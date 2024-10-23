@@ -155,6 +155,7 @@ MonoBehaviour:
   Hand:
   - {fileID: 4200072223276004059, guid: 77fc1ea891e3d4f4c9eee37e83e51ddc, type: 3}
   - {fileID: 4200072223276004059, guid: 590cbbd1f58d03c48ab87366231377ea, type: 3}
+  - {fileID: 4200072223276004059, guid: b991e4ad5eb2c3a47bb3ead64fcccdec, type: 3}
 --- !u!4 &35935745
 Transform:
   m_ObjectHideFlags: 0
