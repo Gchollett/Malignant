@@ -19,6 +19,8 @@ public class CreatureCard : Card
         transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = cardName;
         transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = power.ToString();
         transform.GetChild(2).gameObject.GetComponent<TextMeshPro>().text = health.ToString();
+        transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = ab1.abilityName;
+        transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = ab2.abilityName;
     }
     public void addAbility(Ability ab){
         if(ab1 == null){

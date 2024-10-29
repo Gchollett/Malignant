@@ -21,6 +21,7 @@ public abstract class Card : MonoBehaviour
     private void OnMouseDrag() {
         if(card_locker) return;
         //gm.protag.Hand.Remove(gameObject);
+
         //Movement Handling, Prolly not optimal
         Plane dragPlane = new Plane(Camera.main.transform.forward, transform.position);
         Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -32,6 +33,12 @@ public abstract class Card : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the mouse up event for the card.
+    /// When the mouse button is released, if the card's position is found and it is in a lane,
+    /// it moves the card to the target position in the lane, updates the lane to indicate a card is present,
+    /// locks the card's position, and confirms the position is found.
+    /// </summary>
     private void OnMouseUp()
     {
         if(position_found && lane){
@@ -45,7 +52,7 @@ public abstract class Card : MonoBehaviour
     }
 
     private void OnCollisionStay2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable" && !position_found){
+        if(other.gameObject.tag == "Card Snappable" && !position_found && !other.gameObject.GetComponent<Lane>().alreadyHasCard()){
             Debug.Log($"Snapping to Object: {other.gameObject.name}");
             position_found = true;
             lane = other.gameObject;
@@ -54,7 +61,7 @@ public abstract class Card : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other) {
         if(other.gameObject.tag == "Card Snappable"){
-            other.gameObject.GetComponent<Lane>().cardRemovedFromLane();
+            position_found = false;
         }
     }
     
