@@ -8,19 +8,16 @@ public abstract class Card : MonoBehaviour
     public string cardName;
     public string rarity;
     public abstract void display();
-    public static CardGameManager gm;
     private GameObject lane;
-
     private bool position_found = false;
-    private bool card_locker = false;
+    private bool card_locked = false;
 
-    void Start()
-    {
-        gm = CardGameManager.Instance;
+    private void OnMouseDown() {
+        if(card_locked) return;
+        CardGameManager.Instance.protag.RemoveGameCard(gameObject.transform.GetSiblingIndex());
     }
     private void OnMouseDrag() {
-        if(card_locker) return;
-        //gm.protag.Hand.Remove(gameObject);
+        if(card_locked) return;
         //Movement Handling, Prolly not optimal
         Plane dragPlane = new Plane(Camera.main.transform.forward, transform.position);
         Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -34,27 +31,28 @@ public abstract class Card : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if(position_found && lane){
+        if(position_found){
             Vector2 tgtPos = lane.transform.position;
             transform.position = new Vector2(tgtPos.x,tgtPos.y - 1);
             lane.gameObject.GetComponent<Lane>().cardInLane();
-            // gm.protag.Hand.
-            card_locker =  true;
+            card_locked =  true;
             position_found = true;
+        }else{
+            CardGameManager.Instance.protag.AddGameCard(gameObject);
         }
     }
 
     private void OnCollisionStay2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable" && !position_found){
-            Debug.Log($"Snapping to Object: {other.gameObject.name}");
+        if(other.gameObject.tag == "Card Snappable" && !position_found && !other.gameObject.GetComponent<Lane>().alreadyHasCard()){
             position_found = true;
             lane = other.gameObject;
         }
     }
 
     private void OnCollisionExit2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable"){
-            other.gameObject.GetComponent<Lane>().cardRemovedFromLane();
+        if(other.gameObject.tag == "Card Snappable" && position_found){
+            position_found = false;
+            lane = null;
         }
     }
     

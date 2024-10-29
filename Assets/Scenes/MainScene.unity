@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 37526520}
   - component: {fileID: 37526519}
   - component: {fileID: 37526518}
+  - component: {fileID: 37526521}
   m_Layer: 4
   m_Name: Lane 3
   m_TagString: Card Snappable
@@ -329,6 +330,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &37526521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37526516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de3eca7f2c5a34b42a8d61d2d95a6db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasCard: 0
 --- !u!1 &408085542
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,6 +619,7 @@ GameObject:
   - component: {fileID: 1115063676}
   - component: {fileID: 1115063677}
   - component: {fileID: 1115063678}
+  - component: {fileID: 1115063679}
   m_Layer: 4
   m_Name: Lane 2
   m_TagString: Card Snappable
@@ -751,6 +766,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &1115063679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115063674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de3eca7f2c5a34b42a8d61d2d95a6db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasCard: 0
 --- !u!1 &1394254816
 GameObject:
   m_ObjectHideFlags: 0
