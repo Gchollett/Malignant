@@ -153,9 +153,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Lanes: []
   Hand:
-  - {fileID: 4200072223276004059, guid: 77fc1ea891e3d4f4c9eee37e83e51ddc, type: 3}
-  - {fileID: 4200072223276004059, guid: 590cbbd1f58d03c48ab87366231377ea, type: 3}
-  - {fileID: 4200072223276004059, guid: b991e4ad5eb2c3a47bb3ead64fcccdec, type: 3}
+  - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
+  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
+  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
 --- !u!4 &35935745
 Transform:
   m_ObjectHideFlags: 0
@@ -319,7 +319,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -327,7 +327,7 @@ SpriteRenderer:
   m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &37526521
@@ -491,7 +491,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -499,7 +499,7 @@ SpriteRenderer:
   m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &408085547
@@ -683,7 +683,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -691,7 +691,7 @@ SpriteRenderer:
   m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &1115063677

@@ -11,10 +11,12 @@ public abstract class Card : MonoBehaviour
     private GameObject lane;
     private bool position_found = false;
     private bool card_locked = false;
+    private int card_index;
 
     private void OnMouseDown() {
         if(card_locked) return;
-        CardGameManager.Instance.protag.RemoveGameCard(gameObject.transform.GetSiblingIndex());
+        card_index = gameObject.transform.GetSiblingIndex();
+        CardGameManager.Instance.protag.RemoveGameCard(card_index);
     }
     private void OnMouseDrag() {
         if(card_locked) return;
@@ -28,7 +30,6 @@ public abstract class Card : MonoBehaviour
             transform.position = mousePosition;
         }
     }
-
     private void OnMouseUp()
     {
         if(position_found){
@@ -38,7 +39,7 @@ public abstract class Card : MonoBehaviour
             card_locked =  true;
             position_found = true;
         }else{
-            CardGameManager.Instance.protag.AddGameCard(gameObject);
+            CardGameManager.Instance.protag.AddGameCard(gameObject,card_index);
         }
     }
 
