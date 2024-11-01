@@ -33,8 +33,7 @@ public abstract class Card : MonoBehaviour
     private void OnMouseUp()
     {
         if(position_found){
-            Debug.Log($"{lane} found, attempting to snap to tgtPos");
-            Vector2 tgtPos = lane.GetComponent<Lane>().playerPt;
+            Vector2 tgtPos = lane.transform.position;
             transform.position = new Vector2(tgtPos.x,tgtPos.y - 1);
             lane.gameObject.GetComponent<Lane>().cardInLane();
             card_locked =  true;
@@ -46,7 +45,6 @@ public abstract class Card : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D other) {
         if(other.gameObject.tag == "Card Snappable" && !position_found && !other.gameObject.GetComponent<Lane>().alreadyHasCard()){
-            Debug.Log("Collision Stay!");
             position_found = true;
             lane = other.gameObject;
         }
