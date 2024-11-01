@@ -19,9 +19,11 @@ public class Player : MonoBehaviour
         fixHand();
     }
 
-    public void AddGameCard(GameObject card){
-        Hand.Add(card);
+    public void AddGameCard(GameObject card,int index){
+        Debug.Log(index);
+        Hand.Insert(index,card);
         card.transform.SetParent(gameObject.transform);
+        card.transform.SetSiblingIndex(index);
         fixHand();
     }
 
