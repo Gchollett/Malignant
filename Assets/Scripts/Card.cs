@@ -11,10 +11,12 @@ public abstract class Card : MonoBehaviour
     private GameObject lane;
     private bool position_found = false;
     private bool card_locked = false;
+    private int card_index;
 
     private void OnMouseDown() {
         if(card_locked) return;
-        CardGameManager.Instance.protag.RemoveGameCard(gameObject.transform.GetSiblingIndex());
+        card_index = gameObject.transform.GetSiblingIndex();
+        CardGameManager.Instance.protag.RemoveGameCard(card_index);
     }
     private void OnMouseDrag() {
         if(card_locked) return;
@@ -28,24 +30,21 @@ public abstract class Card : MonoBehaviour
             transform.position = mousePosition;
         }
     }
-
     private void OnMouseUp()
     {
         if(position_found){
-            Debug.Log($"{lane} found, attempting to snap to tgtPos");
-            Vector2 tgtPos = lane.GetComponent<Lane>().playerPt;
+            Vector2 tgtPos = lane.transform.position;
             transform.position = new Vector2(tgtPos.x,tgtPos.y - 1);
             lane.gameObject.GetComponent<Lane>().cardInLane();
             card_locked =  true;
             position_found = true;
         }else{
-            CardGameManager.Instance.protag.AddGameCard(gameObject);
+            CardGameManager.Instance.protag.AddGameCard(gameObject,card_index);
         }
     }
 
     private void OnCollisionStay2D(Collision2D other) {
         if(other.gameObject.tag == "Card Snappable" && !position_found && !other.gameObject.GetComponent<Lane>().alreadyHasCard()){
-            Debug.Log("Collision Stay!");
             position_found = true;
             lane = other.gameObject;
         }
