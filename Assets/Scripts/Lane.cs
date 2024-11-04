@@ -15,7 +15,6 @@ public class Lane : MonoBehaviour
     }
 
     public void cardInLane(){
-        Debug.Log($"cardPlayedInLane played in gameObject {gameObject.name}");
         hasCard = true;
     }
 
@@ -24,7 +23,6 @@ public class Lane : MonoBehaviour
     }
 
     public void cardRemovedFromLane(){
-        Debug.Log($"cardRemovedFromLane played in gameObject {gameObject.name}");
         hasCard = false;
     }
 }

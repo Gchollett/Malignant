@@ -20,7 +20,6 @@ public abstract class Card : MonoBehaviour
     }
     private void OnMouseDrag() {
         if(card_locked) return;
-        //Movement Handling, Prolly not optimal
         Plane dragPlane = new Plane(Camera.main.transform.forward, transform.position);
         Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         float enter = 0.0f;
@@ -33,10 +32,9 @@ public abstract class Card : MonoBehaviour
     private void OnMouseUp()
     {
         if(position_found){
-            Debug.Log($"{lane} found, attempting to snap to tgtPos");
             Vector2 tgtPos = lane.GetComponent<Lane>().playerPt;
+            lane.GetComponent<Lane>().cardInLane();
             transform.position = new Vector2(tgtPos.x,tgtPos.y - 1);
-            lane.gameObject.GetComponent<Lane>().cardInLane();
             card_locked =  true;
             position_found = true;
         }else{

@@ -8,6 +8,7 @@ public class CardGameManager : MonoBehaviour
     public int laneNumber;
     public Player protag;
     public Player antag;
+    public int phase;
     void Awake()
     {
         if(!Instance) Instance = this;
@@ -21,6 +22,11 @@ public class CardGameManager : MonoBehaviour
         if (i >= laneNumber || p.Lanes[i] != null) return false;
         p.Lanes[i] = new Creature(card);
         return true;
+    }
+
+    void changePhase(){
+        phase += 1;
+        phase %= 3;
     }
 
 }
