@@ -33,7 +33,8 @@ public abstract class Card : MonoBehaviour
     private void OnMouseUp()
     {
         if(position_found){
-            Vector2 tgtPos = lane.transform.position;
+            Debug.Log($"{lane} found, attempting to snap to tgtPos");
+            Vector2 tgtPos = lane.GetComponent<Lane>().playerPt;
             transform.position = new Vector2(tgtPos.x,tgtPos.y - 1);
             lane.gameObject.GetComponent<Lane>().cardInLane();
             card_locked =  true;
