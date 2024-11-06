@@ -8,8 +8,10 @@ using UnityEngine;
 
 public class CreatureCard : Card
 {
-    public int power;
-    public int health;
+    [SerializeField]
+    private int power;
+    [SerializeField]
+    private int health;
     public string flavorText;
     public Ability ab1;
     public Ability ab2;
@@ -20,6 +22,7 @@ public class CreatureCard : Card
     private int card_index;
     public int tempHealth {get; set;}
     public int tempPower {get; set;}
+    private static CardGameManager gm;
     public List<(StatusEffect,int)> statusEffects; //The status effect and the duration of it
     public void Apply(StatusEffect se,int duration){
         statusEffects.Append((se,duration));
@@ -28,6 +31,7 @@ public class CreatureCard : Card
     void Start()
     {
         statusEffects = new List<(StatusEffect, int)>();
+        gm = CardGameManager.Instance;
     }
     void FixedUpdate() {
         string adjectives = "";
@@ -41,7 +45,7 @@ public class CreatureCard : Card
     public void attack(Player p){
         p.damage(power);
     }
-    public void attack(Creature c){
+    public void attack(CreatureCard c){
         c.tempHealth -= power;
     }
     public void Kill()
@@ -63,14 +67,17 @@ public class CreatureCard : Card
         if(health + tempHealth <= 0){
             Kill();
         }
+        if(power + tempPower < 0){
+            tempPower = -power;
+        }
     }
     private void OnMouseDown() {
-        if(card_locked) return;
+        if(card_locked || !gm.isMoveEnabled) return;
         card_index = gameObject.transform.GetSiblingIndex();
         CardGameManager.Instance.protag.RemoveGameCard(card_index);
     }
     private void OnMouseDrag() {
-        if(card_locked) return;
+        if(card_locked || !gm.isMoveEnabled) return;
         Plane dragPlane = new Plane(Camera.main.transform.forward, transform.position);
         Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         float enter = 0.0f;
@@ -82,14 +89,18 @@ public class CreatureCard : Card
     }
     private void OnMouseUp()
     {
+        if(!gm.isMoveEnabled) return;
         if(position_found){
             Vector2 tgtPos = lane.GetComponent<Lane>().playerPt;
             lane.GetComponent<Lane>().cardInLane();
-            transform.position = new Vector2(tgtPos.x,tgtPos.y - 1);
+            lane.GetComponent<Lane>().protagCreature = gameObject;
+            transform.position = new Vector2(tgtPos.x,tgtPos.y);
             card_locked =  true;
             position_found = true;
+            gm.changeActivePlayer();
+            gm.isWaiting = false;
         }else{
-            CardGameManager.Instance.protag.AddGameCard(gameObject,card_index);
+            gm.protag.AddGameCard(gameObject,card_index);
         }
     }
 

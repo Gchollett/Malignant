@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
 
     private int health = 10;
-    private int pips = 0;
+    public int pips {get; private set;}
     public List<GameObject> Hand;
     private void FixedUpdate() {
         fixHand();
@@ -42,6 +42,14 @@ public class Player : MonoBehaviour
             }
         }
         
+    }
+
+    public void upPips(int count = 1){
+        pips += count;
+    }
+
+    public void lowerPips(int count = 1){
+        pips -= count;
     }
 
     public void damage(int d){

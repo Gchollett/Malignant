@@ -6,7 +6,7 @@ public class Stinky : StatusEffect
 {
     public override void effect()
     {
-        if(!gameObject.GetComponent<Creature>()) return;
-        gameObject.GetComponent<Creature>().tempPower-=1;
+        if(!gameObject.GetComponent<CreatureCard>()) return;
+        gameObject.GetComponent<CreatureCard>().tempPower-=1;
     }
 }

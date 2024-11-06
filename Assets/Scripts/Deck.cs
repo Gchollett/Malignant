@@ -6,10 +6,18 @@ using UnityEngine;
 public class Deck : MonoBehaviour{
 
     public List<GameObject> cards;
+    private CardGameManager gm;
+
+    void Start()
+    {
+        gm = CardGameManager.Instance;
+    }
     public void draw(){
-        if(cards.Count == 0) return;
-        CardGameManager.Instance.protag.Hand.Add(cards[0]);
+        if(cards.Count == 0 || !gm.isDrawEnabled) return;
+        gm.protag.Hand.Add(cards[0]);
         cards.RemoveAt(0);
+        gm.isWaiting = false;
+        gm.changePhase();
     }
 
     public void shuffle(){
