@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+
 
 public class CreatureCard : Card
 {
@@ -15,7 +18,52 @@ public class CreatureCard : Card
     private bool position_found = false;
     private bool card_locked = false;
     private int card_index;
+    public int tempHealth {get; set;}
+    public int tempPower {get; set;}
+    public List<(StatusEffect,int)> statusEffects; //The status effect and the duration of it
+    public void Apply(StatusEffect se,int duration){
+        statusEffects.Append((se,duration));
+    }
 
+    void Start()
+    {
+        statusEffects = new List<(StatusEffect, int)>();
+    }
+    void FixedUpdate() {
+        string adjectives = "";
+        foreach ((StatusEffect,int) se in statusEffects){
+            adjectives = se.Item1 + " " + adjectives;
+        }
+        transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = adjectives + cardName;
+        transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = ((power + tempPower >= 0)?(power + tempPower):0).ToString();
+        transform.GetChild(2).gameObject.GetComponent<TextMeshPro>().text = (health + tempHealth).ToString();
+    }
+    public void attack(Player p){
+        p.damage(power);
+    }
+    public void attack(Creature c){
+        c.tempHealth -= power;
+    }
+    public void Kill()
+    {
+        ab1.ProcessAbility("Death");
+        ab2.ProcessAbility("Death");
+        ab3.ProcessAbility("Death");
+        Destroy(gameObject);
+    }
+    public void UpdateCard()
+    {
+        for(int i = 0; i < statusEffects.Count; i++){
+            if(statusEffects[i].Item2 > 0){
+                statusEffects[i] = (statusEffects[i].Item1,statusEffects[i].Item2-1);
+            }else{
+                statusEffects.RemoveAt(i);
+            }
+        }
+        if(health + tempHealth <= 0){
+            Kill();
+        }
+    }
     private void OnMouseDown() {
         if(card_locked) return;
         card_index = gameObject.transform.GetSiblingIndex();
@@ -57,9 +105,6 @@ public class CreatureCard : Card
             position_found = false;
             lane = null;
         }
-    }
-    void Start() {
-        display();
     }
     public override void display(){
         transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = cardName;
