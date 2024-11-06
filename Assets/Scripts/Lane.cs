@@ -5,6 +5,10 @@ using UnityEngine;
 public class Lane : MonoBehaviour
 {   
     public bool hasCard = false;
+
+    public GameObject protagCreature {get; private set;}
+    public GameObject antagCreature {get; private set;}
+
     public Vector2 playerPt { get; private set; }
     public Vector2 enemyPt { get; private set; }
     // Start is called before the first frame update

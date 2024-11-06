@@ -5,28 +5,43 @@ using UnityEngine;
 public class CardGameManager : MonoBehaviour
 {
     public static CardGameManager Instance;
-    public int laneNumber;
     public Player protag;
     public Player antag;
-    public int phase;
+    private Player activePlayer;
+    public Lane[] lanes;
+    public Phase phase {get; private set;}
+
+    public enum Phase {
+        Start,
+        Play,
+        Activation,
+        Combat
+    }
+
     void Awake()
     {
         if(!Instance) Instance = this;
     }
+
     void Start()
     {
-        protag.Lanes = new Creature[laneNumber];
-        antag.Lanes = new Creature[laneNumber];
+        activePlayer = protag;
     }
-    public bool PlaceCardInLane(Player p, int i, CreatureCard card){
-        if (i >= laneNumber || p.Lanes[i] != null) return false;
-        p.Lanes[i] = new Creature(card);
-        return true;
+
+    void changeActivePlayer(){
+        if(activePlayer == protag) activePlayer = antag;
+        else activePlayer = protag;
     }
 
     void changePhase(){
-        phase += 1;
-        phase %= 3;
+        phase++;
+        if(phase > Phase.Combat){
+            phase = Phase.Start;
+        }
     }
 
+    void mainGameLoop()
+    {
+        
+    }
 }

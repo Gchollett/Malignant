@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
 
     private int health = 10;
     private int pips = 0;
-    public Creature[] Lanes;
     public List<GameObject> Hand;
     private void FixedUpdate() {
         fixHand();
