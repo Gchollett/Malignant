@@ -98,7 +98,6 @@ public class CreatureCard : Card
             card_locked =  true;
             position_found = true;
             gm.changeActivePlayer();
-            gm.isWaiting = false;
         }else{
             gm.protag.AddGameCard(gameObject,card_index);
         }

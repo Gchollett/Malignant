@@ -5,9 +5,15 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    private int health = 10;
+    public int health {get; private set;}
+    public int startingHealth = 10;
     public int pips {get; private set;}
     public List<GameObject> Hand;
+
+    void Start() {
+        health = startingHealth;
+        pips = 0;
+    }
     private void FixedUpdate() {
         fixHand();
     }

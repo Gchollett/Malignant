@@ -16,7 +16,6 @@ public class Deck : MonoBehaviour{
         if(cards.Count == 0 || !gm.isDrawEnabled) return;
         gm.protag.Hand.Add(cards[0]);
         cards.RemoveAt(0);
-        gm.isWaiting = false;
         gm.changePhase();
     }
 
