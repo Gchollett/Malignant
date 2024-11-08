@@ -50,7 +50,7 @@ public class CardGameManager : MonoBehaviour
 
     void FixedUpdate(){
         mainGameLoop();
-        Debug.Log($"Protag Health:{protag.health}\nAntag Health:{antag.health}\nProtag Pips:{protag.pips}\nAntag pips:{antag.pips}");
+        // Debug.Log($"Protag Health:{protag.health}\nAntag Health:{antag.health}\nProtag Pips:{protag.pips}\nAntag pips:{antag.pips}");
     }
 
     public void changeActivePlayer(){

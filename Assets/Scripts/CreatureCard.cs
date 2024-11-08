@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,20 +24,25 @@ public class CreatureCard : Card
     public int tempHealth {get; set;}
     public int tempPower {get; set;}
     private static CardGameManager gm;
-    public List<(StatusEffect,int)> statusEffects; //The status effect and the duration of it
+    public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
     public void Apply(StatusEffect se,int duration){
-        statusEffects.Append((se,duration));
+        if(statusEffects.ContainsKey(se)){
+            statusEffects[se] += duration;
+        }else{
+            statusEffects[se] = duration;
+            se.effect(this);
+        }
     }
 
     void Start()
     {
-        statusEffects = new List<(StatusEffect, int)>();
+        statusEffects = new Dictionary<StatusEffect, int>();
         gm = CardGameManager.Instance;
     }
     void FixedUpdate() {
         string adjectives = "";
-        foreach ((StatusEffect,int) se in statusEffects){
-            adjectives = se.Item1 + " " + adjectives;
+        foreach (StatusEffect se in statusEffects.Keys){
+            if(statusEffects[se] > 0) adjectives = se.effectName + " " + adjectives;
         }
         transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = adjectives + cardName;
         transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = ((power + tempPower >= 0)?(power + tempPower):0).ToString();
@@ -57,11 +63,12 @@ public class CreatureCard : Card
     }
     public void UpdateCard()
     {
-        for(int i = 0; i < statusEffects.Count; i++){
-            if(statusEffects[i].Item2 > 0){
-                statusEffects[i] = (statusEffects[i].Item1,statusEffects[i].Item2-1);
-            }else{
-                statusEffects.RemoveAt(i);
+        foreach(StatusEffect se in new List<StatusEffect>(statusEffects.Keys)){
+            if(statusEffects[se] > 0) {
+                statusEffects[se] -= 1;
+                if(statusEffects[se] == 0){
+                    se.deffect(this);
+                }
             }
         }
         if(health + tempHealth <= 0){
