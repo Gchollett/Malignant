@@ -34,6 +34,10 @@ public class CreatureCard : Card
         gm = CardGameManager.Instance;
     }
     void FixedUpdate() {
+        setCardText();
+    }
+
+    private void setCardText(){
         string adjectives = "";
         foreach ((StatusEffect,int) se in statusEffects){
             adjectives = se.Item1 + " " + adjectives;
@@ -41,7 +45,25 @@ public class CreatureCard : Card
         transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = adjectives + cardName;
         transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = ((power + tempPower >= 0)?(power + tempPower):0).ToString();
         transform.GetChild(2).gameObject.GetComponent<TextMeshPro>().text = (health + tempHealth).ToString();
+        if(ab1 != null){
+            transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = ab1.abilityName;
+        } else {
+             transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = "Empty";
+        }
+
+        if(ab2 != null){
+            transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = ab2.abilityName;
+        } else {
+             transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = "Empty";
+        }
+
+        if(ab3 != null){
+            transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = ab3.abilityName;
+        } else {
+             transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = "Empty";
+        }
     }
+
     public void attack(Player p){
         p.damage(power);
     }

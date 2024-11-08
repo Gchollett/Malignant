@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: ab1
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: power
       value: 2
       objectReference: {fileID: 0}
@@ -26,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4200072223276004059, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Name
-      value: CreatureCard Variant
+      value: Deer
       objectReference: {fileID: 0}
     - target: {fileID: 9094496513474527702, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_LocalPosition.x
