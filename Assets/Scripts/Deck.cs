@@ -13,8 +13,7 @@ public class Deck : MonoBehaviour{
         gm = CardGameManager.Instance;
     }
     public void draw(){
-        if(gm.isDrawEnabled) gm.changePhase();
-        if(cards.Count == 0 || !gm.isDrawEnabled) return;
+        if(cards.Count == 0) return;
         gm.protag.Hand.Add(cards[0]);
         cards.RemoveAt(0);
     }
@@ -31,6 +30,9 @@ public class Deck : MonoBehaviour{
     }
 
     void OnMouseDown() {
-        draw();
+        if(gm.isDrawEnabled){
+            draw();
+            gm.changePhase();
+        }
     }
 }

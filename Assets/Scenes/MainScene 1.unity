@@ -911,7 +911,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 813420973}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 813420975}
+        m_TargetAssemblyTypeName: TESTING, Assembly-CSharp
+        m_MethodName: applyStatusEffect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &813420973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -962,6 +974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86516b1a481d7543bea67016b7b92e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  se: {fileID: -6364960437577243519, guid: 40a7f42423dd43441b79bc4996ef0111, type: 3}
 --- !u!1 &1047278623
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,19 +54,19 @@ public class CreatureCard : Card
         if(ab1 != null){
             transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = ab1.abilityName;
         } else {
-             transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = "Empty";
+             transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = "";
         }
 
         if(ab2 != null){
             transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = ab2.abilityName;
         } else {
-             transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = "Empty";
+             transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = "";
         }
 
         if(ab3 != null){
             transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = ab3.abilityName;
         } else {
-             transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = "Empty";
+             transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = "";
         }
     }
 
