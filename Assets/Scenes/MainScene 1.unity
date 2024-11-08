@@ -131,7 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 35935745}
-  - component: {fileID: 35935744}
+  - component: {fileID: 35935746}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -139,23 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &35935744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 35935743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70212ce275a38b34184411dd04858fed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 10
-  Hand:
-  - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
-  - {fileID: 8711303135246193907, guid: e04b1a31db0ff6342bdbbbfbae23ff42, type: 3}
-  - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
 --- !u!4 &35935745
 Transform:
   m_ObjectHideFlags: 0
@@ -171,6 +154,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &35935746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35935743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69fdc1ae8803b7142b8b9c43709ad338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 10
+  Hand:
+  - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
+  - {fileID: 8711303135246193907, guid: e04b1a31db0ff6342bdbbbfbae23ff42, type: 3}
+  - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
 --- !u!1 &55150132
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3eca7f2c5a34b42a8d61d2d95a6db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasCard: 0
 --- !u!212 &55150135
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1092,7 +1091,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3eca7f2c5a34b42a8d61d2d95a6db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasCard: 0
 --- !u!212 &1090685777
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1511,7 +1509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db12d3775c14aad40ab4848e83a8893c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  protag: {fileID: 35935744}
+  protag: {fileID: 35935746}
   antag: {fileID: 1540497074}
   lanes:
   - {fileID: 1780046454}
@@ -1563,7 +1561,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 10
-  Hand: []
+  Hand:
+  - {fileID: 8711303135246193907, guid: 94f673096b8f567439aa2107212855d9, type: 3}
+  - {fileID: 8711303135246193907, guid: ff489c9f900685c45a1cf60de6f30380, type: 3}
+  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
+  - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
+  - {fileID: 8711303135246193907, guid: 94f673096b8f567439aa2107212855d9, type: 3}
+  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
+  - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
+  - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
+  - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
+  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
 --- !u!4 &1540497075
 Transform:
   m_ObjectHideFlags: 0
@@ -1746,7 +1754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3eca7f2c5a34b42a8d61d2d95a6db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasCard: 0
 --- !u!212 &1780046455
 SpriteRenderer:
   m_ObjectHideFlags: 0

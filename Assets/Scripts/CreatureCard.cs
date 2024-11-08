@@ -17,13 +17,14 @@ public class CreatureCard : Card
     public Ability ab1;
     public Ability ab2;
     public Ability ab3;
-    private GameObject lane;
+    public GameObject lane {get; set;}
     private bool position_found = false;
     private bool card_locked = false;
     private int card_index;
     public int tempHealth {get; set;}
     public int tempPower {get; set;}
     private static CardGameManager gm;
+    private GameObject prefab;
     public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
     public void Apply(StatusEffect se,int duration){
         if(statusEffects.ContainsKey(se)){
@@ -78,9 +79,10 @@ public class CreatureCard : Card
     }
     public void Kill()
     {
-        ab1.ProcessAbility("Death");
-        ab2.ProcessAbility("Death");
-        ab3.ProcessAbility("Death");
+        ab1?.ProcessAbility("Death");
+        ab2?.ProcessAbility("Death");
+        ab3?.ProcessAbility("Death");
+        lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
     }
     public void UpdateCard()
@@ -103,7 +105,7 @@ public class CreatureCard : Card
     private void OnMouseDown() {
         if(card_locked || !gm.isMoveEnabled) return;
         card_index = gameObject.transform.GetSiblingIndex();
-        CardGameManager.Instance.protag.RemoveGameCard(card_index);
+        prefab = CardGameManager.Instance.protag.RemoveGameCard(card_index);
     }
     private void OnMouseDrag() {
         if(card_locked || !gm.isMoveEnabled) return;
@@ -120,15 +122,13 @@ public class CreatureCard : Card
     {
         if(!gm.isMoveEnabled) return;
         if(position_found){
-            Vector2 tgtPos = lane.GetComponent<Lane>().playerPt;
-            lane.GetComponent<Lane>().cardInLane();
-            lane.GetComponent<Lane>().protagCreature = gameObject;
-            transform.position = new Vector2(tgtPos.x,tgtPos.y);
+            lane.GetComponent<Lane>().addProtagCreature(gameObject);
             card_locked =  true;
             position_found = true;
             gm.changeActivePlayer();
-        }else{
-            gm.protag.AddGameCard(gameObject,card_index);
+        }else if(prefab){
+            gm.protag.AddGameCard(prefab,card_index);
+            Destroy(gameObject);
         }
     }
 
