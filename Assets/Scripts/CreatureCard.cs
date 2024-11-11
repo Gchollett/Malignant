@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,21 +17,27 @@ public class CreatureCard : Card
     public Ability ab1;
     public Ability ab2;
     public Ability ab3;
-    private GameObject lane;
+    public GameObject lane {get; set;}
     private bool position_found = false;
     private bool card_locked = false;
     private int card_index;
     public int tempHealth {get; set;}
     public int tempPower {get; set;}
     private static CardGameManager gm;
-    public List<(StatusEffect,int)> statusEffects; //The status effect and the duration of it
+    private GameObject prefab;
+    public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
     public void Apply(StatusEffect se,int duration){
-        statusEffects.Append((se,duration));
+        if(statusEffects.ContainsKey(se)){
+            statusEffects[se] += duration;
+        }else{
+            statusEffects[se] = duration;
+            se.effect(this);
+        }
     }
 
     void Start()
     {
-        statusEffects = new List<(StatusEffect, int)>();
+        statusEffects = new Dictionary<StatusEffect, int>();
         gm = CardGameManager.Instance;
     }
     void FixedUpdate() {
@@ -39,8 +46,8 @@ public class CreatureCard : Card
 
     private void setCardText(){
         string adjectives = "";
-        foreach ((StatusEffect,int) se in statusEffects){
-            adjectives = se.Item1 + " " + adjectives;
+        foreach (StatusEffect se in statusEffects.Keys){
+            if(statusEffects[se] > 0) adjectives = se.effectName + " " + adjectives;
         }
         transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = adjectives + cardName;
         transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = ((power + tempPower >= 0)?(power + tempPower):0).ToString();
@@ -48,19 +55,19 @@ public class CreatureCard : Card
         if(ab1 != null){
             transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = ab1.abilityName;
         } else {
-             transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = "Empty";
+             transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = "";
         }
 
         if(ab2 != null){
             transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = ab2.abilityName;
         } else {
-             transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = "Empty";
+             transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = "";
         }
 
         if(ab3 != null){
             transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = ab3.abilityName;
         } else {
-             transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = "Empty";
+             transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = "";
         }
     }
 
@@ -72,18 +79,20 @@ public class CreatureCard : Card
     }
     public void Kill()
     {
-        ab1.ProcessAbility("Death");
-        ab2.ProcessAbility("Death");
-        ab3.ProcessAbility("Death");
+        ab1?.ProcessAbility("Death");
+        ab2?.ProcessAbility("Death");
+        ab3?.ProcessAbility("Death");
+        lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
     }
     public void UpdateCard()
     {
-        for(int i = 0; i < statusEffects.Count; i++){
-            if(statusEffects[i].Item2 > 0){
-                statusEffects[i] = (statusEffects[i].Item1,statusEffects[i].Item2-1);
-            }else{
-                statusEffects.RemoveAt(i);
+        foreach(StatusEffect se in new List<StatusEffect>(statusEffects.Keys)){
+            if(statusEffects[se] > 0) {
+                statusEffects[se] -= 1;
+                if(statusEffects[se] == 0){
+                    se.deffect(this);
+                }
             }
         }
         if(health + tempHealth <= 0){
@@ -96,7 +105,7 @@ public class CreatureCard : Card
     private void OnMouseDown() {
         if(card_locked || !gm.isMoveEnabled) return;
         card_index = gameObject.transform.GetSiblingIndex();
-        CardGameManager.Instance.protag.RemoveGameCard(card_index);
+        prefab = CardGameManager.Instance.protag.RemoveGameCard(card_index);
     }
     private void OnMouseDrag() {
         if(card_locked || !gm.isMoveEnabled) return;
@@ -113,15 +122,13 @@ public class CreatureCard : Card
     {
         if(!gm.isMoveEnabled) return;
         if(position_found){
-            Vector2 tgtPos = lane.GetComponent<Lane>().playerPt;
-            lane.GetComponent<Lane>().cardInLane();
-            lane.GetComponent<Lane>().protagCreature = gameObject;
-            transform.position = new Vector2(tgtPos.x,tgtPos.y);
+            lane.GetComponent<Lane>().addProtagCreature(gameObject);
             card_locked =  true;
             position_found = true;
             gm.changeActivePlayer();
-        }else{
-            gm.protag.AddGameCard(gameObject,card_index);
+        }else if(prefab){
+            gm.protag.AddGameCard(prefab,card_index);
+            Destroy(gameObject);
         }
     }
 

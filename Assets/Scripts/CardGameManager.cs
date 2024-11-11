@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CardGameManager : MonoBehaviour
 {
     public static CardGameManager Instance;
-    public Player protag;
+    public Protag protag;
     public Player antag;
     private Player activePlayer;
     public Lane[] lanes;
@@ -32,7 +33,8 @@ public class CardGameManager : MonoBehaviour
         Start = 0,
         Play = 1,
         Activation = 2,
-        Combat = 3
+        Combat = 3,
+        End = 4
     }
 
 
@@ -50,7 +52,7 @@ public class CardGameManager : MonoBehaviour
 
     void FixedUpdate(){
         mainGameLoop();
-        Debug.Log($"Protag Health:{protag.health}\nAntag Health:{antag.health}\nProtag Pips:{protag.pips}\nAntag pips:{antag.pips}");
+        // Debug.Log($"Protag Health:{protag.health}\nAntag Health:{antag.health}\nProtag Pips:{protag.pips}\nAntag pips:{antag.pips}");
     }
 
     public void changeActivePlayer(){
@@ -61,7 +63,7 @@ public class CardGameManager : MonoBehaviour
 
     public void changePhase(){
         phase++;
-        if(phase > Phase.Combat){
+        if(phase > Phase.End){
             phase = Phase.Start;
         }
         isWaiting = false;
@@ -71,7 +73,6 @@ public class CardGameManager : MonoBehaviour
     {
         if(phase == Phase.Start && !isWaiting){
             button.gameObject.SetActive(false);
-            cleanBoard();
             gainPips();
             isWaiting = true;
             isDrawEnabled = true;
@@ -101,16 +102,13 @@ public class CardGameManager : MonoBehaviour
         }else if(phase == Phase.Combat && !isWaiting){
             isWaiting = true;
             combat();
+        }else if(phase == Phase.End && !isWaiting){
+            cleanBoard();
+            changePhase();
         }
     }
     //Start Phase Methods
         //ENABLE DRAW
-    void cleanBoard(){
-        foreach(Lane lane in lanes){
-            lane.protagCreature?.GetComponent<CreatureCard>().UpdateCard();
-            lane.antagCreature?.GetComponent<CreatureCard>().UpdateCard();
-        }
-    }
     void gainPips(){
         protag.upPips();
         antag.upPips();
@@ -120,6 +118,19 @@ public class CardGameManager : MonoBehaviour
         //ENABLE MOVE
         //ENABLE SACRICE
     void antagMove(){
+        if(antag.Hand.Count != 0){
+            foreach(Lane lane in lanes){
+                if(lane.protagCreature && !lane.antagCreature){
+                    GameObject card  = antag.Hand[Random.Range(0,antag.Hand.Count-1)];
+                    GameObject creature = Instantiate(card);
+                    creature.transform.SetParent(antag.transform);
+                    creature.GetComponent<CreatureCard>().lane = lane.gameObject;
+                    lane.addAntagCreature(creature);
+                    antag.Hand.Remove(card);
+                    break;
+                }
+            }
+        }
         changePhase();
         changeActivePlayer();
     }
@@ -141,5 +152,12 @@ public class CardGameManager : MonoBehaviour
             else lane.antagCreature?.GetComponent<CreatureCard>().attack(protag);
         }
         changePhase();
+    }
+    //End Phase Methods
+    void cleanBoard(){
+        foreach(Lane lane in lanes){
+            lane.protagCreature?.GetComponent<CreatureCard>().UpdateCard();
+            lane.antagCreature?.GetComponent<CreatureCard>().UpdateCard();
+        }
     }
 }

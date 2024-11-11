@@ -11,5 +11,6 @@ public abstract class StatusEffect : MonoBehaviour
     {
         gm = CardGameManager.Instance;
     }
-    public abstract void effect();
+    public abstract void effect(CreatureCard creature);
+    public abstract void deffect(CreatureCard creature);
 }

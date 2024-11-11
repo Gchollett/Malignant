@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Lane : MonoBehaviour
 {   
-    public bool hasCard = false;
 
     public GameObject protagCreature {get; set;}
     public GameObject antagCreature {get; set;}
@@ -18,15 +17,35 @@ public class Lane : MonoBehaviour
         enemyPt = transform.GetChild(1).transform.position;
     }
 
-    public void cardInLane(){
-        hasCard = true;
+    public void addAntagCreature(GameObject card)
+    {
+        if(antagCreature) return;
+        antagCreature = card;
+        card.transform.position = enemyPt;
+
+    }
+
+    public void addProtagCreature(GameObject card)
+    {
+        if(protagCreature) return;
+        protagCreature = card;
+        card.transform.position = playerPt;
+    }
+
+    public bool removeFromLane(GameObject card){
+        if(card == protagCreature){
+            protagCreature = null;
+            return true;
+        }
+        else if(card == antagCreature){
+            antagCreature = null;
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public bool alreadyHasCard() {
-        return hasCard;
-    }
-
-    public void cardRemovedFromLane(){
-        hasCard = false;
+        return protagCreature;
     }
 }

@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Stinky : StatusEffect
 {
-    public override void effect()
+    public override void effect(CreatureCard card)
     {
-        if(!gameObject.GetComponent<CreatureCard>()) return;
-        gameObject.GetComponent<CreatureCard>().tempPower-=1;
+        card.tempPower-=1;
     }
+    public override void deffect(CreatureCard card)
+    {
+        card.tempPower+=1;
+    }
+
 }

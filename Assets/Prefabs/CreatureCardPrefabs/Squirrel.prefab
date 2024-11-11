@@ -26,15 +26,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4200072223276004059, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Name
-      value: CreatureCard Variant 5
+      value: Squirrel
       objectReference: {fileID: 0}
     - target: {fileID: 9094496513474527702, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 9094496513474527702, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.6499999
       objectReference: {fileID: 0}
     - target: {fileID: 9094496513474527702, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_LocalPosition.z
