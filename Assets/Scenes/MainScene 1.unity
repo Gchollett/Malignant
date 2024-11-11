@@ -638,7 +638,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.16078432, g: 0.4627451, b: 0.17829224, a: 0}
+  m_BackGroundColor: {r: 0.08810963, g: 0.2830189, b: 0.09823479, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1516,6 +1516,8 @@ MonoBehaviour:
   - {fileID: 1090685776}
   - {fileID: 55150134}
   button: {fileID: 718902957}
+  protagHealth: {fileID: 0}
+  antagHealth: {fileID: 0}
 --- !u!4 &1394254818
 Transform:
   m_ObjectHideFlags: 0

@@ -72,16 +72,17 @@ public class CreatureCard : Card
     }
 
     public void attack(Player p){
-        p.damage(power);
+        p.damage(power+tempPower<0?0:power+tempPower);
     }
     public void attack(CreatureCard c){
-        c.tempHealth -= power;
+        c.tempHealth -= power+tempPower<0?0:power+tempPower;
     }
     public void Kill()
     {
         ab1?.ProcessAbility("Death");
         ab2?.ProcessAbility("Death");
         ab3?.ProcessAbility("Death");
+        Debug.Log(lane);
         lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
     }
