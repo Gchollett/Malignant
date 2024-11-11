@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,17 +19,8 @@ public class CardGameManager : MonoBehaviour
     public bool isSacrificeEnabled {get; private set;}
     public bool isActivationEnabled {get; private set;}
     public bool isWaiting {get; set;}
-
-    class Node{
-        Phase val;
-        Node next;
-
-        Node(Phase v = Phase.Start, Node n = null){
-            val = v;
-            next = n;
-        }
-    }
-    
+    public TextMeshProUGUI protagHealth;
+    public TextMeshProUGUI antagHealth;
     public enum Phase {
         Start = 0,
         Play = 1,
@@ -52,6 +44,8 @@ public class CardGameManager : MonoBehaviour
 
     void FixedUpdate(){
         mainGameLoop();
+        protagHealth.text = protag.health.ToString();
+        antagHealth.text = antag.health.ToString();
         // Debug.Log($"Protag Health:{protag.health}\nAntag Health:{antag.health}\nProtag Pips:{protag.pips}\nAntag pips:{antag.pips}");
     }
 
