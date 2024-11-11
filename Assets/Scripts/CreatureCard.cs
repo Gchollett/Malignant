@@ -1,9 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -26,6 +24,20 @@ public class CreatureCard : Card
     private static CardGameManager gm;
     private GameObject prefab;
     public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
+
+     public enum Trigger {
+        OnAttack,
+        OnDeath,
+        OnDamaged,
+        OnSacrifice
+    }
+
+    public Dictionary<Trigger,Stack<Action<GameObject>>> triggers;
+
+    public void addTrigger(Trigger trig, Action<GameObject> effect){
+        triggers[trig].Push(effect);
+    }
+
     public void Apply(StatusEffect se,int duration){
         if(statusEffects.ContainsKey(se)){
             statusEffects[se] += duration;
@@ -39,6 +51,14 @@ public class CreatureCard : Card
     {
         statusEffects = new Dictionary<StatusEffect, int>();
         gm = CardGameManager.Instance;
+        if(ab1) ab1.creature = this;
+        if(ab2) ab2.creature = this;
+        if(ab3) ab3.creature = this;
+        triggers = new Dictionary<Trigger, Stack<Action<GameObject>>>();
+        Trigger trig = Trigger.OnAttack;
+        while(trig <= Trigger.OnSacrifice){
+            triggers[trig] = new Stack<Action<GameObject>>();
+        }
     }
     void FixedUpdate() {
         setCardText();
@@ -72,10 +92,16 @@ public class CreatureCard : Card
     }
 
     public void attack(Player p){
-        p.damage(power);
+        p.damage(power+tempPower);
+        while(triggers[Trigger.OnAttack].Count > 0){
+            triggers[Trigger.OnAttack].Pop().Invoke(p.gameObject);
+        }
     }
     public void attack(CreatureCard c){
-        c.tempHealth -= power;
+        c.tempHealth -= power+tempPower;
+        while(triggers[Trigger.OnAttack].Count > 0){
+            triggers[Trigger.OnAttack].Pop().Invoke(c.gameObject);
+        }
     }
     public void Kill()
     {
@@ -144,11 +170,6 @@ public class CreatureCard : Card
             position_found = false;
             lane = null;
         }
-    }
-    public override void display(){
-        transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = cardName;
-        transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = power.ToString();
-        transform.GetChild(2).gameObject.GetComponent<TextMeshPro>().text = health.ToString();
     }
     public void addAbility(Ability ab){
         if(ab1 == null){

@@ -9,6 +9,7 @@ public abstract class Ability : MonoBehaviour
     {
         gm = CardGameManager.Instance;
     }
+    public CreatureCard creature {protected get; set;}
     public string abilityName;
     public string description;
     public string adjective;
