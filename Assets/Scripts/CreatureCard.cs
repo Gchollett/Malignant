@@ -26,6 +26,7 @@ public class CreatureCard : Card
     private static CardGameManager gm;
     private GameObject prefab;
     public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
+    public float scale = 1.5f;
     public void Apply(StatusEffect se,int duration){
         if(statusEffects.ContainsKey(se)){
             statusEffects[se] += duration;
@@ -103,6 +104,16 @@ public class CreatureCard : Card
             tempPower = -power;
         }
     }
+
+    private void OnMouseEnter(){
+        transform.localScale *= scale;
+    }
+
+    private void OnMouseExit(){
+        transform.localScale /= scale;
+    }
+
+    
     private void OnMouseDown() {
         if(card_locked || !gm.isMoveEnabled) return;
         card_index = gameObject.transform.GetSiblingIndex();
@@ -163,4 +174,6 @@ public class CreatureCard : Card
             cardName = ab.adjective+ " " + cardName;
         }
     }
+
+
 }
