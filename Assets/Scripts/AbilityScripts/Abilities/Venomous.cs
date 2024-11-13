@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Venomous : PassiveAbility
+public class Venomous : TriggeredAbility
 {
-    public override void staticAction()
+    public override bool trigger(string val)
+    {
+        
+    }
+    public override void triggeredAction()
     {
         
     }
