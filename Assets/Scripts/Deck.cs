@@ -6,9 +6,15 @@ using UnityEngine;
 public class Deck : MonoBehaviour{
 
     public List<GameObject> cards;
+    private CardGameManager gm;
+
+    void Start()
+    {
+        gm = CardGameManager.Instance;
+    }
     public void draw(){
         if(cards.Count == 0) return;
-        CardGameManager.Instance.protag.Hand.Add(cards[0]);
+        gm.protag.Hand.Add(cards[0]);
         cards.RemoveAt(0);
     }
 
@@ -24,6 +30,9 @@ public class Deck : MonoBehaviour{
     }
 
     void OnMouseDown() {
-        draw();
+        if(gm.isDrawEnabled){
+            draw();
+            gm.changePhase();
+        }
     }
 }
