@@ -83,7 +83,6 @@ public class CreatureCard : Card
         ab1?.ProcessAbility("Death");
         ab2?.ProcessAbility("Death");
         ab3?.ProcessAbility("Death");
-        Debug.Log(lane);
         lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
     }
@@ -145,14 +144,14 @@ public class CreatureCard : Card
     }
 
     private void OnCollisionStay2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable" && !position_found && !other.gameObject.GetComponent<Lane>().alreadyHasCard()){
+        if(other.gameObject.tag == "Card Snappable" && !card_locked && !position_found && !other.gameObject.GetComponent<Lane>().alreadyHasCard()){
             position_found = true;
             lane = other.gameObject;
         }
     }
 
     private void OnCollisionExit2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable" && position_found){
+        if(other.gameObject.tag == "Card Snappable" && !card_locked && position_found){
             position_found = false;
             lane = null;
         }

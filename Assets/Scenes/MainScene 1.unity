@@ -1554,6 +1554,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cards:
+  - {fileID: 8711303135246193907, guid: d4cdbd5bd0d77af4b86ca3e4fb9286d2, type: 3}
+  - {fileID: 4840496455172673963, guid: 3c7b4a78c9288554faebf46b54ceeeb2, type: 3}
   - {fileID: 8711303135246193907, guid: ff489c9f900685c45a1cf60de6f30380, type: 3}
   - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
   - {fileID: 8711303135246193907, guid: 94f673096b8f567439aa2107212855d9, type: 3}
@@ -1943,7 +1945,7 @@ SpriteRenderer:
   m_Size: {x: 5, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1770349660
