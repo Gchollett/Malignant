@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,6 +22,8 @@ public class CardGameManager : MonoBehaviour
     public bool isWaiting {get; set;}
     public TextMeshProUGUI protagHealth;
     public TextMeshProUGUI antagHealth;
+    public TextMeshProUGUI protagPips;
+    public TextMeshProUGUI antagPips;
     public enum Phase {
         Start = 0,
         Play = 1,
@@ -46,6 +49,8 @@ public class CardGameManager : MonoBehaviour
         mainGameLoop();
         protagHealth.text = protag.health.ToString();
         antagHealth.text = antag.health.ToString();
+        protagPips.text = $"Pips: {protag.pips}";
+        antagPips.text = $"Pips: {antag.pips}";
         // Debug.Log($"Protag Health:{protag.health}\nAntag Health:{antag.health}\nProtag Pips:{protag.pips}\nAntag pips:{antag.pips}");
     }
 
@@ -88,7 +93,40 @@ public class CardGameManager : MonoBehaviour
             if(activePlayer == protag){
                 button.gameObject.SetActive(true);
                 isActivationEnabled = true;
+                foreach(Lane lane in lanes){
+                    if(lane.protagCreature){
+                        List<Button> abilityButtons = new List<Button>
+                        {
+                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton1,
+                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton2,
+                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton3
+                        };
+                        for(int i = 0; i < 3; i++){
+                            abilityButtons[i].interactable = true;
+                            int index = i;
+                            abilityButtons[i].onClick.AddListener(() => {
+                                if(lane.protagCreature.gameObject.GetComponent<CreatureCard>().abilities[index].ProcessAbility(protag.pips)){
+                                    protag.lowerPips(((ActivatedAbility)lane.protagCreature.gameObject.GetComponent<CreatureCard>().abilities[index]).cost);
+                                }
+                                });
+                        }
+                    }
+                }
             }else{
+                foreach(Lane lane in lanes){
+                    if(lane.protagCreature){
+                        List<Button> abilityButtons = new List<Button>
+                        {
+                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton1,
+                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton2,
+                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton3
+                        };
+                        for(int i = 0; i < 3; i++){
+                            abilityButtons[i].interactable = false;
+                            abilityButtons[i].onClick.RemoveAllListeners();
+                        }
+                    }
+                }
                 button.gameObject.SetActive(false);
                 isActivationEnabled = false;
                 antagActivate();
@@ -115,7 +153,7 @@ public class CardGameManager : MonoBehaviour
         if(antag.Hand.Count != 0){
             foreach(Lane lane in lanes){
                 if(lane.protagCreature && !lane.antagCreature){
-                    GameObject card  = antag.Hand[Random.Range(0,antag.Hand.Count-1)];
+                    GameObject card  = antag.Hand[UnityEngine.Random.Range(0,antag.Hand.Count-1)];
                     GameObject creature = Instantiate(card);
                     creature.transform.SetParent(antag.transform);
                     creature.GetComponent<CreatureCard>().lane = lane.gameObject;
@@ -140,9 +178,9 @@ public class CardGameManager : MonoBehaviour
         //DISABLE ACTIVATIONS
     void combat(){
         foreach(Lane lane in lanes){
-            if(lane.antagCreature) lane.protagCreature?.GetComponent<CreatureCard>().attack(lane.antagCreature.GetComponent<CreatureCard>());
+            if(lane.antagCreature && lane.protagCreature && !lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect) lane.protagCreature.GetComponent<CreatureCard>().attack(lane.antagCreature.GetComponent<CreatureCard>());
             else lane.protagCreature?.GetComponent<CreatureCard>().attack(antag);
-            if(lane.protagCreature) lane.antagCreature?.GetComponent<CreatureCard>().attack(lane.protagCreature.GetComponent<CreatureCard>());
+            if(lane.protagCreature && lane.antagCreature && !lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect) lane.antagCreature?.GetComponent<CreatureCard>().attack(lane.protagCreature.GetComponent<CreatureCard>());
             else lane.antagCreature?.GetComponent<CreatureCard>().attack(protag);
         }
         changePhase();
@@ -152,6 +190,13 @@ public class CardGameManager : MonoBehaviour
         foreach(Lane lane in lanes){
             lane.protagCreature?.GetComponent<CreatureCard>().UpdateCard();
             lane.antagCreature?.GetComponent<CreatureCard>().UpdateCard();
+            List<(Action,int)> something = new List<(Action, int)>();
+            lane.protagCreature?.GetComponent<CreatureCard>().tempTriggers.TryGetValue(Triggers.OnEnd,out something);
+            something.ForEach(trigger => {
+                if(trigger.Item2 <= 0) return;
+                trigger.Item1.Invoke();
+                trigger.Item2 -= 1;
+            });
         }
     }
 }

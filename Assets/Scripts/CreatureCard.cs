@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,6 +6,7 @@ using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class CreatureCard : Card
@@ -17,17 +19,24 @@ public class CreatureCard : Card
     public Ability ab1;
     public Ability ab2;
     public Ability ab3;
+    public List<Ability> abilities {get; set;}
     public GameObject lane {get; set;}
     private bool position_found = false;
     private bool card_locked = false;
     private int card_index;
     public int tempHealth {get; set;}
     public int tempPower {get; set;}
+    public bool isDealingDirect = false; //Boolean for that allows the creature to avoid attacking opposing creatures
     private static CardGameManager gm;
     private GameObject prefab;
     public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
+    public Dictionary<Triggers,List<(Action,int)>> tempTriggers {get; set;} //The triggers that only need to trigger a finite number of times
+    public Dictionary<Triggers,List<Action>> staticTriggers {get;set;} //The triggers that should trigger until removed
+    public Button abilityButton1; 
+    public Button abilityButton2; 
+    public Button abilityButton3; 
     public float scale = 1.5f;
-    public void Apply(StatusEffect se,int duration){
+    public void applyStatusEffect(StatusEffect se,int duration){
         if(statusEffects.ContainsKey(se)){
             statusEffects[se] += duration;
         }else{
@@ -36,12 +45,36 @@ public class CreatureCard : Card
         }
     }
 
+    public void removeStatusEffect(StatusEffect se){
+        if(statusEffects.ContainsKey(se) && statusEffects[se] != 0){
+            statusEffects[se] = 0;
+            se.deffect(this);
+        }
+    }
+
     void Start()
     {
+        abilities = new List<Ability>
+        {
+            ab1,
+            ab2,
+            ab3
+        };
+        tempTriggers = new Dictionary<Triggers, List<(Action, int)>>();
+        staticTriggers = new Dictionary<Triggers, List<Action>>();
         statusEffects = new Dictionary<StatusEffect, int>();
         gm = CardGameManager.Instance;
+        if(ab1)ab1.owner = this;
+        if(ab2)ab2.owner = this;
+        if(ab3)ab3.owner = this;
     }
     void FixedUpdate() {
+        abilities = new List<Ability>
+        {
+            ab1,
+            ab2,
+            ab3
+        };
         setCardText();
     }
 
@@ -53,20 +86,32 @@ public class CreatureCard : Card
         transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = adjectives + cardName;
         transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = ((power + tempPower >= 0)?(power + tempPower):0).ToString();
         transform.GetChild(2).gameObject.GetComponent<TextMeshPro>().text = (health + tempHealth).ToString();
-        if(ab1 != null){
+        if(ab1){
             transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = ab1.abilityName;
+            if(ab1 is ActivatedAbility){
+                abilityButton1.gameObject.SetActive(true);
+                abilityButton1.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{((ActivatedAbility)ab1).cost} pips";
+            }
         } else {
              transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = "";
         }
 
-        if(ab2 != null){
+        if(ab2){
             transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = ab2.abilityName;
+            if(ab2 is ActivatedAbility){
+                abilityButton2.gameObject.SetActive(true);
+                abilityButton2.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{((ActivatedAbility)ab2).cost} pips";
+            }
         } else {
              transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = "";
         }
 
-        if(ab3 != null){
+        if(ab3){
             transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = ab3.abilityName;
+            if(ab3 is ActivatedAbility){
+                abilityButton3.gameObject.SetActive(true);
+                abilityButton3.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{((ActivatedAbility)ab3).cost} pips";
+            }
         } else {
              transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = "";
         }
@@ -80,9 +125,6 @@ public class CreatureCard : Card
     }
     public void Kill()
     {
-        ab1?.ProcessAbility("Death");
-        ab2?.ProcessAbility("Death");
-        ab3?.ProcessAbility("Death");
         lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
     }
@@ -156,20 +198,20 @@ public class CreatureCard : Card
             lane = null;
         }
     }
-    public override void display(){
-        transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = cardName;
-        transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = power.ToString();
-        transform.GetChild(2).gameObject.GetComponent<TextMeshPro>().text = health.ToString();
-    }
+
     public void addAbility(Ability ab){
-        if(ab1 == null){
+        Debug.Log(ab);
+        if(!ab1){
             ab1 = ab;
+            ab1.owner = this;
             cardName = ab.adjective+ " " + cardName;
-        }else if(ab2 == null){
+        }else if(!ab2){
             ab2 = ab;
+            ab2.owner = this;
             cardName = ab.adjective+ " " + cardName;
-        }else if(ab3 == null){
+        }else if(!ab3){
             ab3 = ab;
+            ab3.owner = this;
             cardName = ab.adjective+ " " + cardName;
         }
     }
