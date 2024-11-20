@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class Venomous : PassiveAbility
 {
-    public override void staticAction()
+    public override bool trigger(string val)
+    {
+        return true;
+    }
+    public override void triggeredAction()
     {
         
     }

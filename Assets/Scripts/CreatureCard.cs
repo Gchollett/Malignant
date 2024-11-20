@@ -27,6 +27,8 @@ public class CreatureCard : Card
     private GameObject prefab;
     public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
     public float scale = 1.5f;
+    public float inspectScale = 5f;
+    public GameObject inspectPos;
     public void Apply(StatusEffect se,int duration){
         if(statusEffects.ContainsKey(se)){
             statusEffects[se] += duration;
@@ -113,6 +115,10 @@ public class CreatureCard : Card
         transform.localScale /= scale;
     }
 
+    private void InspectCard(){
+        transform.localScale *= inspectScale;
+        transform.position = inspectPos.transform.position;
+    }
     
     private void OnMouseDown() {
         if(card_locked || !gm.isMoveEnabled) return;
