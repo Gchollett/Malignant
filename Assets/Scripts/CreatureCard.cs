@@ -27,6 +27,8 @@ public class CreatureCard : Card
     private GameObject prefab;
     public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
     public float scale = 1.5f;
+    public float inspectScale = 5f;
+    public GameObject inspectPos;
     public void Apply(StatusEffect se,int duration){
         if(statusEffects.ContainsKey(se)){
             statusEffects[se] += duration;
@@ -83,7 +85,6 @@ public class CreatureCard : Card
         ab1?.ProcessAbility("Death");
         ab2?.ProcessAbility("Death");
         ab3?.ProcessAbility("Death");
-        Debug.Log(lane);
         lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
     }
@@ -113,6 +114,10 @@ public class CreatureCard : Card
         transform.localScale /= scale;
     }
 
+    private void InspectCard(){
+        transform.localScale *= inspectScale;
+        transform.position = inspectPos.transform.position;
+    }
     
     private void OnMouseDown() {
         if(card_locked || !gm.isMoveEnabled) return;
@@ -145,14 +150,14 @@ public class CreatureCard : Card
     }
 
     private void OnCollisionStay2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable" && !position_found && !other.gameObject.GetComponent<Lane>().alreadyHasCard()){
+        if(other.gameObject.tag == "Card Snappable" && !card_locked && !position_found && !other.gameObject.GetComponent<Lane>().alreadyHasCard()){
             position_found = true;
             lane = other.gameObject;
         }
     }
 
     private void OnCollisionExit2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable" && position_found){
+        if(other.gameObject.tag == "Card Snappable" && !card_locked && position_found){
             position_found = false;
             lane = null;
         }
