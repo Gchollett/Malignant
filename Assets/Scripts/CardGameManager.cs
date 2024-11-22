@@ -47,6 +47,12 @@ public class CardGameManager : MonoBehaviour
 
     void FixedUpdate(){
         mainGameLoop();
+        if(phase == Phase.Activation){
+            foreach(Lane lane in lanes){
+                lane.protagCreature?.GetComponent<CreatureCard>().CheckIfDead();
+                lane.antagCreature?.GetComponent<CreatureCard>().CheckIfDead();
+            }
+        }
         protagHealth.text = protag.health.ToString();
         antagHealth.text = antag.health.ToString();
         protagPips.text = $"Pips: {protag.pips}";
@@ -94,7 +100,7 @@ public class CardGameManager : MonoBehaviour
                 button.gameObject.SetActive(true);
                 isActivationEnabled = true;
                 foreach(Lane lane in lanes){
-                    if(lane.protagCreature){
+                    if(lane.protagCreature && !lane.protagCreature.GetComponent<CreatureCard>().isAbilitiesStopped){
                         List<Button> abilityButtons = new List<Button>
                         {
                             lane.protagCreature.GetComponent<CreatureCard>().abilityButton1,

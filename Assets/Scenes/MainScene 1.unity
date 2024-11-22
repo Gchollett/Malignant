@@ -457,7 +457,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &284880070
 RectTransform:
   m_ObjectHideFlags: 0
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   se: {fileID: 0}
-  ab: {fileID: -7589143304030048892, guid: 0d6f141299a1dd147b5dcde416bfee26, type: 3}
+  ab: {fileID: 3165563207623332006, guid: 2b40874c6e361774eb04f973870e99fe, type: 3}
 --- !u!1 &451917577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2125,7 +2125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 10
   Hand:
-  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
+  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
+  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
+  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
 --- !u!4 &1540497075
 Transform:
   m_ObjectHideFlags: 0
@@ -2225,12 +2227,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 26.85
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 5
+  m_fontSizeMax: 27
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2261,7 +2263,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 4.892029, y: 0, z: 5.2996902, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

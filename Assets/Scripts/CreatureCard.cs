@@ -12,10 +12,8 @@ using UnityEngine.UI;
 
 public class CreatureCard : Card
 {
-    [SerializeField]
-    private int power;
-    [SerializeField]
-    private int health;
+    public int power;
+    public int health;
     public string flavorText;
     public Ability ab1;
     public Ability ab2;
@@ -30,6 +28,7 @@ public class CreatureCard : Card
     public int tempPower {get; set;}
     public int extraAttackCounter {get; set;}
     public bool isAttackStopped {get; set;}
+    public bool isAbilitiesStopped {get; set;}
     public bool isPoisoned {get; set;}
     private bool isDying;
     public bool isDealingDirect {get; private set;} //Boolean for that allows the creature to avoid attacking opposing creatures
