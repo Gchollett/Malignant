@@ -13,7 +13,7 @@ public class Honk : ActivatedAbility
     public override void activatedAction()
     {
         for(int i = 0; i< gm.lanes.Count(); i++){
-            gm.lanes[i].protagCreature.GetComponent<CreatureCard>().applyStatusEffect(YokedPrefab,1);
+            gm.lanes[i].protagCreature?.GetComponent<CreatureCard>().applyStatusEffect(YokedPrefab,1);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Security;
 using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
@@ -27,6 +28,8 @@ public class CreatureCard : Card
     public int tempHealth {get; set;}
     public int tempPower {get; set;}
     public int extraAttackCounter {get; set;}
+    public bool isAttackStopped {get; set;}
+    private bool dying;
     public bool isDealingDirect {get; private set;} //Boolean for that allows the creature to avoid attacking opposing creatures
     private static CardGameManager gm;
     private GameObject prefab;
@@ -56,7 +59,6 @@ public class CreatureCard : Card
 
     void Start()
     {
-        Debug.Log($"Constructing Creature: {cardName}");
         initialScale = transform.localScale;
         abilities = new List<Ability>
         {
@@ -90,6 +92,9 @@ public class CreatureCard : Card
             ab3
         };
         setCardText();
+        if(power + tempPower < 0){
+            tempPower = -power;
+        }
     }
 
     private void setCardText(){
@@ -139,6 +144,9 @@ public class CreatureCard : Card
     }
     public void Kill()
     {
+        if(dying)return;
+        dying = true;
+        ActivateTrigger(Triggers.OnDeath);
         lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
     }
@@ -152,11 +160,12 @@ public class CreatureCard : Card
                 }
             }
         }
+        CheckIfDead();
+    }
+
+    public void CheckIfDead(){
         if(health + tempHealth <= 0){
             Kill();
-        }
-        if(power + tempPower < 0){
-            tempPower = -power;
         }
     }
 
@@ -227,6 +236,34 @@ public class CreatureCard : Card
             ab3 = Instantiate(ab);
             ab3.owner = this;
             cardName = ab.adjective+ " " + cardName;
+        }
+    }
+    public void ActivateTrigger(Triggers trig){
+        List<(Action,int)> tempTriggerList;
+        tempTriggers.TryGetValue(trig,out tempTriggerList);
+        List<(Action,int)> elementsToRemove = new List<(Action,int)>();
+        if(tempTriggerList != null){
+            for(int i =0; i<tempTriggerList.Count; i++){
+                if(tempTriggerList[i].Item2 > 0) {
+                    tempTriggerList[i].Item1();
+                    tempTriggerList[i]= (tempTriggerList[i].Item1,tempTriggerList[i].Item2-1);
+                    if(tempTriggerList[i].Item2<=0) elementsToRemove.Add(tempTriggerList[i]);
+                }else{
+                    elementsToRemove.Add(tempTriggerList[i]);
+                }
+            }
+            for(int i = 0; i<elementsToRemove.Count; i++){
+                tempTriggerList.Remove(elementsToRemove[i]);
+            }
+            tempTriggers[trig] = tempTriggerList;
+        }
+        tempTriggers.TryGetValue(trig,out tempTriggerList);
+        List<Action> TriggerList;
+        staticTriggers.TryGetValue(trig,out TriggerList);
+        if(TriggerList != null){
+            for(int i =0; i<TriggerList.Count; i++){
+                TriggerList[i]();
+            }
         }
     }
 

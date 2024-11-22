@@ -5,12 +5,20 @@ using UnityEngine;
 
 public class Smelly : TriggeredAbility
 {
-    public override bool trigger(string val){
-        return val == "Died";
+    StatusEffect StinkyPrefab;
+    void Start()
+    {
+        StinkyPrefab = Resources.Load<StatusEffect>("Prefabs/StatusEffects/Stinky");
+        owner.tempTriggers.TryAdd(Triggers.OnDeath,new List<(Action,int)>());
+        owner.tempTriggers[Triggers.OnDeath].Add((triggeredAction,1));
     }
-
     public override void triggeredAction()
     {
-        
+        Lane lane = owner.lane.GetComponent<Lane>();
+        if(lane.protagCreature == owner.gameObject){
+            lane.antagCreature?.GetComponent<CreatureCard>().applyStatusEffect(StinkyPrefab,2);
+        }else if(lane.antagCreature == owner.gameObject){
+            lane.protagCreature?.GetComponent<CreatureCard>().applyStatusEffect(StinkyPrefab,2);
+        }
     }
 }

@@ -15,5 +15,4 @@ public abstract class Ability : MonoBehaviour
     public string adjective;
     public abstract bool ProcessAbility();
     public abstract bool ProcessAbility(int pips);
-    public abstract bool ProcessAbility(string val);
 }

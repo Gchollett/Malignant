@@ -18,9 +18,4 @@ public abstract class ActivatedAbility : Ability
     {
         return false;
     }
-
-    public override bool ProcessAbility(string val)
-    {
-        return false;
-    }
 }

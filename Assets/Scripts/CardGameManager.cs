@@ -192,23 +192,27 @@ public class CardGameManager : MonoBehaviour
         foreach(Lane lane in lanes){
             if(lane.protagCreature){
                 for(int i = 0; i <= lane.protagCreature.GetComponent<CreatureCard>().extraAttackCounter; i++){
+                    if(lane.protagCreature.GetComponent<CreatureCard>().isAttackStopped) break;
                     if(lane.antagCreature && !lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect){
                         lane.protagCreature.GetComponent<CreatureCard>().attack(lane.antagCreature.GetComponent<CreatureCard>());
                     }
                     else{
                         lane.protagCreature.GetComponent<CreatureCard>().attack(antag);
                     }
+                    lane.protagCreature.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnAttack);
                 }
                 lane.protagCreature.GetComponent<CreatureCard>().extraAttackCounter = 0;
             }
             if(lane.antagCreature){
                 for(int i = 0; i <= lane.antagCreature.GetComponent<CreatureCard>().extraAttackCounter; i++){
+                    if(lane.antagCreature.GetComponent<CreatureCard>().isAttackStopped) break;
                     if(lane.protagCreature && !lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect){
                         lane.antagCreature.GetComponent<CreatureCard>().attack(lane.protagCreature.GetComponent<CreatureCard>());
                     }
                     else{
                         lane.antagCreature.GetComponent<CreatureCard>().attack(protag);
                     }
+                    lane.antagCreature.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnAttack);
                 }
                 lane.antagCreature.GetComponent<CreatureCard>().extraAttackCounter = 0;
             }
@@ -220,21 +224,8 @@ public class CardGameManager : MonoBehaviour
         foreach(Lane lane in lanes){
             lane.protagCreature?.GetComponent<CreatureCard>().UpdateCard();
             lane.antagCreature?.GetComponent<CreatureCard>().UpdateCard();
-            List<(Action,int)> EndTriggerList = new List<(Action, int)>();
-            lane.protagCreature?.GetComponent<CreatureCard>().tempTriggers.TryGetValue(Triggers.OnEnd,out EndTriggerList);
-            if(EndTriggerList != null){
-                for(int i =0; i<EndTriggerList.Count; i++){
-                    if(EndTriggerList[i].Item2 <= 0) return;
-                    EndTriggerList[i].Item1();
-                    if(EndTriggerList[i].Item2-1 <= 0){
-                        EndTriggerList.RemoveAt(i);
-                    }else{
-                        EndTriggerList[i]= (EndTriggerList[i].Item1,EndTriggerList[i].Item2-1);
-                    }
-                }
-                EndTriggerList.ForEach(trigger => {
-                });
-            }
+            lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnEnd);
+            lane.antagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnEnd);
         }
     }
 }
