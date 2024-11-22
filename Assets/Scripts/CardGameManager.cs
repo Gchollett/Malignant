@@ -47,6 +47,12 @@ public class CardGameManager : MonoBehaviour
 
     void FixedUpdate(){
         mainGameLoop();
+        if(phase == Phase.Activation){
+            foreach(Lane lane in lanes){
+                lane.protagCreature?.GetComponent<CreatureCard>().CheckIfDead();
+                lane.antagCreature?.GetComponent<CreatureCard>().CheckIfDead();
+            }
+        }
         protagHealth.text = protag.health.ToString();
         antagHealth.text = antag.health.ToString();
         protagPips.text = $"Pips: {protag.pips}";
@@ -94,7 +100,7 @@ public class CardGameManager : MonoBehaviour
                 button.gameObject.SetActive(true);
                 isActivationEnabled = true;
                 foreach(Lane lane in lanes){
-                    if(lane.protagCreature){
+                    if(lane.protagCreature && !lane.protagCreature.GetComponent<CreatureCard>().isAbilitiesStopped){
                         List<Button> abilityButtons = new List<Button>
                         {
                             lane.protagCreature.GetComponent<CreatureCard>().abilityButton1,
@@ -152,10 +158,10 @@ public class CardGameManager : MonoBehaviour
 
     void playCard(Lane lane){
         GameObject card  = antag.Hand[UnityEngine.Random.Range(0,antag.Hand.Count)];
-        GameObject creature = Instantiate(card);
-        creature.transform.SetParent(antag.transform);
-        creature.GetComponent<CreatureCard>().lane = lane.gameObject;
+        GameObject creature = Instantiate(card,antag.transform);
         lane.addAntagCreature(creature);
+        creature.GetComponent<CreatureCard>().lane = lane.gameObject;
+        creature.GetComponent<CreatureCard>().status = CardStatus.Antags;
         antag.Hand.Remove(card);
     }
     void antagMove(){
@@ -193,8 +199,10 @@ public class CardGameManager : MonoBehaviour
             if(lane.protagCreature){
                 for(int i = 0; i <= lane.protagCreature.GetComponent<CreatureCard>().extraAttackCounter; i++){
                     if(lane.protagCreature.GetComponent<CreatureCard>().isAttackStopped) break;
-                    if(lane.antagCreature && !lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect){
+                    if(lane.antagCreature && (!lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect || lane.antagCreature.GetComponent<CreatureCard>().canBlockDirect)){
                         lane.protagCreature.GetComponent<CreatureCard>().attack(lane.antagCreature.GetComponent<CreatureCard>());
+                        lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnDealingDamage);
+                        lane.antagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnTakingDamage);
                     }
                     else{
                         lane.protagCreature.GetComponent<CreatureCard>().attack(antag);
@@ -206,8 +214,10 @@ public class CardGameManager : MonoBehaviour
             if(lane.antagCreature){
                 for(int i = 0; i <= lane.antagCreature.GetComponent<CreatureCard>().extraAttackCounter; i++){
                     if(lane.antagCreature.GetComponent<CreatureCard>().isAttackStopped) break;
-                    if(lane.protagCreature && !lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect){
+                    if(lane.protagCreature && (!lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect || lane.protagCreature.GetComponent<CreatureCard>().canBlockDirect)){
                         lane.antagCreature.GetComponent<CreatureCard>().attack(lane.protagCreature.GetComponent<CreatureCard>());
+                        lane.antagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnDealingDamage);
+                        lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnTakingDamage);
                     }
                     else{
                         lane.antagCreature.GetComponent<CreatureCard>().attack(protag);
@@ -222,6 +232,8 @@ public class CardGameManager : MonoBehaviour
     //End Phase Methods
     void cleanBoard(){
         foreach(Lane lane in lanes){
+            lane.protagCreature?.GetComponent<CreatureCard>().CheckIfDead();
+            lane.antagCreature?.GetComponent<CreatureCard>().CheckIfDead();
             lane.protagCreature?.GetComponent<CreatureCard>().UpdateCard();
             lane.antagCreature?.GetComponent<CreatureCard>().UpdateCard();
             lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnEnd);

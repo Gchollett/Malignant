@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectName: Stinky
-  description: Creature has -1 power.
+  description: Creature gains -1 power.

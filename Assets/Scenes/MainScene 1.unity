@@ -169,9 +169,9 @@ MonoBehaviour:
   startingHealth: 10
   Hand:
   - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
+  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
   - {fileID: 8711303135246193907, guid: e04b1a31db0ff6342bdbbbfbae23ff42, type: 3}
   - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
-  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
 --- !u!1 &55150132
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   se: {fileID: 0}
-  ab: {fileID: 6230842278394199242, guid: 4971f3a6224ca7b46a4c56c95459a758, type: 3}
+  ab: {fileID: 3165563207623332006, guid: 2b40874c6e361774eb04f973870e99fe, type: 3}
 --- !u!1 &451917577
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,7 +995,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &813420971
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2125,16 +2125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 10
   Hand:
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
-  - {fileID: 9113436518359008566, guid: 3cadea51d2ae28b44b1007e5f3fed2d2, type: 3}
-  - {fileID: 8711303135246193907, guid: e04b1a31db0ff6342bdbbbfbae23ff42, type: 3}
-  - {fileID: 4840496455172673963, guid: 3c7b4a78c9288554faebf46b54ceeeb2, type: 3}
-  - {fileID: 8711303135246193907, guid: ff489c9f900685c45a1cf60de6f30380, type: 3}
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
-  - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
-  - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
-  - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
-  - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
+  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
+  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
+  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
 --- !u!4 &1540497075
 Transform:
   m_ObjectHideFlags: 0
@@ -2234,12 +2227,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 26.85
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 5
+  m_fontSizeMax: 27
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2270,7 +2263,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 4.892029, y: 0, z: 5.2996902, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

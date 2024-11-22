@@ -24,6 +24,22 @@ PrefabInstance:
       propertyPath: flavorText
       value: It's from Canada
       objectReference: {fileID: 0}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_Size.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_Size.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7e5fb90f50895944abc7d9235628e759, type: 3}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4200072223276004059, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Name
       value: Moose 1

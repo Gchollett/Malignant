@@ -24,9 +24,25 @@ PrefabInstance:
       propertyPath: flavorText
       value: It needs a shephard
       objectReference: {fileID: 0}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_Size.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_Size.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8e15559c66d49314abbd7940c25998b5, type: 3}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4200072223276004059, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Name
-      value: CreatureCard Variant 2
+      value: Lamb
       objectReference: {fileID: 0}
     - target: {fileID: 9094496513474527702, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_LocalPosition.x
