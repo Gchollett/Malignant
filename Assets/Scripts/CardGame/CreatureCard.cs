@@ -28,6 +28,7 @@ public class CreatureCard : Card
     public int tempPower {get; set;}
     public int extraAttackCounter {get; set;}
     public bool isAttackStopped {get; set;}
+    public bool isBlockStopped {get;set;}
     public bool isAbilitiesStopped {get; set;}
     public bool isPoisoned {get; set;}
     private bool isDying;
@@ -233,14 +234,14 @@ public class CreatureCard : Card
     }
 
     private void OnCollisionStay2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable" && !card_locked && !position_found && !other.gameObject.GetComponent<Lane>().alreadyHasCard()){
+        if(other.gameObject.tag == "Card Snappable" && !card_locked && !position_found && status != CardStatus.Antags && !other.gameObject.GetComponent<Lane>().alreadyHasCard() && transform.localScale == initialScale){
             position_found = true;
             lane = other.gameObject;
         }
     }
 
     private void OnCollisionExit2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable" && !card_locked && position_found){
+        if(other.gameObject.tag == "Card Snappable" && !card_locked && position_found && status != CardStatus.Antags  && transform.localScale == initialScale){
             position_found = false;
             lane = null;
         }
