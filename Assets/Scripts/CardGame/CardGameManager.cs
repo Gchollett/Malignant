@@ -74,6 +74,10 @@ public class CardGameManager : MonoBehaviour
         isWaiting = false;
     }
 
+    public void disableSacrifice(){
+        isSacrificeEnabled = false;
+    }
+
     void mainGameLoop()
     {
         if(phase == Phase.Start && !isWaiting){

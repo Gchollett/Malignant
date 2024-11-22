@@ -202,12 +202,16 @@ public class CreatureCard : Card
 
     
     private void OnMouseDown() {
-        if(card_locked || !gm.isMoveEnabled) return;
-        card_index = gameObject.transform.GetSiblingIndex();
-        prefab = CardGameManager.Instance.protag.RemoveGameCard(card_index);
+        if(status == CardStatus.Protags && gm.isSacrificeEnabled){
+            Sacrifice();
+        }else{
+            if(card_locked || !gm.isMoveEnabled) return;
+            card_index = gameObject.transform.GetSiblingIndex();
+            prefab = CardGameManager.Instance.protag.RemoveGameCard(card_index);
+        }
     }
     private void OnMouseDrag() {
-        if(card_locked || !gm.isMoveEnabled) return;
+        if(card_locked || !gm.isMoveEnabled || status != CardStatus.Unplayed) return;
         Plane dragPlane = new Plane(Camera.main.transform.forward, transform.position);
         Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         float enter = 0.0f;
@@ -220,7 +224,7 @@ public class CreatureCard : Card
     }
     private void OnMouseUp()
     {
-        if(!gm.isMoveEnabled && status != CardStatus.Unplayed) return;
+        if(!gm.isMoveEnabled || status != CardStatus.Unplayed) return;
         if(position_found && status == CardStatus.Unplayed){
             lane.GetComponent<Lane>().addProtagCreature(gameObject);
             card_locked =  true;
@@ -245,6 +249,21 @@ public class CreatureCard : Card
             position_found = false;
             lane = null;
         }
+    }
+
+    private void Sacrifice(){
+        if(status == CardStatus.Protags){
+            gm.protag.upPips();
+            gm.disableSacrifice();            
+        }else if(status == CardStatus.Antags){
+            gm.antag.upPips();
+        }
+        ActivateTrigger(Triggers.OnSacrifice);
+        lane.GetComponent<Lane>().removeFromLane(gameObject);
+        Destroy(gameObject);
+        Destroy(ab1);
+        Destroy(ab2);
+        Destroy(ab3);
     }
 
     public void addAbility(Ability ab){

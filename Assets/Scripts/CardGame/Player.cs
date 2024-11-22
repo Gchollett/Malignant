@@ -19,8 +19,16 @@ public class Player : MonoBehaviour
         pips += count;
     }
 
-    public void lowerPips(int count = 1){
-        pips -= count;
+    public int lowerPips(int count = 1){
+        if(pips < count) {
+            int ret = pips;
+            pips = 0;
+            return ret;
+        }
+        else {
+            pips -= count;
+            return count;
+        }
     }
 
     public void damage(int d){
