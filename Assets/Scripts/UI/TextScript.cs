@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
 public class TextAnimation : MonoBehaviour
 {
@@ -25,6 +27,8 @@ public class TextAnimation : MonoBehaviour
         {
             _textMeshPro.text = stringArray[i];
             StartCoroutine(TextVisible());
+        }else{
+            SceneManager.LoadScene(1);
         }
     }
 
