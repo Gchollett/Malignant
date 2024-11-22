@@ -108,7 +108,7 @@ public class CardGameManager : MonoBehaviour
                                 if(lane.protagCreature.gameObject.GetComponent<CreatureCard>().abilities[index].ProcessAbility(protag.pips)){
                                     protag.lowerPips(((ActivatedAbility)lane.protagCreature.gameObject.GetComponent<CreatureCard>().abilities[index]).cost);
                                 }
-                                });
+                            });
                         }
                     }
                 }
@@ -149,17 +149,29 @@ public class CardGameManager : MonoBehaviour
         //DISABLE DRAW
         //ENABLE MOVE
         //ENABLE SACRICE
+
+    void playCard(Lane lane){
+        GameObject card  = antag.Hand[UnityEngine.Random.Range(0,antag.Hand.Count)];
+        GameObject creature = Instantiate(card);
+        creature.transform.SetParent(antag.transform);
+        creature.GetComponent<CreatureCard>().lane = lane.gameObject;
+        lane.addAntagCreature(creature);
+        antag.Hand.Remove(card);
+    }
     void antagMove(){
         if(antag.Hand.Count != 0){
+            bool played = false;
+            List<Lane> emptyLanes = new List<Lane>();
             foreach(Lane lane in lanes){
-                if(lane.protagCreature && !lane.antagCreature){
-                    GameObject card  = antag.Hand[UnityEngine.Random.Range(0,antag.Hand.Count-1)];
-                    GameObject creature = Instantiate(card);
-                    creature.transform.SetParent(antag.transform);
-                    creature.GetComponent<CreatureCard>().lane = lane.gameObject;
-                    lane.addAntagCreature(creature);
-                    antag.Hand.Remove(card);
-                    break;
+                if(!played && lane.protagCreature && !lane.antagCreature){
+                    playCard(lane);
+                    played = true;
+                }else if(!lane.antagCreature){
+                    emptyLanes.Add(lane);
+                }
+            }if(!played){
+                if(emptyLanes.Count > 0){
+                    playCard(emptyLanes[UnityEngine.Random.Range(0,emptyLanes.Count)]);
                 }
             }
         }
@@ -178,10 +190,28 @@ public class CardGameManager : MonoBehaviour
         //DISABLE ACTIVATIONS
     void combat(){
         foreach(Lane lane in lanes){
-            if(lane.antagCreature && lane.protagCreature && !lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect) lane.protagCreature.GetComponent<CreatureCard>().attack(lane.antagCreature.GetComponent<CreatureCard>());
-            else lane.protagCreature?.GetComponent<CreatureCard>().attack(antag);
-            if(lane.protagCreature && lane.antagCreature && !lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect) lane.antagCreature?.GetComponent<CreatureCard>().attack(lane.protagCreature.GetComponent<CreatureCard>());
-            else lane.antagCreature?.GetComponent<CreatureCard>().attack(protag);
+            if(lane.protagCreature){
+                for(int i = 0; i <= lane.protagCreature.GetComponent<CreatureCard>().extraAttackCounter; i++){
+                    if(lane.antagCreature && !lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect){
+                        lane.protagCreature.GetComponent<CreatureCard>().attack(lane.antagCreature.GetComponent<CreatureCard>());
+                    }
+                    else{
+                        lane.protagCreature.GetComponent<CreatureCard>().attack(antag);
+                    }
+                }
+                lane.protagCreature.GetComponent<CreatureCard>().extraAttackCounter = 0;
+            }
+            if(lane.antagCreature){
+                for(int i = 0; i <= lane.antagCreature.GetComponent<CreatureCard>().extraAttackCounter; i++){
+                    if(lane.protagCreature && !lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect){
+                        lane.antagCreature.GetComponent<CreatureCard>().attack(lane.protagCreature.GetComponent<CreatureCard>());
+                    }
+                    else{
+                        lane.antagCreature.GetComponent<CreatureCard>().attack(protag);
+                    }
+                }
+                lane.antagCreature.GetComponent<CreatureCard>().extraAttackCounter = 0;
+            }
         }
         changePhase();
     }
@@ -190,13 +220,21 @@ public class CardGameManager : MonoBehaviour
         foreach(Lane lane in lanes){
             lane.protagCreature?.GetComponent<CreatureCard>().UpdateCard();
             lane.antagCreature?.GetComponent<CreatureCard>().UpdateCard();
-            List<(Action,int)> something = new List<(Action, int)>();
-            lane.protagCreature?.GetComponent<CreatureCard>().tempTriggers.TryGetValue(Triggers.OnEnd,out something);
-            something.ForEach(trigger => {
-                if(trigger.Item2 <= 0) return;
-                trigger.Item1.Invoke();
-                trigger.Item2 -= 1;
-            });
+            List<(Action,int)> EndTriggerList = new List<(Action, int)>();
+            lane.protagCreature?.GetComponent<CreatureCard>().tempTriggers.TryGetValue(Triggers.OnEnd,out EndTriggerList);
+            if(EndTriggerList != null){
+                for(int i =0; i<EndTriggerList.Count; i++){
+                    if(EndTriggerList[i].Item2 <= 0) return;
+                    EndTriggerList[i].Item1();
+                    if(EndTriggerList[i].Item2-1 <= 0){
+                        EndTriggerList.RemoveAt(i);
+                    }else{
+                        EndTriggerList[i]= (EndTriggerList[i].Item1,EndTriggerList[i].Item2-1);
+                    }
+                }
+                EndTriggerList.ForEach(trigger => {
+                });
+            }
         }
     }
 }

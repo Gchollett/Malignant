@@ -26,7 +26,8 @@ public class CreatureCard : Card
     private int card_index;
     public int tempHealth {get; set;}
     public int tempPower {get; set;}
-    public bool isDealingDirect = false; //Boolean for that allows the creature to avoid attacking opposing creatures
+    public int extraAttackCounter {get; set;}
+    public bool isDealingDirect {get; private set;} //Boolean for that allows the creature to avoid attacking opposing creatures
     private static CardGameManager gm;
     private GameObject prefab;
     public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
@@ -35,9 +36,10 @@ public class CreatureCard : Card
     public Button abilityButton1; 
     public Button abilityButton2; 
     public Button abilityButton3; 
+    private Vector3 initialScale;
     public float scale = 1.5f;
     public void applyStatusEffect(StatusEffect se,int duration){
-        if(statusEffects.ContainsKey(se)){
+        if(statusEffects.ContainsKey(se) && statusEffects[se] != 0){
             statusEffects[se] += duration;
         }else{
             statusEffects[se] = duration;
@@ -54,19 +56,31 @@ public class CreatureCard : Card
 
     void Start()
     {
+        Debug.Log($"Constructing Creature: {cardName}");
+        initialScale = transform.localScale;
         abilities = new List<Ability>
         {
             ab1,
             ab2,
             ab3
         };
+
         tempTriggers = new Dictionary<Triggers, List<(Action, int)>>();
         staticTriggers = new Dictionary<Triggers, List<Action>>();
         statusEffects = new Dictionary<StatusEffect, int>();
         gm = CardGameManager.Instance;
-        if(ab1)ab1.owner = this;
-        if(ab2)ab2.owner = this;
-        if(ab3)ab3.owner = this;
+        if(ab1){
+            ab1 = Instantiate(ab1,transform);
+            ab1.owner = this;
+        }
+        if(ab2){
+            ab2 = Instantiate(ab2,transform);
+            ab2.owner = this;
+        }
+        if(ab3){
+            ab3 = Instantiate(ab3,transform);
+            ab3.owner = this;
+        }
     }
     void FixedUpdate() {
         abilities = new List<Ability>
@@ -151,7 +165,7 @@ public class CreatureCard : Card
     }
 
     private void OnMouseExit(){
-        transform.localScale /= scale;
+        transform.localScale = initialScale;
     }
 
     
@@ -170,6 +184,7 @@ public class CreatureCard : Card
             Vector3 mousePosition = camRay.GetPoint(enter);
             transform.position = mousePosition;
         }
+        transform.localScale = initialScale;
     }
     private void OnMouseUp()
     {
@@ -200,21 +215,23 @@ public class CreatureCard : Card
     }
 
     public void addAbility(Ability ab){
-        Debug.Log(ab);
         if(!ab1){
-            ab1 = ab;
+            ab1 = Instantiate(ab);
             ab1.owner = this;
             cardName = ab.adjective+ " " + cardName;
         }else if(!ab2){
-            ab2 = ab;
+            ab2 = Instantiate(ab);
             ab2.owner = this;
             cardName = ab.adjective+ " " + cardName;
         }else if(!ab3){
-            ab3 = ab;
+            ab3 = Instantiate(ab);
             ab3.owner = this;
             cardName = ab.adjective+ " " + cardName;
         }
     }
 
-
+    public void setDirectDamage(bool value){
+        Debug.Log($"Setting Direct Damage to {value}");
+        isDealingDirect = value;
+    }
 }

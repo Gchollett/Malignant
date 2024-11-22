@@ -4,7 +4,7 @@
         OnSacrifice,
         OnEnter,
         OnActivate,
-        OnAttach,
+        OnAttack,
         OnDeath,
         OnEnd
     }

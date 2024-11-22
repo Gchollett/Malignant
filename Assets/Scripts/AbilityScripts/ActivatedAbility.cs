@@ -11,7 +11,6 @@ public abstract class ActivatedAbility : Ability
     public override bool ProcessAbility(int pips){
         if(pips < cost) return false;
         activatedAction();
-        
         return true;
     }
 

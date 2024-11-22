@@ -7,8 +7,8 @@ public class Hop : ActivatedAbility
 {
     public override void activatedAction()
     {
-        owner.isDealingDirect = true;
+        owner.setDirectDamage(true);
         owner.tempTriggers.TryAdd(Triggers.OnEnd,new List<(Action,int)>());
-        owner.tempTriggers[Triggers.OnEnd].Add((() => {owner.isDealingDirect = false;},1));
+        owner.tempTriggers[Triggers.OnEnd].Add((delegate () {owner.setDirectDamage(false);},1));
     }
 }
