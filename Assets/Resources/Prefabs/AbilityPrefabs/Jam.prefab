@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityName: Jam
-  description: All creatures on your side get Inspired.
+  description: Every other creature on your side gains Inspired
   adjective: Musical

@@ -5,6 +5,8 @@
         OnEnter,
         OnActivate,
         OnAttack,
+        OnDealingDamage,
+        OnTakingDamage,
         OnDeath,
         OnEnd
     }

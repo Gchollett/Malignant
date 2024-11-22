@@ -196,6 +196,8 @@ public class CardGameManager : MonoBehaviour
                     if(lane.protagCreature.GetComponent<CreatureCard>().isAttackStopped) break;
                     if(lane.antagCreature && (!lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect || lane.antagCreature.GetComponent<CreatureCard>().canBlockDirect)){
                         lane.protagCreature.GetComponent<CreatureCard>().attack(lane.antagCreature.GetComponent<CreatureCard>());
+                        lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnDealingDamage);
+                        lane.antagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnTakingDamage);
                     }
                     else{
                         lane.protagCreature.GetComponent<CreatureCard>().attack(antag);
@@ -209,6 +211,8 @@ public class CardGameManager : MonoBehaviour
                     if(lane.antagCreature.GetComponent<CreatureCard>().isAttackStopped) break;
                     if(lane.protagCreature && (!lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect || lane.protagCreature.GetComponent<CreatureCard>().canBlockDirect)){
                         lane.antagCreature.GetComponent<CreatureCard>().attack(lane.protagCreature.GetComponent<CreatureCard>());
+                        lane.antagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnDealingDamage);
+                        lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnTakingDamage);
                     }
                     else{
                         lane.antagCreature.GetComponent<CreatureCard>().attack(protag);

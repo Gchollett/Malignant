@@ -30,7 +30,8 @@ public class CreatureCard : Card
     public int tempPower {get; set;}
     public int extraAttackCounter {get; set;}
     public bool isAttackStopped {get; set;}
-    private bool dying;
+    public bool isPoisoned {get; set;}
+    private bool isDying;
     public bool isDealingDirect {get; private set;} //Boolean for that allows the creature to avoid attacking opposing creatures
     private static CardGameManager gm;
     private GameObject prefab;
@@ -162,8 +163,8 @@ public class CreatureCard : Card
     }
     public void Kill()
     {
-        if(dying)return;
-        dying = true;
+        if(isDying)return;
+        isDying = true;
         ActivateTrigger(Triggers.OnDeath);
         lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
@@ -184,8 +185,11 @@ public class CreatureCard : Card
         CheckIfDead();
     }
 
+    public void Poison(){
+        isPoisoned = true;
+    }
     public void CheckIfDead(){
-        if(health + tempHealth <= 0){
+        if(health + tempHealth <= 0 || isPoisoned){
             Kill();
         }
     }
