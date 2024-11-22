@@ -15,9 +15,9 @@ public class Smelly : TriggeredAbility
     public override void triggeredAction()
     {
         Lane lane = owner.lane.GetComponent<Lane>();
-        if(lane.protagCreature == owner.gameObject){
+        if(owner.status == CardStatus.Protags){
             lane.antagCreature?.GetComponent<CreatureCard>().applyStatusEffect(StinkyPrefab,2);
-        }else if(lane.antagCreature == owner.gameObject){
+        }else if(owner.status == CardStatus.Antags){
             lane.protagCreature?.GetComponent<CreatureCard>().applyStatusEffect(StinkyPrefab,2);
         }
     }

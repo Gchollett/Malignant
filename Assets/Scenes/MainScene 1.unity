@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   se: {fileID: 0}
-  ab: {fileID: 6230842278394199242, guid: 4971f3a6224ca7b46a4c56c95459a758, type: 3}
+  ab: {fileID: -7589143304030048892, guid: 0d6f141299a1dd147b5dcde416bfee26, type: 3}
 --- !u!1 &451917577
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,7 +995,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &813420971
 RectTransform:
   m_ObjectHideFlags: 0

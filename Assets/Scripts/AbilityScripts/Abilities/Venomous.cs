@@ -12,9 +12,9 @@ public class Venomous : TriggeredAbility
     public override void triggeredAction()
     {
         Lane lane = owner.lane.GetComponent<Lane>();
-        if(lane.protagCreature == owner.gameObject){
+        if(owner.status == CardStatus.Protags){
             lane.antagCreature?.GetComponent<CreatureCard>().Kill();
-        }else if(lane.antagCreature == owner.gameObject){
+        }else if(owner.status == CardStatus.Antags){
             lane.protagCreature?.GetComponent<CreatureCard>().Kill();
         }
     }

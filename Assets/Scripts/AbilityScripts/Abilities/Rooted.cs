@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class Rooted : PassiveAbility
 {
+    void Start()
+    {
+        staticAction();
+    }
     public override void staticAction()
     {
-        
+        owner.canBlockDirect = true;
     }
 }

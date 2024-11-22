@@ -155,6 +155,7 @@ public class CardGameManager : MonoBehaviour
         GameObject creature = Instantiate(card);
         creature.transform.SetParent(antag.transform);
         creature.GetComponent<CreatureCard>().lane = lane.gameObject;
+        creature.GetComponent<CreatureCard>().status = CardStatus.Antags;
         lane.addAntagCreature(creature);
         antag.Hand.Remove(card);
     }
@@ -193,7 +194,7 @@ public class CardGameManager : MonoBehaviour
             if(lane.protagCreature){
                 for(int i = 0; i <= lane.protagCreature.GetComponent<CreatureCard>().extraAttackCounter; i++){
                     if(lane.protagCreature.GetComponent<CreatureCard>().isAttackStopped) break;
-                    if(lane.antagCreature && !lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect){
+                    if(lane.antagCreature && (!lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect || lane.antagCreature.GetComponent<CreatureCard>().canBlockDirect)){
                         lane.protagCreature.GetComponent<CreatureCard>().attack(lane.antagCreature.GetComponent<CreatureCard>());
                     }
                     else{
@@ -206,7 +207,7 @@ public class CardGameManager : MonoBehaviour
             if(lane.antagCreature){
                 for(int i = 0; i <= lane.antagCreature.GetComponent<CreatureCard>().extraAttackCounter; i++){
                     if(lane.antagCreature.GetComponent<CreatureCard>().isAttackStopped) break;
-                    if(lane.protagCreature && !lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect){
+                    if(lane.protagCreature && (!lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect || lane.protagCreature.GetComponent<CreatureCard>().canBlockDirect)){
                         lane.antagCreature.GetComponent<CreatureCard>().attack(lane.protagCreature.GetComponent<CreatureCard>());
                     }
                     else{

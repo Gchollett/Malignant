@@ -25,6 +25,7 @@ public class CreatureCard : Card
     private bool position_found = false;
     private bool card_locked = false;
     private int card_index;
+    public bool canBlockDirect {get; set;}
     public int tempHealth {get; set;}
     public int tempPower {get; set;}
     public int extraAttackCounter {get; set;}
@@ -34,13 +35,25 @@ public class CreatureCard : Card
     private static CardGameManager gm;
     private GameObject prefab;
     public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
+    public HashSet<StatusEffect> staticEffects; //The status effects that don't need a duration
     public Dictionary<Triggers,List<(Action,int)>> tempTriggers {get; set;} //The triggers that only need to trigger a finite number of times
     public Dictionary<Triggers,List<Action>> staticTriggers {get;set;} //The triggers that should trigger until removed
     public Button abilityButton1; 
     public Button abilityButton2; 
     public Button abilityButton3; 
     private Vector3 initialScale;
+    public CardStatus status {get; set;}
     public float scale = 1.5f;
+
+    public void applyStaticEffect(StatusEffect se){
+        if(staticEffects.Add(se))se.effect(this);
+    }
+    public void unapplyStaticEffect(StatusEffect se){
+        Debug.Log(se);
+        if(staticEffects.Remove(se)){
+            se.deffect(this);
+        }
+    }
     public void applyStatusEffect(StatusEffect se,int duration){
         if(statusEffects.ContainsKey(se) && statusEffects[se] != 0){
             statusEffects[se] += duration;
@@ -60,6 +73,7 @@ public class CreatureCard : Card
     void Start()
     {
         initialScale = transform.localScale;
+        status = CardStatus.Unplayed;
         abilities = new List<Ability>
         {
             ab1,
@@ -70,6 +84,7 @@ public class CreatureCard : Card
         tempTriggers = new Dictionary<Triggers, List<(Action, int)>>();
         staticTriggers = new Dictionary<Triggers, List<Action>>();
         statusEffects = new Dictionary<StatusEffect, int>();
+        staticEffects = new HashSet<StatusEffect>();
         gm = CardGameManager.Instance;
         if(ab1){
             ab1 = Instantiate(ab1,transform);
@@ -101,6 +116,9 @@ public class CreatureCard : Card
         string adjectives = "";
         foreach (StatusEffect se in statusEffects.Keys){
             if(statusEffects[se] > 0) adjectives = se.effectName + " " + adjectives;
+        }
+        foreach (StatusEffect se in staticEffects){
+            adjectives = se.effectName + " " + adjectives;
         }
         transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = adjectives + cardName;
         transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = ((power + tempPower >= 0)?(power + tempPower):0).ToString();
@@ -149,6 +167,9 @@ public class CreatureCard : Card
         ActivateTrigger(Triggers.OnDeath);
         lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
+        Destroy(ab1);
+        Destroy(ab2);
+        Destroy(ab3);
     }
     public void UpdateCard()
     {
@@ -198,11 +219,12 @@ public class CreatureCard : Card
     private void OnMouseUp()
     {
         if(!gm.isMoveEnabled) return;
-        if(position_found){
+        if(position_found && status == CardStatus.Unplayed){
             lane.GetComponent<Lane>().addProtagCreature(gameObject);
             card_locked =  true;
             position_found = true;
             gm.changeActivePlayer();
+            status = CardStatus.Protags;
         }else if(prefab){
             gm.protag.AddGameCard(prefab,card_index);
             Destroy(gameObject);
@@ -268,7 +290,6 @@ public class CreatureCard : Card
     }
 
     public void setDirectDamage(bool value){
-        Debug.Log($"Setting Direct Damage to {value}");
         isDealingDirect = value;
     }
 }
