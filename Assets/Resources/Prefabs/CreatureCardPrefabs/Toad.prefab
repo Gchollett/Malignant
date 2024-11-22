@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4804605655002474024
+--- !u!1001 &5685173073633172408
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,42 +11,42 @@ PrefabInstance:
     - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: ab1
       value: 
-      objectReference: {fileID: 5596490349630856120, guid: b4d3e75c9fca69340a1a4d01eb58fd98, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: power
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: health
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: cardName
-      value: Turtle
+      value: Toad
       objectReference: {fileID: 0}
     - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: flavorText
-      value: It's got a shell.
+      value: It's not a frog
       objectReference: {fileID: 0}
     - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Size.x
-      value: 5
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Size.y
-      value: 5
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e9bdb3536ccde1647a9a211f39b24732, type: 3}
+      objectReference: {fileID: 21300000, guid: 46482cbe257dab74a919e29aa69d0b7e, type: 3}
     - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4200072223276004059, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Name
-      value: Turtle
+      value: Toad
       objectReference: {fileID: 0}
     - target: {fileID: 9094496513474527702, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_LocalPosition.x

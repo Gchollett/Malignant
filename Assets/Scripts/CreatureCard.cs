@@ -43,7 +43,7 @@ public class CreatureCard : Card
     public Button abilityButton2; 
     public Button abilityButton3; 
     private Vector3 initialScale;
-    public CardStatus status {get; set;}
+    public CardStatus status {get; set;} = CardStatus.Unplayed;
     public float scale = 1.5f;
 
     public void applyStaticEffect(StatusEffect se){
@@ -74,7 +74,6 @@ public class CreatureCard : Card
     void Start()
     {
         initialScale = transform.localScale;
-        status = CardStatus.Unplayed;
         abilities = new List<Ability>
         {
             ab1,
@@ -182,7 +181,6 @@ public class CreatureCard : Card
                 }
             }
         }
-        CheckIfDead();
     }
 
     public void Poison(){
@@ -222,7 +220,7 @@ public class CreatureCard : Card
     }
     private void OnMouseUp()
     {
-        if(!gm.isMoveEnabled) return;
+        if(!gm.isMoveEnabled && status != CardStatus.Unplayed) return;
         if(position_found && status == CardStatus.Unplayed){
             lane.GetComponent<Lane>().addProtagCreature(gameObject);
             card_locked =  true;

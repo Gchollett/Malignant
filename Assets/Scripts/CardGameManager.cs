@@ -152,11 +152,10 @@ public class CardGameManager : MonoBehaviour
 
     void playCard(Lane lane){
         GameObject card  = antag.Hand[UnityEngine.Random.Range(0,antag.Hand.Count)];
-        GameObject creature = Instantiate(card);
-        creature.transform.SetParent(antag.transform);
+        GameObject creature = Instantiate(card,antag.transform);
+        lane.addAntagCreature(creature);
         creature.GetComponent<CreatureCard>().lane = lane.gameObject;
         creature.GetComponent<CreatureCard>().status = CardStatus.Antags;
-        lane.addAntagCreature(creature);
         antag.Hand.Remove(card);
     }
     void antagMove(){
@@ -227,6 +226,8 @@ public class CardGameManager : MonoBehaviour
     //End Phase Methods
     void cleanBoard(){
         foreach(Lane lane in lanes){
+            lane.protagCreature?.GetComponent<CreatureCard>().CheckIfDead();
+            lane.antagCreature?.GetComponent<CreatureCard>().CheckIfDead();
             lane.protagCreature?.GetComponent<CreatureCard>().UpdateCard();
             lane.antagCreature?.GetComponent<CreatureCard>().UpdateCard();
             lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnEnd);

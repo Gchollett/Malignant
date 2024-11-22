@@ -28,9 +28,25 @@ PrefabInstance:
       propertyPath: flavorText
       value: It's yucky
       objectReference: {fileID: 0}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_Size.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_Size.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9defeb9c66209604ca15bffe66be8e8e, type: 3}
+    - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4200072223276004059, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Name
-      value: CreatureCard Variant 7
+      value: Tarantula
       objectReference: {fileID: 0}
     - target: {fileID: 9094496513474527702, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_LocalPosition.x

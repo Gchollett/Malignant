@@ -169,9 +169,9 @@ MonoBehaviour:
   startingHealth: 10
   Hand:
   - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
+  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
   - {fileID: 8711303135246193907, guid: e04b1a31db0ff6342bdbbbfbae23ff42, type: 3}
   - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
-  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
 --- !u!1 &55150132
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +457,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &284880070
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2125,16 +2125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 10
   Hand:
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
-  - {fileID: 9113436518359008566, guid: 3cadea51d2ae28b44b1007e5f3fed2d2, type: 3}
-  - {fileID: 8711303135246193907, guid: e04b1a31db0ff6342bdbbbfbae23ff42, type: 3}
-  - {fileID: 4840496455172673963, guid: 3c7b4a78c9288554faebf46b54ceeeb2, type: 3}
-  - {fileID: 8711303135246193907, guid: ff489c9f900685c45a1cf60de6f30380, type: 3}
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
-  - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
-  - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
-  - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
-  - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
+  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
 --- !u!4 &1540497075
 Transform:
   m_ObjectHideFlags: 0
