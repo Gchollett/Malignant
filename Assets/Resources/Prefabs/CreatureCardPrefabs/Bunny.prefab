@@ -28,6 +28,14 @@ PrefabInstance:
       propertyPath: flavorText
       value: It's a fluffy rabbit
       objectReference: {fileID: 0}
+    - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: abilities.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: abilities.Array.data[0]
+      value: 
+      objectReference: {fileID: -1185043365302635136, guid: bc9a8ce546112304a9f23eee6ef66d09, type: 3}
     - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Size.x
       value: 5

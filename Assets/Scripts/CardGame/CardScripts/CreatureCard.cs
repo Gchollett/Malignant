@@ -15,14 +15,9 @@ public class CreatureCard : Card
     public int power;
     public int health;
     public string flavorText;
-    public Ability ab1;
-    public Ability ab2;
-    public Ability ab3;
-    public List<Ability> abilities {get; set;}
+    public int abilityLimit = 3;
+    public List<Ability> abilities;
     public GameObject lane {get; set;}
-    private bool position_found = false;
-    private bool card_locked = false;
-    private int card_index;
     public bool canBlockDirect {get; set;}
     public int tempHealth {get; set;}
     public int tempPower {get; set;}
@@ -32,19 +27,14 @@ public class CreatureCard : Card
     public bool isAbilitiesStopped {get; set;}
     public bool isPoisoned {get; set;}
     private bool isDying;
-    public bool isDealingDirect {get; private set;} //Boolean for that allows the creature to avoid attacking opposing creatures
+    public bool isDealingDirect {get; set;} //Boolean for that allows the creature to avoid attacking opposing creatures
     private static CardGameManager gm;
-    private GameObject prefab;
     public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
     public HashSet<StatusEffect> staticEffects; //The status effects that don't need a duration
     public Dictionary<Triggers,List<(Action,int)>> tempTriggers {get; set;} //The triggers that only need to trigger a finite number of times
     public Dictionary<Triggers,List<Action>> staticTriggers {get;set;} //The triggers that should trigger until removed
-    public Button abilityButton1; 
-    public Button abilityButton2; 
-    public Button abilityButton3; 
-    private Vector3 initialScale;
+    public Vector3 initialScale {get; private set;}
     public CardStatus status {get; set;} = CardStatus.Unplayed;
-    public float scale = 1.5f;
 
     public void applyStaticEffect(StatusEffect se){
         if(staticEffects.Add(se))se.effect(this);
@@ -74,85 +64,24 @@ public class CreatureCard : Card
     void Start()
     {
         initialScale = transform.localScale;
-        abilities = new List<Ability>
-        {
-            ab1,
-            ab2,
-            ab3
-        };
-
         tempTriggers = new Dictionary<Triggers, List<(Action, int)>>();
         staticTriggers = new Dictionary<Triggers, List<Action>>();
         statusEffects = new Dictionary<StatusEffect, int>();
         staticEffects = new HashSet<StatusEffect>();
         gm = CardGameManager.Instance;
-        if(ab1){
-            ab1 = Instantiate(ab1,transform);
-            ab1.owner = this;
-        }
-        if(ab2){
-            ab2 = Instantiate(ab2,transform);
-            ab2.owner = this;
-        }
-        if(ab3){
-            ab3 = Instantiate(ab3,transform);
-            ab3.owner = this;
+        for(int i = 0; i < System.Math.Min(abilities.Count,abilityLimit); i++){
+            if(abilities[i]){
+                abilities[i] = Instantiate(abilities[i],transform);
+                abilities[i].owner = this;
+            }
         }
     }
     void FixedUpdate() {
-        abilities = new List<Ability>
-        {
-            ab1,
-            ab2,
-            ab3
-        };
-        setCardText();
         if(power + tempPower < 0){
             tempPower = -power;
         }
     }
 
-    private void setCardText(){
-        string adjectives = "";
-        foreach (StatusEffect se in statusEffects.Keys){
-            if(statusEffects[se] > 0) adjectives = se.effectName + " " + adjectives;
-        }
-        foreach (StatusEffect se in staticEffects){
-            adjectives = se.effectName + " " + adjectives;
-        }
-        transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = adjectives + cardName;
-        transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = ((power + tempPower >= 0)?(power + tempPower):0).ToString();
-        transform.GetChild(2).gameObject.GetComponent<TextMeshPro>().text = (health + tempHealth).ToString();
-        if(ab1){
-            transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = ab1.abilityName;
-            if(ab1 is ActivatedAbility){
-                abilityButton1.gameObject.SetActive(true);
-                abilityButton1.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{((ActivatedAbility)ab1).cost} pips";
-            }
-        } else {
-             transform.GetChild(3).gameObject.GetComponent<TextMeshPro>().text = "";
-        }
-
-        if(ab2){
-            transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = ab2.abilityName;
-            if(ab2 is ActivatedAbility){
-                abilityButton2.gameObject.SetActive(true);
-                abilityButton2.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{((ActivatedAbility)ab2).cost} pips";
-            }
-        } else {
-             transform.GetChild(4).gameObject.GetComponent<TextMeshPro>().text = "";
-        }
-
-        if(ab3){
-            transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = ab3.abilityName;
-            if(ab3 is ActivatedAbility){
-                abilityButton3.gameObject.SetActive(true);
-                abilityButton3.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{((ActivatedAbility)ab3).cost} pips";
-            }
-        } else {
-             transform.GetChild(5).gameObject.GetComponent<TextMeshPro>().text = "";
-        }
-    }
 
     public void attack(Player p){
         p.damage(power+tempPower<0?0:power+tempPower);
@@ -167,9 +96,9 @@ public class CreatureCard : Card
         ActivateTrigger(Triggers.OnDeath);
         lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
-        Destroy(ab1);
-        Destroy(ab2);
-        Destroy(ab3);
+        abilities.ForEach(ab => {
+            Destroy(ab);
+        });
     }
     public void UpdateCard()
     {
@@ -190,68 +119,9 @@ public class CreatureCard : Card
         if(health + tempHealth <= 0 || isPoisoned){
             Kill();
         }
-    }
+    }    
 
-    private void OnMouseEnter(){
-        transform.localScale *= scale;
-    }
-
-    private void OnMouseExit(){
-        transform.localScale = initialScale;
-    }
-
-    
-    private void OnMouseDown() {
-        if(status == CardStatus.Protags && gm.isSacrificeEnabled){
-            Sacrifice();
-        }else{
-            if(card_locked || !gm.isMoveEnabled) return;
-            card_index = gameObject.transform.GetSiblingIndex();
-            prefab = CardGameManager.Instance.protag.RemoveGameCard(card_index);
-        }
-    }
-    private void OnMouseDrag() {
-        if(card_locked || !gm.isMoveEnabled || status != CardStatus.Unplayed) return;
-        Plane dragPlane = new Plane(Camera.main.transform.forward, transform.position);
-        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float enter = 0.0f;
-        if (dragPlane.Raycast(camRay, out enter)) 
-        {
-            Vector3 mousePosition = camRay.GetPoint(enter);
-            transform.position = mousePosition;
-        }
-        transform.localScale = initialScale;
-    }
-    private void OnMouseUp()
-    {
-        if(!gm.isMoveEnabled || status != CardStatus.Unplayed) return;
-        if(position_found && status == CardStatus.Unplayed){
-            lane.GetComponent<Lane>().addProtagCreature(gameObject);
-            card_locked =  true;
-            position_found = true;
-            gm.changeActivePlayer();
-            status = CardStatus.Protags;
-        }else if(prefab){
-            gm.protag.AddGameCard(prefab,card_index);
-            Destroy(gameObject);
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable" && !card_locked && !position_found && status != CardStatus.Antags && !other.gameObject.GetComponent<Lane>().alreadyHasCard() && transform.localScale == initialScale){
-            position_found = true;
-            lane = other.gameObject;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D other) {
-        if(other.gameObject.tag == "Card Snappable" && !card_locked && position_found && status != CardStatus.Antags  && transform.localScale == initialScale){
-            position_found = false;
-            lane = null;
-        }
-    }
-
-    private void Sacrifice(){
+    public void Sacrifice(){
         if(status == CardStatus.Protags){
             gm.protag.upPips();
             gm.disableSacrifice();            
@@ -261,25 +131,24 @@ public class CreatureCard : Card
         ActivateTrigger(Triggers.OnSacrifice);
         lane.GetComponent<Lane>().removeFromLane(gameObject);
         Destroy(gameObject);
-        Destroy(ab1);
-        Destroy(ab2);
-        Destroy(ab3);
+        abilities.ForEach(ab => {
+            Destroy(ab);
+        });
     }
 
-    public void addAbility(Ability ab){
-        if(!ab1){
-            ab1 = Instantiate(ab);
-            ab1.owner = this;
-            cardName = ab.adjective+ " " + cardName;
-        }else if(!ab2){
-            ab2 = Instantiate(ab);
-            ab2.owner = this;
-            cardName = ab.adjective+ " " + cardName;
-        }else if(!ab3){
-            ab3 = Instantiate(ab);
-            ab3.owner = this;
-            cardName = ab.adjective+ " " + cardName;
+    public bool addAbility(Ability ab){
+        int indx = 0;
+        while(indx < abilities.Count && indx < abilityLimit && abilities[indx] != null){
+            indx ++;
         }
+        if(indx == abilityLimit) return false;
+        if(indx == abilities.Count){
+            abilities.Add(null);
+        }
+        abilities[indx] = Instantiate(ab);
+        abilities[indx].owner = this;
+        cardName = ab.adjective+ " " + cardName;
+        return true;
     }
     public void ActivateTrigger(Triggers trig){
         List<(Action,int)> tempTriggerList;
@@ -308,9 +177,5 @@ public class CreatureCard : Card
                 TriggerList[i]();
             }
         }
-    }
-
-    public void setDirectDamage(bool value){
-        isDealingDirect = value;
     }
 }

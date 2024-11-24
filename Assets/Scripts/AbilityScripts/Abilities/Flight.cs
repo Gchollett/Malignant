@@ -10,6 +10,6 @@ public class Flight : PassiveAbility
     }
     public override void staticAction()
     {
-        owner.setDirectDamage(true);
+        owner.isDealingDirect = true;
     }
 }

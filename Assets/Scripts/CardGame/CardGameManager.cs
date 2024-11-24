@@ -105,12 +105,7 @@ public class CardGameManager : MonoBehaviour
                 isActivationEnabled = true;
                 foreach(Lane lane in lanes){
                     if(lane.protagCreature && !lane.protagCreature.GetComponent<CreatureCard>().isAbilitiesStopped){
-                        List<Button> abilityButtons = new List<Button>
-                        {
-                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton1,
-                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton2,
-                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton3
-                        };
+                        List<Button> abilityButtons = lane.protagCreature.GetComponent<CardText>().abilityButtons;
                         for(int i = 0; i < 3; i++){
                             abilityButtons[i].interactable = true;
                             int index = i;
@@ -125,12 +120,7 @@ public class CardGameManager : MonoBehaviour
             }else{
                 foreach(Lane lane in lanes){
                     if(lane.protagCreature){
-                        List<Button> abilityButtons = new List<Button>
-                        {
-                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton1,
-                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton2,
-                            lane.protagCreature.GetComponent<CreatureCard>().abilityButton3
-                        };
+                        List<Button> abilityButtons = lane.protagCreature.GetComponent<CardText>().abilityButtons;
                         for(int i = 0; i < 3; i++){
                             abilityButtons[i].interactable = false;
                             abilityButtons[i].onClick.RemoveAllListeners();

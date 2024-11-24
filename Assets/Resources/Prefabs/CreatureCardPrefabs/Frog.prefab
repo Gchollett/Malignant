@@ -28,6 +28,14 @@ PrefabInstance:
       propertyPath: flavorText
       value: It's green and slimy
       objectReference: {fileID: 0}
+    - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: abilities.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: abilities.Array.data[0]
+      value: 
+      objectReference: {fileID: -9205876720537696641, guid: 64583671cf30f364dbe60b06eeec3391, type: 3}
     - target: {fileID: 3046827408473331217, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Size.x
       value: 1.25
