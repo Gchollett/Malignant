@@ -51,8 +51,8 @@ public class CardGameManager : MonoBehaviour
             protag.upPips(dm.startingPips);
         }
         deck.shuffle();
-        Debug.Log(Math.Min(3,deck.cards.Count));
-        for(int i = 0; i < Math.Min(3,deck.cards.Count);i++){
+        int drawAmount = Math.Min(3,deck.cards.Count);
+        for(int i = 0; i < drawAmount;i++){
             protag.AddGameCard(deck.draw(),-1);
         }
     }
