@@ -14,6 +14,10 @@ public class DeckButton : MonoBehaviour
     private void OnMouseDown() {
         if(!gm.isDrawEnabled) return;
         gm.protag.AddGameCard(deck.draw(),-1);
+        foreach(Lane lane in gm.lanes){
+            lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnDraw);
+            lane.antagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnDraw);
+        }
         gm.changePhase();
     }
 }

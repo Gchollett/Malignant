@@ -51,7 +51,7 @@ public class CardGameManager : MonoBehaviour
             protag.upPips(dm.startingPips);
         }
         deck.shuffle();
-        Debug.Log(deck.cards.Count);
+        Debug.Log(Math.Min(3,deck.cards.Count));
         for(int i = 0; i < Math.Min(3,deck.cards.Count);i++){
             protag.AddGameCard(deck.draw(),-1);
         }
@@ -93,6 +93,10 @@ public class CardGameManager : MonoBehaviour
     void mainGameLoop()
     {
         if(phase == Phase.Start && !isWaiting){
+            foreach(Lane lane in lanes){
+                lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnStart);
+                lane.antagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnStart);
+            }
             button.gameObject.SetActive(false);
             gainPips();
             isWaiting = true;
@@ -212,6 +216,7 @@ public class CardGameManager : MonoBehaviour
                     }
                     else{
                         lane.protagCreature.GetComponent<CreatureCard>().attack(antag);
+                        lane.protagCreature.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnDamagingPlayer);
                     }
                     lane.protagCreature.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnAttack);
                 }
@@ -227,6 +232,7 @@ public class CardGameManager : MonoBehaviour
                     }
                     else{
                         lane.antagCreature.GetComponent<CreatureCard>().attack(protag);
+                        lane.antagCreature.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnDamagingPlayer);
                     }
                     lane.antagCreature.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnAttack);
                 }

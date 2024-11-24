@@ -11,6 +11,7 @@ public abstract class ActivatedAbility : Ability
     public override bool ProcessAbility(int pips){
         if(pips < cost) return false;
         activatedAction();
+        owner.ActivateTrigger(Triggers.OnActivate);
         return true;
     }
 
