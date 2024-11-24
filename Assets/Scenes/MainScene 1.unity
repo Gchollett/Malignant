@@ -167,11 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 10
-  Hand:
-  - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
-  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
-  - {fileID: 8711303135246193907, guid: e04b1a31db0ff6342bdbbbfbae23ff42, type: 3}
-  - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
+  Hand: []
 --- !u!1 &55150132
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,6 +1826,7 @@ GameObject:
   - component: {fileID: 1225767601}
   - component: {fileID: 1225767602}
   - component: {fileID: 1225767603}
+  - component: {fileID: 1225767604}
   m_Layer: 0
   m_Name: Deck
   m_TagString: Untagged
@@ -1916,13 +1913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29c31a9a4ffa0594ca79dda557cd85c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards:
-  - {fileID: 8711303135246193907, guid: d4cdbd5bd0d77af4b86ca3e4fb9286d2, type: 3}
-  - {fileID: 4840496455172673963, guid: 3c7b4a78c9288554faebf46b54ceeeb2, type: 3}
-  - {fileID: 8711303135246193907, guid: ff489c9f900685c45a1cf60de6f30380, type: 3}
-  - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
-  - {fileID: 8711303135246193907, guid: 94f673096b8f567439aa2107212855d9, type: 3}
-  - {fileID: 8711303135246193907, guid: 826265946d467204c8a8d42dd5ffc43d, type: 3}
+  cards: []
 --- !u!114 &1225767602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1968,7 +1959,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.09072447, y: 0.11546749}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1979,8 +1970,21 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.3333333, y: 3.3333333}
+  m_Size: {x: 1.8185511, y: 2.3680367}
   m_EdgeRadius: 0
+--- !u!114 &1225767604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225767598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e35078ed20ebb4aab48b2efa58b90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deck: {fileID: 1225767601}
 --- !u!1 &1284964822
 GameObject:
   m_ObjectHideFlags: 0
@@ -2151,6 +2155,7 @@ MonoBehaviour:
   - {fileID: 1090685776}
   - {fileID: 55150134}
   button: {fileID: 718902957}
+  deck: {fileID: 1225767601}
   protagHealth: {fileID: 1284964824}
   antagHealth: {fileID: 1164436929}
   protagPips: {fileID: 1981685142}
@@ -2200,21 +2205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 10
-  Hand:
-  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
-  - {fileID: 1720211253634153947, guid: 0c67c81695105ab469b5a5ef66494905, type: 3}
-  - {fileID: 8711303135246193907, guid: e04b1a31db0ff6342bdbbbfbae23ff42, type: 3}
-  - {fileID: 8711303135246193907, guid: e04b1a31db0ff6342bdbbbfbae23ff42, type: 3}
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
-  - {fileID: 8711303135246193907, guid: ff489c9f900685c45a1cf60de6f30380, type: 3}
-  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
-  - {fileID: 8407215160499677539, guid: d9c76a286002a144f9f4f8a3280861cc, type: 3}
-  - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
-  - {fileID: 8711303135246193907, guid: ff489c9f900685c45a1cf60de6f30380, type: 3}
-  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
-  - {fileID: 8407215160499677539, guid: d9c76a286002a144f9f4f8a3280861cc, type: 3}
-  - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
+  Hand: []
 --- !u!4 &1540497075
 Transform:
   m_ObjectHideFlags: 0
@@ -2364,6 +2355,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1573574123}
   m_CullTransparentMesh: 1
+--- !u!1 &1647448886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1647448888}
+  - component: {fileID: 1647448887}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1647448887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647448886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 430b16e675c8223499b51def03da3e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyHand: {fileID: 11400000, guid: e42b234cd169a9a48af77920ea412847, type: 2}
+  Deck:
+  - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
+  - {fileID: 6894223614821436078, guid: 5f70c03be9224674ca5122f3b4914cd8, type: 3}
+  - {fileID: 4840496455172673963, guid: 3c7b4a78c9288554faebf46b54ceeeb2, type: 3}
+  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
+  startingPips: 0
+--- !u!4 &1647448888
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647448886}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.840451, y: -0.2520777, z: 1835.4623}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1673798065
 GameObject:
   m_ObjectHideFlags: 0
@@ -2966,3 +3008,4 @@ SceneRoots:
   - {fileID: 1225767600}
   - {fileID: 1185966236}
   - {fileID: 1047278626}
+  - {fileID: 1647448888}

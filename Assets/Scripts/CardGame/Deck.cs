@@ -1,20 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Deck : MonoBehaviour{
 
     public List<GameObject> cards;
-    private CardGameManager gm;
+    private DataManager dm;
 
     void Start()
     {
-        gm = CardGameManager.Instance;
+        dm = DataManager.Instance;
+        if(dm) cards = new List<GameObject>(dm.Deck);
     }
-    public void draw(){
-        if(cards.Count == 0) return;
-        gm.protag.Hand.Add(cards[0]);
+    public GameObject draw(){
+        if(cards.Count == 0) return null;
+        GameObject card = cards[0];
         cards.RemoveAt(0);
+        return card;
     }
 
     public void shuffle(){
@@ -26,12 +29,5 @@ public class Deck : MonoBehaviour{
 			cards[i] = cards[r];
 			cards[r] = tmp;
 		}
-    }
-
-    void OnMouseDown() {
-        if(gm.isDrawEnabled){
-            draw();
-            gm.changePhase();
-        }
     }
 }

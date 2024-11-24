@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CardHover : MonoBehaviour
 {
-    [SerializeField] private readonly CreatureCard creature;
-    [SerializeField] private readonly SpriteRenderer imageRenderer;
-    [SerializeField] private readonly Canvas canvas;
-    [SerializeField] private readonly float scale = 1.5f;
-    [SerializeField] private readonly int handOffset = 1;
-    [SerializeField] private readonly float speed = 3;
-    [SerializeField] private readonly int hoverSortingOrder = 4;
+    [SerializeField] private CreatureCard creature;
+    [SerializeField] private SpriteRenderer imageRenderer;
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private float scale = 1.5f;
+    [SerializeField] private int handOffset = 1;
+    [SerializeField] private float speed = 3;
+    [SerializeField] private int hoverSortingOrder = 4;
     private int initialSortingOrder;
     private Vector2 targetPos;
     private SpriteRenderer cardRenderer;
@@ -26,7 +26,7 @@ public class CardHover : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position,targetPos,speed*Time.deltaTime);
+        if(creature.status == CardStatus.Unplayed)transform.position = Vector3.MoveTowards(transform.position,targetPos,speed*Time.deltaTime);
     }
 
     private void OnMouseEnter(){
@@ -34,9 +34,7 @@ public class CardHover : MonoBehaviour
         cardRenderer.sortingOrder = hoverSortingOrder;
         imageRenderer.sortingOrder = hoverSortingOrder+1;
         canvas.sortingOrder = hoverSortingOrder;
-        if(creature.status == CardStatus.Unplayed){
-            targetPos = initialPos + new Vector2(0,handOffset);
-        }
+        targetPos = initialPos + new Vector2(0,handOffset);
     }
 
     private void OnMouseExit(){
@@ -44,8 +42,6 @@ public class CardHover : MonoBehaviour
         cardRenderer.sortingOrder = initialSortingOrder;
         imageRenderer.sortingOrder = initialSortingOrder+1;
         canvas.sortingOrder = initialSortingOrder;
-        if(creature.status == CardStatus.Unplayed){
-            targetPos = initialPos;
-        }
+        targetPos = initialPos;
     }
 }

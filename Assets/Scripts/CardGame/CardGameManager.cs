@@ -14,12 +14,14 @@ public class CardGameManager : MonoBehaviour
     private Player activePlayer;
     public Lane[] lanes;
     public Button button;
+    [SerializeField] private Deck deck;
     public Phase phase {get; private set;}
     public bool isDrawEnabled {get; private set;}
     public bool isMoveEnabled {get; private set;}
     public bool isSacrificeEnabled {get; private set;}
     public bool isActivationEnabled {get; private set;}
     public bool isWaiting {get; set;}
+    private DataManager dm;
     public TextMeshProUGUI protagHealth;
     public TextMeshProUGUI antagHealth;
     public TextMeshProUGUI protagPips;
@@ -43,6 +45,16 @@ public class CardGameManager : MonoBehaviour
         phase = Phase.Start;
         isWaiting = false;
         activePlayer = protag;
+        dm = DataManager.Instance;
+        if(dm){
+            antag.Hand = new List<GameObject>(dm.EnemyHand.Hand);
+            protag.upPips(dm.startingPips);
+        }
+        deck.shuffle();
+        Debug.Log(deck.cards.Count);
+        for(int i = 0; i < Math.Min(3,deck.cards.Count);i++){
+            protag.AddGameCard(deck.draw(),-1);
+        }
     }
 
     void FixedUpdate(){

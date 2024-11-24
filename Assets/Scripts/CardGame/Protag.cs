@@ -15,7 +15,9 @@ public class Protag : Player {
     }
 
     public void AddGameCard(GameObject card,int index){
-        Hand.Insert(index,card);
+        if(!card) return;
+        if(index == -1) Hand.Add(card);
+        else Hand.Insert(index,card);
     }
 
     public void fixHand(bool force = false) {
