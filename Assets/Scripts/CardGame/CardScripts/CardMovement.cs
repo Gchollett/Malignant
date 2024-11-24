@@ -44,6 +44,7 @@ public class CardMovement : MonoBehaviour
             position_found = true;
             gm.changeActivePlayer();
             creature.status = CardStatus.Protags;
+            gm.protag.fixHand(true);
         }else if(prefab){
             gm.protag.AddGameCard(prefab,card_index);
             Destroy(gameObject);

@@ -1348,7 +1348,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creature: {fileID: -6069409344659761535}
+  imageRenderer: {fileID: 3046827408473331217}
+  canvas: {fileID: 5456053750089413137}
   scale: 1.5
+  handOffset: 1
+  speed: 4
+  hoverSortingOrder: 4
 --- !u!114 &1525208604452983937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2003,7 +2008,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &3667174549879107617
 MonoBehaviour:

@@ -16,12 +16,10 @@ public class Protag : Player {
 
     public void AddGameCard(GameObject card,int index){
         Hand.Insert(index,card);
-        // card.transform.SetParent(gameObject.transform);
-        // card.transform.SetSiblingIndex(index);
     }
 
-    private void fixHand() {
-        if(Hand.Count != transform.childCount){
+    public void fixHand(bool force = false) {
+        if(Hand.Count != transform.childCount || force){
             for(int i = 0; i < transform.childCount; i++){
                 Destroy(transform.GetChild(i).gameObject);
             }
@@ -29,10 +27,6 @@ public class Protag : Player {
                 GameObject card = Instantiate(Hand[i]);
                 card.transform.parent = gameObject.transform;
                 card.transform.position = gameObject.transform.position + new Vector3(2*(i-Hand.Count/2f+.5f),0,0);
-            }
-        }else{
-            for(int i = 0; i < Hand.Count; i++){
-                transform.GetChild(i).gameObject.transform.position = gameObject.transform.position + new Vector3(2*(i-Hand.Count/2f+.5f),0,0);
             }
         }
         
