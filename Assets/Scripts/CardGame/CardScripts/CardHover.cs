@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CardHover : MonoBehaviour
 {
-    [SerializeField] private CreatureCard creature;
-    [SerializeField] private SpriteRenderer imageRenderer;
-    [SerializeField] private Canvas canvas;
-    [SerializeField] private float scale = 1.5f;
-    [SerializeField] private int handOffset = 1;
-    [SerializeField] private float speed = 3;
-    [SerializeField] private int hoverSortingOrder = 4;
+    [SerializeField] private readonly CreatureCard creature;
+    [SerializeField] private readonly SpriteRenderer imageRenderer;
+    [SerializeField] private readonly Canvas canvas;
+    [SerializeField] private readonly float scale = 1.5f;
+    [SerializeField] private readonly int handOffset = 1;
+    [SerializeField] private readonly float speed = 3;
+    [SerializeField] private readonly int hoverSortingOrder = 4;
     private int initialSortingOrder;
     private Vector2 targetPos;
     private SpriteRenderer cardRenderer;
