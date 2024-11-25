@@ -166,7 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69fdc1ae8803b7142b8b9c43709ad338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 10
   Hand: []
 --- !u!1 &55150132
 GameObject:
@@ -2149,7 +2148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   protag: {fileID: 35935746}
-  antag: {fileID: 0}
+  antag: {fileID: 1540497076}
   lanes:
   - {fileID: 1780046454}
   - {fileID: 1090685776}
@@ -2219,7 +2218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902734faa6b92f643a64cacb5c933bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 10
   Hand: []
 --- !u!1 &1573574123
 GameObject:
@@ -2384,12 +2382,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430b16e675c8223499b51def03da3e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyHand: {fileID: 11400000, guid: e42b234cd169a9a48af77920ea412847, type: 2}
+  EnemyHand: {fileID: 11400000, guid: 5458cdd5228128649af37378303b516b, type: 2}
   Deck:
   - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
   - {fileID: 6894223614821436078, guid: 5f70c03be9224674ca5122f3b4914cd8, type: 3}
   - {fileID: 4840496455172673963, guid: 3c7b4a78c9288554faebf46b54ceeeb2, type: 3}
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
+  - {fileID: 8711303135246193907, guid: d4cdbd5bd0d77af4b86ca3e4fb9286d2, type: 3}
   startingPips: 0
 --- !u!4 &1647448888
 Transform:

@@ -44,7 +44,7 @@ public class Antag : Player {
                             if(pips >= ((ActivatedAbility)ab).cost+2) prob = .3f;
                             break;
                     }
-                    if(Random.Range(0f,1f) > prob) ab.ProcessAbility(pips);
+                    if(Random.Range(0f,1f) > prob) if(ab.ProcessAbility(pips)){lowerPips(((ActivatedAbility)ab).cost);};
                 }
             }            
         }
@@ -72,8 +72,11 @@ public class Antag : Player {
                                 }
                             }
                             break;
+                        default: 
+                            prob = 0;
+                            break;
                     }
-                    if(Random.Range(0f,1f) > prob) ab.ProcessAbility(pips);
+                    if(Random.Range(0f,1f) > prob) if(ab.ProcessAbility(pips)){lowerPips(((ActivatedAbility)ab).cost);};
                 }
             }            
         }
@@ -110,8 +113,11 @@ public class Antag : Player {
                                 prob = .2f;
                             }
                             break;
+                        default: 
+                            prob = 0;
+                            break;
                     }
-                    if(Random.Range(0f,1f) > prob) ab.ProcessAbility(pips);
+                    if(Random.Range(0f,1f) > prob) if(ab.ProcessAbility(pips)){lowerPips(((ActivatedAbility)ab).cost);};
                 }
             }            
         }
@@ -131,8 +137,11 @@ public class Antag : Player {
                                 }
                             }
                             break;
+                        default: 
+                            prob = 0;
+                            break;
                     }
-                    if(Random.Range(0f,1f) > prob) ab.ProcessAbility(pips);
+                    if(Random.Range(0f,1f) > prob) if(ab.ProcessAbility(pips)){lowerPips(((ActivatedAbility)ab).cost);};
                 }
             }            
         }

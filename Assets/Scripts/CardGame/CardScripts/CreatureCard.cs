@@ -45,7 +45,7 @@ public class CreatureCard : Card
         statusEffects = new Dictionary<StatusEffect, int>();
         staticEffects = new HashSet<StatusEffect>();
         gm = CardGameManager.Instance;
-        for(int i = 0; i < System.Math.Min(abilities.Count,abilityLimit); i++){
+        for(int i = 0; i < Math.Min(abilities.Count,abilityLimit); i++){
             if(abilities[i]){
                 abilities[i] = Instantiate(abilities[i],transform);
                 abilities[i].owner = this;
@@ -135,7 +135,7 @@ public class CreatureCard : Card
         });
     }
 
-    public bool addAbility(Ability ab){
+    public bool addAbility(Ability ab,bool test = false){
         int indx = 0;
         while(indx < abilities.Count && indx < abilityLimit && abilities[indx] != null){
             indx ++;
@@ -144,8 +144,12 @@ public class CreatureCard : Card
         if(indx == abilities.Count){
             abilities.Add(null);
         }
-        abilities[indx] = Instantiate(ab);
-        abilities[indx].owner = this;
+        if(test){
+            abilities[indx] = Instantiate(ab);
+            abilities[indx].owner = this;
+        }else{
+            abilities[indx] = ab;
+        }
         cardName = ab.adjective+ " " + cardName;
         return true;
     }
