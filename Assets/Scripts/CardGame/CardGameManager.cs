@@ -146,7 +146,9 @@ public class CardGameManager : MonoBehaviour
                 }
                 button.gameObject.SetActive(false);
                 isActivationEnabled = false;
-                antagActivate();
+                antag.activateAbilities(lanes);
+                changePhase();
+                changeActivePlayer();
             }
         }else if(phase == Phase.Combat && !isWaiting){
             isWaiting = true;
@@ -171,10 +173,6 @@ public class CardGameManager : MonoBehaviour
         //DISABLE MOVE
         //DISABLE SACRIFICE
         //ENABLE ACTIVATIONS
-    void antagActivate(){
-        changePhase();
-        changeActivePlayer();
-    }
     //Combat Phase Methods
         //DISABLE ACTIVATIONS
     void combat(){

@@ -36,31 +36,7 @@ public class CreatureCard : Card
     public Vector3 initialScale {get; private set;}
     public CardStatus status {get; set;} = CardStatus.Unplayed;
 
-    public void applyStaticEffect(StatusEffect se){
-        if(staticEffects.Add(se))se.effect(this);
-    }
-    public void unapplyStaticEffect(StatusEffect se){
-        Debug.Log(se);
-        if(staticEffects.Remove(se)){
-            se.deffect(this);
-        }
-    }
-    public void applyStatusEffect(StatusEffect se,int duration){
-        if(statusEffects.ContainsKey(se) && statusEffects[se] != 0){
-            statusEffects[se] += duration;
-        }else{
-            statusEffects[se] = duration;
-            se.effect(this);
-        }
-    }
-
-    public void removeStatusEffect(StatusEffect se){
-        if(statusEffects.ContainsKey(se) && statusEffects[se] != 0){
-            statusEffects[se] = 0;
-            se.deffect(this);
-        }
-    }
-
+    
     void Start()
     {
         initialScale = transform.localScale;
@@ -82,6 +58,29 @@ public class CreatureCard : Card
         }
     }
 
+    public void applyStaticEffect(StatusEffect se){
+        if(staticEffects.Add(se))se.effect(this);
+    }
+    public void unapplyStaticEffect(StatusEffect se){
+        if(staticEffects.Remove(se)){
+            se.deffect(this);
+        }
+    }
+    public void applyStatusEffect(StatusEffect se,int duration){
+        if(statusEffects.ContainsKey(se) && statusEffects[se] != 0){
+            statusEffects[se] += duration;
+        }else{
+            statusEffects[se] = duration;
+            se.effect(this);
+        }
+    }
+
+    public void removeStatusEffect(StatusEffect se){
+        if(statusEffects.ContainsKey(se) && statusEffects[se] != 0){
+            statusEffects[se] = 0;
+            se.deffect(this);
+        }
+    }
 
     public void attack(Player p){
         p.damage(power+tempPower<0?0:power+tempPower);
@@ -177,5 +176,24 @@ public class CreatureCard : Card
                 TriggerList[i]();
             }
         }
+    }
+
+    public int getInGameHealth()
+    {
+        return health + tempHealth;
+    }
+
+    public int getInGamePower()
+    {
+        return power + tempPower;
+    }
+
+    public bool hasAbility(Type abCheck){
+        foreach(Ability ab in abilities){
+            if(ab.GetType() == abCheck){
+                return true;
+            }
+        }
+        return false;
     }
 }
