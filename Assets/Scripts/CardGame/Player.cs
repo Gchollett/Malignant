@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
 
     public int health {get; private set;}
-    public int startingHealth = 10;
+    public int startingHealth {get;} = 10;
     public int pips {get; private set;}
     public List<GameObject> Hand;
 

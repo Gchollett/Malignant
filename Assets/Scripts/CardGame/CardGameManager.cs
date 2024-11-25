@@ -10,7 +10,7 @@ public class CardGameManager : MonoBehaviour
 {
     public static CardGameManager Instance;
     public Protag protag;
-    public Player antag;
+    public Antag antag;
     private Player activePlayer;
     public Lane[] lanes;
     public Button button;
@@ -69,7 +69,6 @@ public class CardGameManager : MonoBehaviour
         antagHealth.text = antag.health.ToString();
         protagPips.text = $"Pips: {protag.pips}";
         antagPips.text = $"Pips: {antag.pips}";
-        // Debug.Log($"Protag Health:{protag.health}\nAntag Health:{antag.health}\nProtag Pips:{protag.pips}\nAntag pips:{antag.pips}");
     }
 
     public void changeActivePlayer(){
@@ -112,7 +111,9 @@ public class CardGameManager : MonoBehaviour
                 button.gameObject.SetActive(false);
                 isMoveEnabled = false;
                 isSacrificeEnabled = false;
-                antagMove();
+                antag.MakePlay(lanes);
+                changePhase();
+                changeActivePlayer();
             }
         }else if(phase == Phase.Activation && !isWaiting){
             isWaiting = true;
@@ -165,35 +166,7 @@ public class CardGameManager : MonoBehaviour
         //DISABLE DRAW
         //ENABLE MOVE
         //ENABLE SACRICE
-
-    void playCard(Lane lane){
-        GameObject card  = antag.Hand[UnityEngine.Random.Range(0,antag.Hand.Count)];
-        GameObject creature = Instantiate(card,antag.transform);
-        lane.addAntagCreature(creature);
-        creature.GetComponent<CreatureCard>().lane = lane.gameObject;
-        creature.GetComponent<CreatureCard>().status = CardStatus.Antags;
-        antag.Hand.Remove(card);
-    }
-    void antagMove(){
-        if(antag.Hand.Count != 0){
-            bool played = false;
-            List<Lane> emptyLanes = new List<Lane>();
-            foreach(Lane lane in lanes){
-                if(!played && lane.protagCreature && !lane.antagCreature){
-                    playCard(lane);
-                    played = true;
-                }else if(!lane.antagCreature){
-                    emptyLanes.Add(lane);
-                }
-            }if(!played){
-                if(emptyLanes.Count > 0){
-                    playCard(emptyLanes[UnityEngine.Random.Range(0,emptyLanes.Count)]);
-                }
-            }
-        }
-        changePhase();
-        changeActivePlayer();
-    }
+    
     //Activation Phase Methods
         //DISABLE MOVE
         //DISABLE SACRIFICE
