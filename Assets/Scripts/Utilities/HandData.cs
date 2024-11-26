@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "HandData", menuName = "ScriptableObjects/HandData", order = 1)]
+[CreateAssetMenu(fileName = "Hand Data", menuName = "Scriptable Objects/Hand Data", order = 1)]
 public class HandData : ScriptableObject
 {
     public string handName;
