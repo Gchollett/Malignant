@@ -4,32 +4,32 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class Antag : Player {    
-    Card playCard(Lane lane){
-        CardData card  = Hand[Random.Range(0,Hand.Count)];
+    void playCard(Lane lane){
+        CardData cardData  = Hand[Random.Range(0,Hand.Count)];
         GameObject creature = Instantiate(CardPrefab,transform);
-        creature.GetComponent<Card>().cardData = card;
+        Card card = creature.GetComponent<Card>();
+        card.cardData = cardData;
         lane.addAntagCreature(creature);
-        creature.GetComponent<Card>().lane = lane.gameObject;
-        creature.GetComponent<Card>().status = CardStatus.Antags;
-        Hand.Remove(card);
-        return creature.GetComponent<Card>();
+        card.lane = lane.gameObject;
+        card.status = CardStatus.Antags;
+        Hand.Remove(cardData);
     }
    public void MakePlay(Lane[] lanes){
         if(Hand.Count != 0){
-            Card playedCard = null;
+            bool played = false;
             List<Lane> emptyLanes = new List<Lane>();
             foreach(Lane lane in lanes){
-                if(!playedCard && lane.protagCreature && !lane.antagCreature){
-                    playedCard = playCard(lane);
+                if(!played && lane.protagCreature && !lane.antagCreature){
+                    playCard(lane);
+                    played = true;
                 }else if(!lane.antagCreature){
                     emptyLanes.Add(lane);
                 }
-            }if(!playedCard){
+            }if(!played){
                 if(emptyLanes.Count > 0){
-                    playedCard = playCard(emptyLanes[Random.Range(0,emptyLanes.Count)]);
+                    playCard(emptyLanes[Random.Range(0,emptyLanes.Count)]);
                 }
             }
-            playedCard?.ActivateTrigger(Triggers.OnEnter);
         }
     }
 

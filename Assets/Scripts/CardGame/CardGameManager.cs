@@ -112,9 +112,7 @@ public class CardGameManager : MonoBehaviour
                 button.gameObject.SetActive(false);
                 isMoveEnabled = false;
                 isSacrificeEnabled = false;
-                antag.MakePlay(lanes);
-                changePhase();
-                changeActivePlayer();
+                StartCoroutine(playThenSwitch());
             }
         }else if(phase == Phase.Activation && !isWaiting){
             isWaiting = true;
@@ -169,7 +167,14 @@ public class CardGameManager : MonoBehaviour
         //DISABLE DRAW
         //ENABLE MOVE
         //ENABLE SACRICE
-    
+        IEnumerator playThenSwitch()
+        {
+            
+                antag.MakePlay(lanes);
+                yield return new WaitForFixedUpdate();
+                changePhase();
+                changeActivePlayer();
+        }
     //Activation Phase Methods
         //DISABLE MOVE
         //DISABLE SACRIFICE

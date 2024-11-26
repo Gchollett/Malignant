@@ -33,10 +33,10 @@ public class Card : MonoBehaviour
     private bool isDying;
     public bool isDealingDirect {get; set;} //Boolean for that allows the creature to avoid attacking opposing creatures
     private static CardGameManager gm;
-    public Dictionary<StatusEffect,int> statusEffects; //The status effect and the duration of it
-    public HashSet<StatusEffect> staticEffects; //The status effects that don't need a duration
-    public Dictionary<Triggers,List<(Action,int)>> tempTriggers {get; set;} //The triggers that only need to trigger a finite number of times
-    public Dictionary<Triggers,List<Action>> staticTriggers {get;set;} //The triggers that should trigger until removed
+    public Dictionary<StatusEffect,int> statusEffects {get; set;} = new Dictionary<StatusEffect, int>(); //The status effect and the duration of it
+    public HashSet<StatusEffect> staticEffects {get; set;} = new HashSet<StatusEffect>(); //The status effects that don't need a duration
+    public Dictionary<Triggers,List<(Action,int)>> tempTriggers {get; set;} = new Dictionary<Triggers, List<(Action, int)>>();//The triggers that only need to trigger a finite number of times
+    public Dictionary<Triggers,List<Action>> staticTriggers {get;set;} = new Dictionary<Triggers, List<Action>>(); //The triggers that should trigger until removed
     public Vector3 initialScale {get; private set;}
     public CardStatus status {get; set;} = CardStatus.Unplayed;
 
@@ -50,17 +50,15 @@ public class Card : MonoBehaviour
         abilities = new List<Ability>(cardData.abilities);
         image.sprite = cardData.image;
         initialScale = transform.localScale;
-        tempTriggers = new Dictionary<Triggers, List<(Action, int)>>();
-        Debug.Log($"{cardName}: {tempTriggers != null}");
-        staticTriggers = new Dictionary<Triggers, List<Action>>();
-        statusEffects = new Dictionary<StatusEffect, int>();
-        staticEffects = new HashSet<StatusEffect>();
         gm = CardGameManager.Instance;
         for(int i = 0; i < Math.Min(abilities.Count,abilityLimit); i++){
             if(abilities[i]){
                 abilities[i] = Instantiate(abilities[i],transform);
                 abilities[i].owner = this;
             }
+        }
+        if(status == CardStatus.Antags){ //Only workaround I found for on enter trigger for antag creatures with the new CardData
+            ActivateTrigger(Triggers.OnEnter);
         }
     }
     void FixedUpdate() {
