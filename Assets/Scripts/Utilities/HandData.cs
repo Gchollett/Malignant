@@ -8,5 +8,5 @@ public class HandData : ScriptableObject
 {
     public string handName;
     public Difficulty difficulty;
-    public List<GameObject> Hand;
+    public List<CardData> Hand;
 }

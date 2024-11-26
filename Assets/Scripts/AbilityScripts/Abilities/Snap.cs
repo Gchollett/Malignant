@@ -9,16 +9,16 @@ public class Snap : ActivatedAbility
     {
         Lane lane = owner.lane.GetComponent<Lane>();
         if(owner.status == CardStatus.Protags){
-            if(lane.antagCreature && lane.antagCreature.GetComponent<CreatureCard>().canBlockDirect){
-                lane.antagCreature.GetComponent<CreatureCard>().tempHealth -= owner.power+owner.tempPower;
+            if(lane.antagCreature && lane.antagCreature.GetComponent<Card>().canBlockDirect){
+                lane.antagCreature.GetComponent<Card>().tempHealth -= owner.power+owner.tempPower;
                 owner.ActivateTrigger(Triggers.OnDealingDamage);
             }else{
                 gm.antag.damage(owner.power+owner.tempPower);
                 owner.ActivateTrigger(Triggers.OnDamagingPlayer);
             }
         }else if(owner.status == CardStatus.Antags){
-            if(lane.protagCreature && lane.protagCreature.GetComponent<CreatureCard>().canBlockDirect){
-                lane.protagCreature.GetComponent<CreatureCard>().tempHealth -= owner.power+owner.tempPower;
+            if(lane.protagCreature && lane.protagCreature.GetComponent<Card>().canBlockDirect){
+                lane.protagCreature.GetComponent<Card>().tempHealth -= owner.power+owner.tempPower;
                 owner.ActivateTrigger(Triggers.OnDealingDamage);
             }else{
                 gm.protag.damage(owner.power+owner.tempPower);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CardHover : MonoBehaviour
 {
-    [SerializeField] private CreatureCard creature;
+    [SerializeField] private Card creature;
     [SerializeField] private SpriteRenderer imageRenderer;
     [SerializeField] private Canvas canvas;
     [SerializeField] private float scale = 1.5f;

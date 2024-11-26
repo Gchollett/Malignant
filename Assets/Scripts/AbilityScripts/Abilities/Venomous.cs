@@ -13,9 +13,9 @@ public class Venomous : TriggeredAbility
     {
         Lane lane = owner.lane.GetComponent<Lane>();
         if(owner.status == CardStatus.Protags){
-            lane.antagCreature?.GetComponent<CreatureCard>().Poison();
+            lane.antagCreature?.GetComponent<Card>().Poison();
         }else if(owner.status == CardStatus.Antags){
-            lane.protagCreature?.GetComponent<CreatureCard>().Poison();
+            lane.protagCreature?.GetComponent<Card>().Poison();
         }
     }
 }

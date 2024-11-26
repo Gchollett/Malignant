@@ -11,7 +11,7 @@ public class CardText : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private List<TextMeshProUGUI> abilityText;
     public List<Button> abilityButtons;
-    [SerializeField] private CreatureCard creature;
+    [SerializeField] private Card creature;
 
     private void FixedUpdate() {
         setCardText();

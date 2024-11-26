@@ -15,8 +15,8 @@ MonoBehaviour:
   handName: Squirrel Slam
   difficulty: 0
   Hand:
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
-  - {fileID: 8711303135246193907, guid: af7a7077f38a91440b5b608d8341f27e, type: 3}
+  - {fileID: 11400000, guid: b7fc2a1a8813eee46813746f4200629b, type: 2}
+  - {fileID: 11400000, guid: b7fc2a1a8813eee46813746f4200629b, type: 2}
+  - {fileID: 11400000, guid: b7fc2a1a8813eee46813746f4200629b, type: 2}
+  - {fileID: 11400000, guid: b7fc2a1a8813eee46813746f4200629b, type: 2}
+  - {fileID: 11400000, guid: b7fc2a1a8813eee46813746f4200629b, type: 2}

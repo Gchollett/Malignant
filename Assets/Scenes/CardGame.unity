@@ -2384,10 +2384,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyHand: {fileID: 11400000, guid: 5458cdd5228128649af37378303b516b, type: 2}
   Deck:
-  - {fileID: 1912444613095532143, guid: b179b5619ec936d429cb3c21d39321cb, type: 3}
-  - {fileID: 6894223614821436078, guid: 5f70c03be9224674ca5122f3b4914cd8, type: 3}
-  - {fileID: 4840496455172673963, guid: 3c7b4a78c9288554faebf46b54ceeeb2, type: 3}
-  - {fileID: 8711303135246193907, guid: d4cdbd5bd0d77af4b86ca3e4fb9286d2, type: 3}
+  - {fileID: 11400000, guid: 4438381f80e8da8429e12b875be80b69, type: 2}
+  - {fileID: 11400000, guid: addc330881e66bc479abbe640f952750, type: 2}
+  - {fileID: 11400000, guid: 518f0ba96fb9b204682a04419541e330, type: 2}
+  - {fileID: 11400000, guid: 6fb29c3a4865b8a4a9b73a03796f62e1, type: 2}
   startingPips: 0
 --- !u!4 &1647448888
 Transform:

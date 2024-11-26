@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    protected GameObject CardPrefab;
     public int health {get; private set;}
     public int startingHealth {get;} = 10;
     public int pips {get; private set;}
-    public List<GameObject> Hand;
+    public List<CardData> Hand;
 
     void Start() {
+        CardPrefab = Resources.Load<GameObject>("Prefabs/CreatureCard");
         health = startingHealth;
         pips = 0;
     }

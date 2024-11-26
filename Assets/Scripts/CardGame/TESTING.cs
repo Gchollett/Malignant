@@ -17,10 +17,10 @@ public class TESTING : MonoBehaviour
     }
 
     public void applyStatusEffect(){
-        gm.lanes[0].protagCreature?.GetComponent<CreatureCard>().applyStatusEffect(se,3);
+        gm.lanes[0].protagCreature?.GetComponent<Card>().applyStatusEffect(se,3);
     }
 
     public void applyAbility(){
-        if(gm.protag.Hand.Count > 0) gm.protag.gameObject.transform.GetChild(0).GetComponent<CreatureCard>().addAbility(ab,true);
+        if(gm.protag.Hand.Count > 0) gm.protag.gameObject.transform.GetChild(0).GetComponent<Card>().addAbility(ab,true);
     }
 }

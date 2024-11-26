@@ -13,7 +13,7 @@ public class Scare : ActivatedAbility
     public override void activatedAction()
     {
         Lane lane = owner.lane.GetComponent<Lane>();
-        if(owner.status==CardStatus.Protags) lane.antagCreature?.GetComponent<CreatureCard>().applyStatusEffect(FrightenedPrefab,2);
-        else if(owner.status==CardStatus.Antags) lane.protagCreature?.GetComponent<CreatureCard>().applyStatusEffect(FrightenedPrefab,2);
+        if(owner.status==CardStatus.Protags) lane.antagCreature?.GetComponent<Card>().applyStatusEffect(FrightenedPrefab,2);
+        else if(owner.status==CardStatus.Antags) lane.protagCreature?.GetComponent<Card>().applyStatusEffect(FrightenedPrefab,2);
     }
 }

@@ -1283,13 +1283,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7cf4e9315bd3244ae7568d720e5e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardName: 
-  rarity: 
-  power: 0
-  health: 0
-  flavorText: 
+  cardData: {fileID: 0}
+  image: {fileID: 3046827408473331217}
   abilityLimit: 3
-  abilities: []
 --- !u!61 &3811246683177190037
 BoxCollider2D:
   m_ObjectHideFlags: 0

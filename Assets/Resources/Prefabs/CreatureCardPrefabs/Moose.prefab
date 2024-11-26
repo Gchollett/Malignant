@@ -17,6 +17,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 28b57af0a198a4b4582973cde21bbe6b, type: 2}
+    - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: cardName
       value: Moose
       objectReference: {fileID: 0}
@@ -42,7 +46,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4200072223276004059, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_Name
-      value: Moose 1
+      value: Moose
       objectReference: {fileID: 0}
     - target: {fileID: 9094496513474527702, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: m_LocalPosition.x

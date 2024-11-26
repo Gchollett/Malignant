@@ -4,38 +4,40 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class Antag : Player {    
-    void playCard(Lane lane){
-        GameObject card  = Hand[Random.Range(0,Hand.Count)];
-        GameObject creature = Instantiate(card,transform);
+    Card playCard(Lane lane){
+        CardData card  = Hand[Random.Range(0,Hand.Count)];
+        GameObject creature = Instantiate(CardPrefab,transform);
+        creature.GetComponent<Card>().cardData = card;
         lane.addAntagCreature(creature);
-        creature.GetComponent<CreatureCard>().lane = lane.gameObject;
-        creature.GetComponent<CreatureCard>().status = CardStatus.Antags;
+        creature.GetComponent<Card>().lane = lane.gameObject;
+        creature.GetComponent<Card>().status = CardStatus.Antags;
         Hand.Remove(card);
+        return creature.GetComponent<Card>();
     }
    public void MakePlay(Lane[] lanes){
         if(Hand.Count != 0){
-            bool played = false;
+            Card playedCard = null;
             List<Lane> emptyLanes = new List<Lane>();
             foreach(Lane lane in lanes){
-                if(!played && lane.protagCreature && !lane.antagCreature){
-                    playCard(lane);
-                    played = true;
+                if(!playedCard && lane.protagCreature && !lane.antagCreature){
+                    playedCard = playCard(lane);
                 }else if(!lane.antagCreature){
                     emptyLanes.Add(lane);
                 }
-            }if(!played){
+            }if(!playedCard){
                 if(emptyLanes.Count > 0){
-                    playCard(emptyLanes[Random.Range(0,emptyLanes.Count)]);
+                    playedCard = playCard(emptyLanes[Random.Range(0,emptyLanes.Count)]);
                 }
             }
+            playedCard?.ActivateTrigger(Triggers.OnEnter);
         }
     }
 
     public void activateAbilities(Lane[] lanes)
     {
         foreach(Lane lane in lanes){ //Go through and activate debuffs
-            if(lane.antagCreature && lane.antagCreature.GetComponent<CreatureCard>().abilities.Count > 0){
-                CreatureCard creature = lane.antagCreature.GetComponent<CreatureCard>();
+            if(lane.antagCreature && lane.antagCreature.GetComponent<Card>().abilities.Count > 0){
+                Card creature = lane.antagCreature.GetComponent<Card>();
                 foreach(Ability ab in creature.abilities){
                     float prob = 0.01f;
                     switch(ab){
@@ -49,8 +51,8 @@ public class Antag : Player {
             }            
         }
         foreach(Lane lane in lanes){ //Go through and activate buffs
-            if(lane.antagCreature && lane.antagCreature.GetComponent<CreatureCard>().abilities.Count > 0){
-                CreatureCard creature = lane.antagCreature.GetComponent<CreatureCard>();
+            if(lane.antagCreature && lane.antagCreature.GetComponent<Card>().abilities.Count > 0){
+                Card creature = lane.antagCreature.GetComponent<Card>();
                 foreach(Ability ab in creature.abilities){
                     float prob = 0.01f;
                     switch(ab){
@@ -63,7 +65,7 @@ public class Antag : Player {
                         case Rage:
                             if(creature.getInGameHealth() > 1){
                                 if(lane.protagCreature){
-                                    CreatureCard protagCreature = lane.protagCreature.GetComponent<CreatureCard>();
+                                    Card protagCreature = lane.protagCreature.GetComponent<Card>();
                                     if(protagCreature.isBlockStopped || protagCreature.getInGamePower() < creature.getInGameHealth()-1 || protagCreature.getInGameHealth() <= creature.getInGamePower()+2){
                                         prob = .5f;
                                     }
@@ -81,14 +83,14 @@ public class Antag : Player {
             }            
         }
         foreach(Lane lane in lanes){ //Go through and activate Damage
-            if(lane.antagCreature && lane.antagCreature.GetComponent<CreatureCard>().abilities.Count > 0){
-                CreatureCard creature = lane.antagCreature.GetComponent<CreatureCard>();
+            if(lane.antagCreature && lane.antagCreature.GetComponent<Card>().abilities.Count > 0){
+                Card creature = lane.antagCreature.GetComponent<Card>();
                 foreach(Ability ab in creature.abilities){
                     float prob = 0.01f;
                     switch(ab){
                         case Hasten:
                             if(lane.protagCreature){
-                                if(creature.getInGamePower() * 2 >= lane.protagCreature.GetComponent<CreatureCard>().getInGameHealth()){
+                                if(creature.getInGamePower() * 2 >= lane.protagCreature.GetComponent<Card>().getInGameHealth()){
                                     prob = .7f;
                                 }
                             }else{
@@ -100,7 +102,7 @@ public class Antag : Player {
                             }
                             break;
                         case Bonk:
-                            if(lane.protagCreature && lane.protagCreature.GetComponent<CreatureCard>().getInGameHealth() <= creature.getInGamePower()*1.5){
+                            if(lane.protagCreature && lane.protagCreature.GetComponent<Card>().getInGameHealth() <= creature.getInGamePower()*1.5){
                                 prob = .5f;
                             }else{
                                 prob = 0;
@@ -122,14 +124,14 @@ public class Antag : Player {
             }            
         }
         foreach(Lane lane in lanes){ //Go through and activate Misc
-            if(lane.antagCreature && lane.antagCreature.GetComponent<CreatureCard>().abilities.Count > 0){
-                CreatureCard creature = lane.antagCreature.GetComponent<CreatureCard>();
+            if(lane.antagCreature && lane.antagCreature.GetComponent<Card>().abilities.Count > 0){
+                Card creature = lane.antagCreature.GetComponent<Card>();
                 foreach(Ability ab in creature.abilities){
                     float prob = 0.01f;
                     switch(ab){
                         case PlayDead:
                             if(lane.protagCreature){
-                                CreatureCard protagCreature = lane.protagCreature.GetComponent<CreatureCard>();
+                                Card protagCreature = lane.protagCreature.GetComponent<Card>();
                                 foreach(Ability abi in creature.abilities){
                                     if((abi is Honk || abi is Jam || abi is Snap) && (protagCreature.getInGamePower() * (protagCreature.extraAttackCounter+1) >= creature.getInGameHealth() || protagCreature.hasAbility(typeof(Venomous))) && protagCreature.getInGamePower() < health/2){
                                         prob = .7f;

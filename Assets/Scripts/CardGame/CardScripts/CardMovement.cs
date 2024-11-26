@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CardMovement : MonoBehaviour
 {
-    [SerializeField] private CreatureCard creature;    
+    [SerializeField] private Card creature;    
     private CardGameManager gm;
     private bool card_locked;
     private bool position_found;
     private int card_index;
-    private GameObject prefab;
+    private CardData data;
     void Start()
     {
         gm = CardGameManager.Instance;
@@ -20,7 +20,7 @@ public class CardMovement : MonoBehaviour
         }else{
             if(card_locked || !gm.isMoveEnabled) return;
             card_index = gameObject.transform.GetSiblingIndex();
-            prefab = CardGameManager.Instance.protag.RemoveGameCard(card_index);
+            data = CardGameManager.Instance.protag.RemoveGameCard(card_index);
         }
     }
     private void OnMouseDrag() {
@@ -44,10 +44,10 @@ public class CardMovement : MonoBehaviour
             position_found = true;
             gm.changeActivePlayer();
             creature.status = CardStatus.Protags;
-            gm.protag.fixHand(true);
+            gm.protag.DisplayHand(true);
             creature.ActivateTrigger(Triggers.OnEnter);
-        }else if(prefab){
-            gm.protag.AddGameCard(prefab,card_index);
+        }else if(data){
+            gm.protag.AddGameCard(data,card_index);
             Destroy(gameObject);
         }
     }

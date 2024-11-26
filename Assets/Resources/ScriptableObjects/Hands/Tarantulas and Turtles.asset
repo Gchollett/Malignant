@@ -15,7 +15,7 @@ MonoBehaviour:
   handName: Tarantulas and Turtles
   difficulty: 0
   Hand:
-  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
-  - {fileID: 8711303135246193907, guid: f3de485bf52189a48a8bb88c86e32112, type: 3}
-  - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
-  - {fileID: 8711303135246193907, guid: 8bc27ba0f08e4bd41b6b38de92abe6a9, type: 3}
+  - {fileID: 11400000, guid: a669e6364323d0640a716691c1a2ae1c, type: 2}
+  - {fileID: 11400000, guid: a669e6364323d0640a716691c1a2ae1c, type: 2}
+  - {fileID: 11400000, guid: 518f0ba96fb9b204682a04419541e330, type: 2}
+  - {fileID: 11400000, guid: 518f0ba96fb9b204682a04419541e330, type: 2}

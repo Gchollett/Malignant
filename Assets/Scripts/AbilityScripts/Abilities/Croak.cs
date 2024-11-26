@@ -15,9 +15,9 @@ public class Croak : TriggeredAbility
     {
         Lane lane = owner.lane.GetComponent<Lane>();
         if(owner.status == CardStatus.Protags){
-            lane.antagCreature?.GetComponent<CreatureCard>().applyStatusEffect(TrippinPrefab,2);
+            lane.antagCreature?.GetComponent<Card>().applyStatusEffect(TrippinPrefab,2);
         }else if(owner.status == CardStatus.Antags){
-            lane.protagCreature?.GetComponent<CreatureCard>().applyStatusEffect(TrippinPrefab,2);
+            lane.protagCreature?.GetComponent<Card>().applyStatusEffect(TrippinPrefab,2);
         }
     }
 }

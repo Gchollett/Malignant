@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Sleepy : StatusEffect
 {
-    public override void effect(CreatureCard card)
+    public override void effect(Card card)
     {
         card.isAttackStopped = true;
         card.isAbilitiesStopped = true;
     }
-    public override void deffect(CreatureCard card)
+    public override void deffect(Card card)
     {
         card.isAttackStopped = false;
         card.isAbilitiesStopped = false;

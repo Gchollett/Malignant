@@ -21,6 +21,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
+      propertyPath: cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: a669e6364323d0640a716691c1a2ae1c, type: 2}
+    - target: {fileID: -6069409344659761535, guid: f6f3b4a9d889b684e9458e88d51c44c0, type: 3}
       propertyPath: cardName
       value: Tarantula
       objectReference: {fileID: 0}

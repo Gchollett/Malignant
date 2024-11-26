@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Trippin : StatusEffect
 {
-    public override void effect(CreatureCard card)
+    public override void effect(Card card)
     {
         card.isAttackStopped = true;
     }
-    public override void deffect(CreatureCard card)
+    public override void deffect(Card card)
     {
         card.isAttackStopped = false;
     }

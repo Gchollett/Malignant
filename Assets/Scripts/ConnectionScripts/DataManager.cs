@@ -6,7 +6,7 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
     public HandData EnemyHand;
-    public List<GameObject> Deck;
+    public List<CardData> Deck;
     public int startingPips = 0;
     void Awake()
     {
