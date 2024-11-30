@@ -74,6 +74,10 @@ public class CardGameManager : MonoBehaviour
         isWaiting = false;
     }
 
+    public void disableSacrifice(){
+        isSacrificeEnabled = false;
+    }
+
     void mainGameLoop()
     {
         if(phase == Phase.Start && !isWaiting){
@@ -199,7 +203,7 @@ public class CardGameManager : MonoBehaviour
             if(lane.protagCreature){
                 for(int i = 0; i <= lane.protagCreature.GetComponent<CreatureCard>().extraAttackCounter; i++){
                     if(lane.protagCreature.GetComponent<CreatureCard>().isAttackStopped) break;
-                    if(lane.antagCreature && (!lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect || lane.antagCreature.GetComponent<CreatureCard>().canBlockDirect)){
+                    if(lane.antagCreature && !lane.antagCreature.GetComponent<CreatureCard>().isBlockStopped && (!lane.protagCreature.GetComponent<CreatureCard>().isDealingDirect || lane.antagCreature.GetComponent<CreatureCard>().canBlockDirect)){
                         lane.protagCreature.GetComponent<CreatureCard>().attack(lane.antagCreature.GetComponent<CreatureCard>());
                         lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnDealingDamage);
                         lane.antagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnTakingDamage);
@@ -214,7 +218,7 @@ public class CardGameManager : MonoBehaviour
             if(lane.antagCreature){
                 for(int i = 0; i <= lane.antagCreature.GetComponent<CreatureCard>().extraAttackCounter; i++){
                     if(lane.antagCreature.GetComponent<CreatureCard>().isAttackStopped) break;
-                    if(lane.protagCreature && (!lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect || lane.protagCreature.GetComponent<CreatureCard>().canBlockDirect)){
+                    if(lane.protagCreature && !lane.protagCreature.GetComponent<CreatureCard>().isBlockStopped && (!lane.antagCreature.GetComponent<CreatureCard>().isDealingDirect || lane.protagCreature.GetComponent<CreatureCard>().canBlockDirect)){
                         lane.antagCreature.GetComponent<CreatureCard>().attack(lane.protagCreature.GetComponent<CreatureCard>());
                         lane.antagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnDealingDamage);
                         lane.protagCreature?.GetComponent<CreatureCard>().ActivateTrigger(Triggers.OnTakingDamage);

@@ -13,10 +13,12 @@ public class Bonk : ActivatedAbility
     }
     public override void activatedAction()
     {
-        if(owner.status == CardStatus.Protags){
+        if(owner.status == CardStatus.Protags && owner.lane.GetComponent<Lane>().antagCreature){
             owner.lane.GetComponent<Lane>().antagCreature.GetComponent<CreatureCard>().tempHealth -= (int)(1.5*(owner.power+owner.tempPower));
-        }else if(owner.status == CardStatus.Antags){
+            owner.ActivateTrigger(Triggers.OnDealingDamage);
+        }else if(owner.status == CardStatus.Antags && owner.lane.GetComponent<Lane>().protagCreature){
             owner.lane.GetComponent<Lane>().protagCreature.GetComponent<CreatureCard>().tempHealth -= (int)(1.5*(owner.power+owner.tempPower));
+            owner.ActivateTrigger(Triggers.OnDealingDamage);
         }
         owner.applyStatusEffect(SleepyPrefab,2);
     }

@@ -47,4 +47,4 @@ MonoBehaviour:
   abilityName: Hasten
   description: Attack an extra time this turn.
   adjective: Fast
-  cost: 1
+  cost: 2

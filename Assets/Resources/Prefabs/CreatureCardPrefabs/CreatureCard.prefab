@@ -304,7 +304,7 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_SortAtRoot: 0
+  m_SortAtRoot: 1
 --- !u!1 &1752464817274574550
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,7 +488,7 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_SortAtRoot: 0
+  m_SortAtRoot: 1
 --- !u!1 &2397477711842694050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,7 +1176,6 @@ MonoBehaviour:
   ab1: {fileID: 0}
   ab2: {fileID: 0}
   ab3: {fileID: 0}
-  isDealingDirect: 0
   abilityButton1: {fileID: 7464125550442828542}
   abilityButton2: {fileID: 1646773964665573846}
   abilityButton3: {fileID: 5212682958057850239}

@@ -6,6 +6,7 @@
         OnActivate,
         OnAttack,
         OnDealingDamage,
+        OnDamagingPlayer,
         OnTakingDamage,
         OnDeath,
         OnEnd
