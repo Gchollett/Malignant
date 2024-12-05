@@ -5,12 +5,17 @@ using UnityEngine;
 
 public class Venomous : TriggeredAbility
 {
-    public override bool trigger(string val)
-    {
-        return true;
+    void Start(){
+        owner.staticTriggers.TryAdd(Triggers.OnDealingDamage,new List<Action>());
+        owner.staticTriggers[Triggers.OnDealingDamage].Add(triggeredAction);
     }
     public override void triggeredAction()
     {
-        
+        Lane lane = owner.lane.GetComponent<Lane>();
+        if(owner.status == CardStatus.Protags){
+            lane.antagCreature?.GetComponent<Card>().Poison();
+        }else if(owner.status == CardStatus.Antags){
+            lane.protagCreature?.GetComponent<Card>().Poison();
+        }
     }
 }
