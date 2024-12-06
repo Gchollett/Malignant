@@ -19,4 +19,4 @@ MonoBehaviour:
   flavorText: It's a long eared rabbit
   abilities:
   - {fileID: -5071529493868634274, guid: 9f0371301d135d841b20932a0fb9652f, type: 3}
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 8498d9344ecde2a45907cea6b3fd3397, type: 3}

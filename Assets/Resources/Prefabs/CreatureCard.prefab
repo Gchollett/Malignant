@@ -1284,7 +1284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 0}
-  image: {fileID: 3046827408473331217}
+  spriteRenderer: {fileID: 3046827408473331217}
+  image: {fileID: 0}
   abilityLimit: 3
 --- !u!61 &3811246683177190037
 BoxCollider2D:
