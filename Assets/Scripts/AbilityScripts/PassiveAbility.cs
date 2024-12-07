@@ -17,9 +17,4 @@ public abstract class PassiveAbility : Ability
     {
         return false;
     }
-
-    public override bool ProcessAbility(string val)
-    {
-        return false;
-    }
 }

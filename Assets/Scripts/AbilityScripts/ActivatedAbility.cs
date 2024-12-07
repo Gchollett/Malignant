@@ -9,17 +9,13 @@ public abstract class ActivatedAbility : Ability
     public int cost;
     public abstract void activatedAction();
     public override bool ProcessAbility(int pips){
-        if(pips < cost) return false;
+        if(pips < cost || owner.isAbilitiesStopped) return false;
         activatedAction();
+        owner.ActivateTrigger(Triggers.OnActivate);
         return true;
     }
 
     public override bool ProcessAbility()
-    {
-        return false;
-    }
-
-    public override bool ProcessAbility(string val)
     {
         return false;
     }

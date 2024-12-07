@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Ability : MonoBehaviour
 {
     public static CardGameManager gm;
+    public Card owner {get; set;}
     void Start()
     {
         gm = CardGameManager.Instance;
@@ -14,5 +15,4 @@ public abstract class Ability : MonoBehaviour
     public string adjective;
     public abstract bool ProcessAbility();
     public abstract bool ProcessAbility(int pips);
-    public abstract bool ProcessAbility(string val);
 }
