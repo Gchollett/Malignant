@@ -54,7 +54,7 @@ public class OverworldPlayer : MonoBehaviour
 
     public void NextNode(MapNode newNode) {
         nextNode = newNode;
-        newLoc = nextNode.transform.position;
+        newLoc = nextNode.transform.position + new Vector3 (0, 0, -3);
         isMoving = true;
     }
 
