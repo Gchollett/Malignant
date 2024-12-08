@@ -19,10 +19,11 @@ public abstract class MapNode : MonoBehaviour
     public abstract void OnVisit();
 
     private void OnMouseDown() {
-        if(!visited){
+            if(OverworldPlayer.Instance.ReadyToMove(this)){
             OnVisit();
             visited = true;
-        }
+            OverworldPlayer.Instance.NextNode(this);
+            }
     }
 
 }
