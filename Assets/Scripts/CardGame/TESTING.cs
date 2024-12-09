@@ -21,6 +21,6 @@ public class TESTING : MonoBehaviour
     }
 
     public void applyAbility(){
-        if(gm.protag.Hand.Count > 0) gm.protag.gameObject.transform.GetChild(0).GetComponent<Card>().addAbility(ab,true);
+        if(gm.protag.Hand.Count > 0) gm.protag.gameObject.transform.GetChild(0).GetComponent<Card>().addAbility(ab);
     }
 }

@@ -6,7 +6,7 @@ public abstract class Ability : MonoBehaviour
 {
     public static CardGameManager gm;
     public Card owner {get; set;}
-    void Start()
+    void FixedUpdate()
     {
         gm = CardGameManager.Instance;
     }

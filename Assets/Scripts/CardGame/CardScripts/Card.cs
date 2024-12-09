@@ -13,7 +13,8 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
     public CardData cardData;
-    public SpriteRenderer image;
+    public SpriteRenderer spriteRenderer;
+    public Image image;
     public string cardName {get; private set;}
     public string rarity {get; private set;}    
     public int power {get; private set;}
@@ -48,7 +49,8 @@ public class Card : MonoBehaviour
         rarity = cardData.rarity;
         flavorText = cardData.flavorText;
         abilities = new List<Ability>(cardData.abilities);
-        image.sprite = cardData.image;
+        if(spriteRenderer) spriteRenderer.sprite = cardData.image;
+        else image.sprite = cardData.image;
         initialScale = transform.localScale;
         gm = CardGameManager.Instance;
         for(int i = 0; i < Math.Min(abilities.Count,abilityLimit); i++){
@@ -144,7 +146,7 @@ public class Card : MonoBehaviour
         });
     }
 
-    public bool addAbility(Ability ab,bool test = false){
+    public bool addAbility(Ability ab){
         int indx = 0;
         while(indx < abilities.Count && indx < abilityLimit && abilities[indx] != null){
             indx ++;
@@ -153,13 +155,10 @@ public class Card : MonoBehaviour
         if(indx == abilities.Count){
             abilities.Add(null);
         }
-        if(test){
-            abilities[indx] = Instantiate(ab);
-            abilities[indx].owner = this;
-        }else{
-            abilities[indx] = ab;
-        }
-        cardName = ab.adjective+ " " + cardName;
+        abilities[indx] = ab;
+        cardData.abilities.Add(ab);
+        cardData.cardName = ab.adjective + " " + cardName;
+        cardName = ab.adjective + " " + cardName;
         return true;
     }
     public void ActivateTrigger(Triggers trig){
