@@ -24,6 +24,7 @@ public class Jam : PassiveAbility
     }
     public override void staticAction()
     {
+        if(!gm)return;
         for(int i =0; i< gm.lanes.Count(); i++){
             if(owner.status == CardStatus.Protags && owner.gameObject != gm.lanes[i].protagCreature) gm.lanes[i].protagCreature?.GetComponent<Card>().applyStaticEffect(InspiredPrefab);
             else if(owner.status == CardStatus.Antags && owner.gameObject != gm.lanes[i].antagCreature) gm.lanes[i].antagCreature?.GetComponent<Card>().applyStaticEffect(InspiredPrefab);
