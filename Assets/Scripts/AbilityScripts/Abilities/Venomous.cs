@@ -3,10 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Venomous : PassiveAbility
+public class Venomous : TriggeredAbility
 {
-    public override void staticAction()
+    void Start(){
+        owner.staticTriggers.TryAdd(Triggers.OnDealingDamage,new List<Action>());
+        owner.staticTriggers[Triggers.OnDealingDamage].Add(triggeredAction);
+    }
+    public override void triggeredAction()
     {
-        
+        Lane lane = owner.lane.GetComponent<Lane>();
+        if(owner.status == CardStatus.Protags){
+            lane.antagCreature?.GetComponent<Card>().Poison();
+        }else if(owner.status == CardStatus.Antags){
+            lane.protagCreature?.GetComponent<Card>().Poison();
+        }
     }
 }

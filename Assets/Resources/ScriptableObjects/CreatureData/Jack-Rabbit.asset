@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf63be6e16841946a7224ea46e81fb1, type: 3}
+  m_Name: Jack-Rabbit
+  m_EditorClassIdentifier: 
+  cardName: Jack-Rabbit
+  rarity: 
+  power: 1
+  health: 3
+  flavorText: It's a long eared rabbit
+  abilities:
+  - {fileID: -5071529493868634274, guid: 9f0371301d135d841b20932a0fb9652f, type: 3}
+  image: {fileID: 0}

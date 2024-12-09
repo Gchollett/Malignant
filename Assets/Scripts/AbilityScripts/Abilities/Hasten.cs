@@ -7,6 +7,6 @@ public class Hasten : ActivatedAbility
 {
     public override void activatedAction()
     {
-        
+        owner.extraAttackCounter += 1;
     }
 }
