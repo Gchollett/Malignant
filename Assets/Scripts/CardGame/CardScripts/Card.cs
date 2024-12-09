@@ -146,7 +146,7 @@ public class Card : MonoBehaviour
         });
     }
 
-    public bool addAbility(Ability ab,bool test = false){
+    public bool addAbility(Ability ab){
         int indx = 0;
         while(indx < abilities.Count && indx < abilityLimit && abilities[indx] != null){
             indx ++;
@@ -155,11 +155,10 @@ public class Card : MonoBehaviour
         if(indx == abilities.Count){
             abilities.Add(null);
         }
-        abilities[indx] = Instantiate(ab);
-        abilities[indx].owner = this;
+        abilities[indx] = ab;
         cardData.abilities.Add(ab);
-        cardData.cardName = ab.adjective+ " " + cardName;
-        cardName = ab.adjective+ " " + cardName;
+        cardData.cardName = ab.adjective + " " + cardName;
+        cardName = ab.adjective + " " + cardName;
         return true;
     }
     public void ActivateTrigger(Triggers trig){
