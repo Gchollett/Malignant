@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef7b058aff7748a4886c647fb1e905ca, type: 3}
+  m_Name: Pip Master
+  m_EditorClassIdentifier: 
+  handName: Pip Master
+  difficulty: 4
+  Hand:
+  - {fileID: 11400000, guid: 8093c57b0d8ce1f45a5eff63bc686ff7, type: 2}
+  - {fileID: 11400000, guid: 8093c57b0d8ce1f45a5eff63bc686ff7, type: 2}
+  - {fileID: 11400000, guid: 8093c57b0d8ce1f45a5eff63bc686ff7, type: 2}
+  - {fileID: 11400000, guid: 60fecc2162af79349a587cd19cd08e9c, type: 2}
+  - {fileID: 11400000, guid: 60fecc2162af79349a587cd19cd08e9c, type: 2}
+  - {fileID: 11400000, guid: 60fecc2162af79349a587cd19cd08e9c, type: 2}

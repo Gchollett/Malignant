@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Goose
   m_EditorClassIdentifier: 
   cardName: Goose
-  rarity: 
+  rarity: 2
   power: 1
   health: 2
   flavorText: It is a long duck

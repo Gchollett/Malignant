@@ -1,21 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
     public static MapManager Instance;
-     [SerializeField]
-    public List<List<MapNode>> nodes = new List<List<MapNode>>();
+    public int nodeNum;
     [SerializeField]
-    private int depth;
+    private GameObject startNodePrefab;
     [SerializeField]
-    private GameObject nodePrefab;
+    private GameObject battleNodePrefab;
+    [SerializeField]
+    private GameObject bossNodePrefab;
+    [SerializeField]
+    private GameObject abilityStoreNodePrefab;
+    [SerializeField]
+    private GameObject cardStoreNodePrefab;
+    [SerializeField]
+    private GameObject hunterNodePrefab;
+    [SerializeField]
+    private GameObject monolithNodePrefab;
+    [SerializeField]
+    private GameObject edgePrefab;
+
     [SerializeField]
     private GameObject player;
+    [SerializeField]
+    private float radius;
+    [SerializeField]
+    private Vector2 sampleRegionSize;
+    public int numVisited {get; set;} = 0;
+
+    public List<GameObject> nodes {get; private set;} = new List<GameObject>();
+    public List<GameObject> edges {get; private set;} = new List<GameObject>();
 
         private void Awake()
     {
@@ -30,73 +49,133 @@ public class MapManager : MonoBehaviour
     }
 
 
+
     /// <summary>
     ///  Instaniates test nodes, Generates Edges between them, and renders them with line editor.
     ///  Very temporary and always changing.
     /// </summary>
-    private void initializeMap(){
+    private void initializeMap()
+    {
+        AddNodes(); 
+        AddEdges();
+    }
 
-        int xPos = -8;
-        int yPos = -4;
-        int nodeNum = 1;   
-        for(int x = 0; x < depth; x++){
-            List<MapNode> newLst = new List<MapNode>();
-            nodes.Add(newLst);
-            for(int y = 0; y < nodeNum; y++){
-                if(nodeNum==1)yPos += 8/2; else yPos += 8/nodeNum;
-                //Debug.Log($"Node_{x},{y} yPos: {yPos}");
-                Vector2 pos = new Vector2(xPos,yPos);
-                GameObject newNode = Instantiate(nodePrefab, pos, Quaternion.identity, gameObject.transform);
-                nodes[x].Add(newNode.GetComponent<TestNode>());
-                newNode.name = $"Node_{x},{y}";
-            }
-            nodeNum *= 2;
-            yPos = -4;
-            xPos += 16/depth; //NEEDS TO CHANGE
+    private void AddNodes()
+    {
+        List<Vector2> points = new List<Vector2>();
+        while(points.Count < nodeNum){
+            points = PoissonDiscSampling.GeneratePoints(radius,sampleRegionSize);
         }
-
-        //Randomly Assign Edges between nodes and add them to edges, as well as add lines between them
-        //Currently adds Edges only to nodes in the next List stored in nodes
-        for(int x = 0; x < depth -1; x++){
-                foreach (MapNode node in nodes[x]){
-                    //Debug.Log($"On {node.name}");
-                    int edgeNum = Random.Range(1,3);
-                    for(int i = 0; i < edgeNum; i++){
-                        int pickANode = Random.Range(0, nodes[x+1].Count - 1);
-                        Debug.Log(pickANode);
-                        node.edges.Add(nodes[x +1][pickANode]);
-                        nodes[x+1][pickANode].edges.Add(node);
-                        node.GetComponent<LineRenderer>().SetPosition(0, node.transform.position);
-                        node.GetComponent<LineRenderer>().SetPosition(1, nodes[x+1][pickANode].transform.position);
-                    }
-                }
+        points.Sort((Vector2 a, Vector2 b) => (int)Mathf.Round(a.x-b.x));
+        for(int i=1; i <= nodeNum; i++){
+            if(i == 1){
+                GameObject newNode = Instantiate(startNodePrefab,transform);
+                newNode.transform.position = points[i-1] - sampleRegionSize/2;
+                nodes.Add(newNode);
+            } else if(i <= nodeNum/3){
+                List<GameObject> nodeList = new List<GameObject>
+                    {
+                        battleNodePrefab,
+                        battleNodePrefab,
+                        battleNodePrefab,
+                        cardStoreNodePrefab,
+                    };
+                GameObject pickedNode = nodeList[Random.Range(0,nodeList.Count)];
+                GameObject newNode = Instantiate(pickedNode,transform);
+                newNode.transform.position = points[i-1] - sampleRegionSize/2;
+                nodes.Add(newNode);
+            }else if(i <= nodeNum*3/4){
+                List<GameObject> nodeList = new List<GameObject>
+                    {
+                        battleNodePrefab,
+                        battleNodePrefab,
+                        battleNodePrefab,
+                        battleNodePrefab,
+                        battleNodePrefab,
+                        cardStoreNodePrefab,
+                        cardStoreNodePrefab,
+                        hunterNodePrefab,
+                        hunterNodePrefab,
+                        abilityStoreNodePrefab,
+                        abilityStoreNodePrefab,
+                        monolithNodePrefab
+                    };
+                GameObject pickedNode = nodeList[Random.Range(0,nodeList.Count)];
+                GameObject newNode = Instantiate(pickedNode,transform);
+                newNode.transform.position = points[i-1] - sampleRegionSize/2;
+                nodes.Add(newNode);
+            }else if(i <= nodeNum-1){
+                List<GameObject> nodeList = new List<GameObject>
+                    {
+                        battleNodePrefab,
+                        abilityStoreNodePrefab,
+                        monolithNodePrefab,
+                        monolithNodePrefab,
+                    };
+                GameObject pickedNode = nodeList[Random.Range(0,nodeList.Count)];
+                GameObject newNode = Instantiate(pickedNode,transform);
+                newNode.transform.position = points[i-1] - sampleRegionSize/2;
+                nodes.Add(newNode);
+            }else{
+                GameObject newNode = Instantiate(bossNodePrefab,transform); 
+                newNode.transform.position = points[i-1] - sampleRegionSize/2;                
+                nodes.Add(newNode);
+            }
         }
     }
+
+    private void AddEdges()
+    {
+        GameObject currentNode = nodes[0];
+        for(int i = 1; i < nodes.Count; i++){
+            GameObject neighborNode = nodes[i];
+            GameObject edge = Instantiate(edgePrefab,transform);
+            edge.GetComponent<LineRenderer>().SetPosition(0,currentNode.transform.position);
+            edge.GetComponent<LineRenderer>().SetPosition(1,neighborNode.transform.position);
+            currentNode.GetComponent<MapNode>().edges.Add(neighborNode.GetComponent<MapNode>());
+            edges.Add(edge);
+            currentNode = neighborNode;
+        }
+        currentNode = nodes[0];
+        for(int i = Random.Range(2,4); i < nodes.Count; i+=Random.Range(2,5)){
+            GameObject neighborNode = nodes[i];
+            GameObject edge = Instantiate(edgePrefab,transform);
+            edge.GetComponent<LineRenderer>().SetPosition(0,currentNode.transform.position);
+            edge.GetComponent<LineRenderer>().SetPosition(1,neighborNode.transform.position);
+            currentNode.GetComponent<MapNode>().edges.Add(neighborNode.GetComponent<MapNode>());
+            edges.Add(edge);
+            currentNode = neighborNode;
+        }
+    }
+
 
 
     private void initializePlayer(){
-        Debug.Log("Running");
-        player.transform.position = nodes[0][0].transform.position - new Vector3(0,0,3);
+        player.transform.position = nodes[0].transform.position - new Vector3(0,0,3);
         player.GetComponent<OverworldPlayer>().initializePlayer();
-
     }
 
     private void Start() {
-        initializeMap();
-        initializePlayer();
-    }
-
-    public void MovePlayer(Vector3 pos, MapNode tgt){
-        Debug.Log(player);
-        Debug.Log(nodes[0][0]);
-        MapNode currentNode = player.GetComponent<OverworldPlayer>().currentNode;
-        Debug.Log(currentNode);
-        if(currentNode.edges.Contains(tgt)){
-            player.transform.position = pos - new Vector3(0,0,3);
-            player.GetComponent<OverworldPlayer>().currentNode = tgt;
+        if(nodes.Count > 0){
+            foreach(GameObject node in nodes){
+                Instantiate(node);
+            }
+            foreach(GameObject edge in edges){
+                Instantiate(edge);
+            }
         }else{
-            Debug.Log($"Unable to move from {currentNode} to {tgt}");
+            initializeMap();
+            initializePlayer();
         }
-
+        DontDestroyOnLoad(gameObject);
     }
+
+    private void FixedUpdate() {
+        if(SceneManager.GetActiveScene().name == "Overworld"){
+            for(int i = 0; i< transform.childCount; i++){
+                transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+    }
+
 }

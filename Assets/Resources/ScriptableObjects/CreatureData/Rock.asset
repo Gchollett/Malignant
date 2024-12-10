@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   cardName: Rock
-  rarity: 
+  rarity: 1
   power: 0
   health: 6
   flavorText: It's as dumb as it looks

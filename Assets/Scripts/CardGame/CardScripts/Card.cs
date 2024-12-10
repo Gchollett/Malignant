@@ -16,7 +16,7 @@ public class Card : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Image image;
     public string cardName {get; private set;}
-    public string rarity {get; private set;}    
+    public Rarity rarity {get; private set;}    
     public int power {get; private set;}
     public int health {get; private set;}
     public string flavorText {get; private set;}

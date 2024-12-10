@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OverworldPlayer : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class OverworldPlayer : MonoBehaviour
 
     public float movementTime = 3;
     private float elapsedTime;
-    private bool isMoving = false;
+    public bool isMoving {get; private set;} = false;
 
     private void Awake()
     {
@@ -27,12 +28,15 @@ public class OverworldPlayer : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void initializePlayer()
     {   
-        Debug.Log("Running");
         mm = MapManager.Instance;
-        currentNode = mm.nodes[0][0];
+        currentNode = mm.nodes[0].GetComponent<MapNode>();
         Debug.Log($"Player started at node {currentNode}");
         startPos = currentNode.transform.position;
     }
@@ -50,12 +54,9 @@ public class OverworldPlayer : MonoBehaviour
                 startPos = nextNode.transform.position;
             }
         }
-    }
-
-    public void NextNode(MapNode newNode) {
-        nextNode = newNode;
-        newLoc = nextNode.transform.position + new Vector3 (0, 0, -3);
-        isMoving = true;
+        if(SceneManager.GetActiveScene().name == "Overworld"){
+            GetComponent<SpriteRenderer>().enabled = true;
+        }
     }
 
     public bool ReadyToMove(MapNode newNode) {
@@ -63,5 +64,16 @@ public class OverworldPlayer : MonoBehaviour
             return true;
         }
         return false;
+    }
+    public void Move(MapNode tgt){
+        if(ReadyToMove(tgt)){
+            currentNode = tgt;
+            newLoc = tgt.transform.position;
+            isMoving = true;
+            nextNode = tgt;
+        }else{
+            Debug.Log($"Unable to move from {currentNode} to {tgt}");
+        }
+
     }
 }

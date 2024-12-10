@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScreen.unity
     guid: 560dff00a8dd641ff9edabd000f58d22
   - enabled: 1
+    path: Assets/Scenes/Overworld.unity
+    guid: ca96a71ad8678d140bb5da44b66ff277
+  - enabled: 1
     path: Assets/Scenes/CardGame.unity
     guid: ae5b3331f4a8d144e82fb6335dad21d9
   m_configObjects: {}

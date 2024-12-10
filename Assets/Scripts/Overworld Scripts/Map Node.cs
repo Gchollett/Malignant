@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class MapNode : MonoBehaviour
 {
     public static MapManager mm;
+    public static DataManager dm;
+    public static OverworldPlayer op;
     public List<MapNode> edges;
 
     private LineRenderer lr;
@@ -13,16 +16,26 @@ public abstract class MapNode : MonoBehaviour
 
     private void Start() {
         mm = MapManager.Instance;
+        dm = DataManager.Instance;
+        op = OverworldPlayer.Instance;
         lr = gameObject.GetComponent<LineRenderer>();
     }
 
     public abstract void OnVisit();
 
-    private void OnMouseDown() {
-            if(OverworldPlayer.Instance.ReadyToMove(this)){
+    private IEnumerator moveThenVisit(){
+        op.Move(this);
+        yield return new WaitUntil(() => !op.isMoving);
+        if(!visited)
+        {
             OnVisit();
+            mm.numVisited+=1;
             visited = true;
-            OverworldPlayer.Instance.NextNode(this);
+        }
+    }
+    private void OnMouseDown() {
+            if(op.ReadyToMove(this)){
+                StartCoroutine(moveThenVisit());
             }
     }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CardGameManager : MonoBehaviour
@@ -22,6 +23,8 @@ public class CardGameManager : MonoBehaviour
     public bool isActivationEnabled {get; private set;}
     public bool isWaiting {get; set;}
     private DataManager dm;
+    private MapManager mm;
+    private OverworldPlayer op;
     public TextMeshProUGUI protagHealth;
     public TextMeshProUGUI antagHealth;
     public TextMeshProUGUI protagPips;
@@ -42,6 +45,14 @@ public class CardGameManager : MonoBehaviour
 
     void Start()
     {
+        mm = MapManager.Instance;
+        op = OverworldPlayer.Instance;
+        if(mm) {
+            for(int i = 0; i< mm.transform.childCount; i++){
+                mm.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+        if(op) op.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         phase = Phase.Start;
         isWaiting = false;
         activePlayer = protag;
@@ -70,6 +81,10 @@ public class CardGameManager : MonoBehaviour
         antagHealth.text = antag.health.ToString();
         protagPips.text = $"Pips: {protag.pips}";
         antagPips.text = $"Pips: {antag.pips}";
+        if(antag.health <= 0){
+            dm.money += protag.pips;
+            SceneManager.LoadScene("Overworld");
+        }
     }
 
     public void changeActivePlayer(){

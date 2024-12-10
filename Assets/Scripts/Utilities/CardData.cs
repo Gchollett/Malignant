@@ -7,7 +7,7 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
     public string cardName;
-    public string rarity;
+    public Rarity rarity;
     public int power;
     public int health;
     public string flavorText;

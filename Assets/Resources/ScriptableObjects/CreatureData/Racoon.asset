@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Racoon
   m_EditorClassIdentifier: 
   cardName: Racoon
-  rarity: 
+  rarity: 2
   power: 2
   health: 3
   flavorText: It's gonna steal

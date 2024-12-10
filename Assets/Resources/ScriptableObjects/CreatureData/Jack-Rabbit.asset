@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Jack-Rabbit
   m_EditorClassIdentifier: 
   cardName: Jack-Rabbit
-  rarity: 
+  rarity: 1
   power: 1
   health: 3
   flavorText: It's a long eared rabbit

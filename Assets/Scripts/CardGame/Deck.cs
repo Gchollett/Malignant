@@ -14,6 +14,7 @@ public class Deck : MonoBehaviour{
         if(dm){
             cards = new List<CardData>(dm.Deck);
         } 
+        shuffle();
     }
     public CardData draw(){
         if(cards.Count == 0) return null;
