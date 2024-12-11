@@ -19,7 +19,7 @@ public class DataManager : MonoBehaviour
         else Destroy(gameObject);
         List<CardData> cards = new List<CardData>(Resources.LoadAll<CardData>("ScriptableObjects/CreatureData").Where((x) => x.rarity == Rarity.Common));
         for(int i =0; i<4;i++){
-            Deck.Add(cards[Random.Range(0,cards.Count)]);
+            Deck.Add(Instantiate(cards[Random.Range(0,cards.Count)]));
         }
     }
     void Start()

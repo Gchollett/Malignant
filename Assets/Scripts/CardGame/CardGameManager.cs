@@ -47,12 +47,6 @@ public class CardGameManager : MonoBehaviour
     {
         mm = MapManager.Instance;
         op = OverworldPlayer.Instance;
-        if(mm) {
-            for(int i = 0; i< mm.transform.childCount; i++){
-                mm.transform.GetChild(i).gameObject.SetActive(false);
-            }
-        }
-        if(op) op.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         phase = Phase.Start;
         isWaiting = false;
         activePlayer = protag;

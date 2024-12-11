@@ -13,8 +13,8 @@ public class BossNode : MapNode
     }
     public override void OnVisit()
     {   
-        List<HandData> easyHands = new List<HandData>(hands.Where((x) => x.difficulty == Difficulty.Boss));
-        dm.EnemyHand = easyHands[Random.Range(0,easyHands.Count)];
+        List<HandData> bossHands = new List<HandData>(hands.Where((x) => x.difficulty == Difficulty.Boss));
+        dm.EnemyHand = bossHands[Random.Range(0,bossHands.Count)];
         SceneManager.LoadScene("CardGame");
     }
 }

@@ -2434,6 +2434,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 518f0ba96fb9b204682a04419541e330, type: 2}
   - {fileID: 11400000, guid: 6fb29c3a4865b8a4a9b73a03796f62e1, type: 2}
   startingPips: 0
+  money: 10
 --- !u!4 &1647448888
 Transform:
   m_ObjectHideFlags: 0

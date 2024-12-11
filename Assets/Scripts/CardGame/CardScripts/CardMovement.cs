@@ -39,7 +39,7 @@ public class CardMovement : MonoBehaviour
     {
         if(!gm.isMoveEnabled || creature.status != CardStatus.Unplayed) return;
         if(position_found && creature.status == CardStatus.Unplayed){
-            creature.lane.GetComponent<Lane>().addProtagCreature(gameObject);
+            creature.lane.GetComponent<Lane>()?.addProtagCreature(gameObject);
             card_locked =  true;
             position_found = true;
             gm.changeActivePlayer();

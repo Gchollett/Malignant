@@ -56,6 +56,8 @@ public class OverworldPlayer : MonoBehaviour
         }
         if(SceneManager.GetActiveScene().name == "Overworld"){
             GetComponent<SpriteRenderer>().enabled = true;
+        }else{
+            GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 

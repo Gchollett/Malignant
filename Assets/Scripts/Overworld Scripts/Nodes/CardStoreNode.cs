@@ -8,6 +8,6 @@ public class CardStoreNode : MapNode
 {
     public override void OnVisit()
     {   
-       SceneManager.LoadScene("Main Scene 1");
+       SceneManager.LoadScene("CardStore");
     }
 }

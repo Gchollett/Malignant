@@ -11,7 +11,6 @@ public class TextAnimation : MonoBehaviour
     public string[] stringArray;
 
     [SerializeField] float timeBtwnChars;
-    [SerializeField] float timeBtwnWords;
 
     int i = 0;
 
@@ -45,7 +44,6 @@ public class TextAnimation : MonoBehaviour
             if (visibleCount >= totalVisibleCharacters)
             {
                 i += 1;
-                //Invoke("EndCheck", timeBtwnWords);
                 break;
             }
 

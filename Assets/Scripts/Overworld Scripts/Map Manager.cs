@@ -23,6 +23,12 @@ public class MapManager : MonoBehaviour
     [SerializeField]
     private GameObject monolithNodePrefab;
     [SerializeField]
+    private GameObject treasureNodePrefab;
+    [SerializeField]
+    private GameObject upgradeNodePrefab;
+    [SerializeField]
+    private GameObject treeNodePrefab;
+    [SerializeField]
     private GameObject edgePrefab;
 
     [SerializeField]
@@ -63,14 +69,15 @@ public class MapManager : MonoBehaviour
     private void AddNodes()
     {
         List<Vector2> points = new List<Vector2>();
-        while(points.Count < nodeNum){
+        while(points.Count < nodeNum || Mathf.Floor(points.Count/nodeNum)*nodeNum < points.Count){
             points = PoissonDiscSampling.GeneratePoints(radius,sampleRegionSize);
         }
         points.Sort((Vector2 a, Vector2 b) => (int)Mathf.Round(a.x-b.x));
-        for(int i=1; i <= nodeNum; i++){
-            if(i == 1){
+        int p_count = points.Count/nodeNum;
+        for(int i=0; i < nodeNum; i++){
+            if(i == 0){
                 GameObject newNode = Instantiate(startNodePrefab,transform);
-                newNode.transform.position = points[i-1] - sampleRegionSize/2;
+                newNode.transform.position = points[i*p_count] - sampleRegionSize/2;
                 nodes.Add(newNode);
             } else if(i <= nodeNum/3){
                 List<GameObject> nodeList = new List<GameObject>
@@ -78,11 +85,14 @@ public class MapManager : MonoBehaviour
                         battleNodePrefab,
                         battleNodePrefab,
                         battleNodePrefab,
+                        battleNodePrefab,
+                        treasureNodePrefab,
+                        treasureNodePrefab,
                         cardStoreNodePrefab,
                     };
                 GameObject pickedNode = nodeList[Random.Range(0,nodeList.Count)];
                 GameObject newNode = Instantiate(pickedNode,transform);
-                newNode.transform.position = points[i-1] - sampleRegionSize/2;
+                newNode.transform.position = points[i*p_count] - sampleRegionSize/2;
                 nodes.Add(newNode);
             }else if(i <= nodeNum*3/4){
                 List<GameObject> nodeList = new List<GameObject>
@@ -92,6 +102,12 @@ public class MapManager : MonoBehaviour
                         battleNodePrefab,
                         battleNodePrefab,
                         battleNodePrefab,
+                        battleNodePrefab,
+                        battleNodePrefab,
+                        upgradeNodePrefab,
+                        upgradeNodePrefab,
+                        treasureNodePrefab,
+                        treasureNodePrefab,
                         cardStoreNodePrefab,
                         cardStoreNodePrefab,
                         hunterNodePrefab,
@@ -102,9 +118,9 @@ public class MapManager : MonoBehaviour
                     };
                 GameObject pickedNode = nodeList[Random.Range(0,nodeList.Count)];
                 GameObject newNode = Instantiate(pickedNode,transform);
-                newNode.transform.position = points[i-1] - sampleRegionSize/2;
+                newNode.transform.position = points[i*p_count] - sampleRegionSize/2;
                 nodes.Add(newNode);
-            }else if(i <= nodeNum-1){
+            }else if(i < nodeNum-1){
                 List<GameObject> nodeList = new List<GameObject>
                     {
                         battleNodePrefab,
@@ -114,13 +130,20 @@ public class MapManager : MonoBehaviour
                     };
                 GameObject pickedNode = nodeList[Random.Range(0,nodeList.Count)];
                 GameObject newNode = Instantiate(pickedNode,transform);
-                newNode.transform.position = points[i-1] - sampleRegionSize/2;
+                newNode.transform.position = points[i*p_count] - sampleRegionSize/2;
                 nodes.Add(newNode);
             }else{
-                GameObject newNode = Instantiate(bossNodePrefab,transform); 
-                newNode.transform.position = points[i-1] - sampleRegionSize/2;                
+                GameObject newNode = Instantiate(bossNodePrefab,transform);
+                newNode.transform.position = points[i*p_count] - sampleRegionSize/2;                
                 nodes.Add(newNode);
             }
+        }
+        for(int i=0;i<points.Count;i++){
+            if(i%p_count != 0){
+                GameObject newNode = Instantiate(treeNodePrefab,transform);
+                newNode.transform.position = points[i] - sampleRegionSize/2; 
+            }
+
         }
     }
 
@@ -174,6 +197,10 @@ public class MapManager : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Overworld"){
             for(int i = 0; i< transform.childCount; i++){
                 transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }else{
+            for(int i = 0; i< transform.childCount; i++){
+                transform.GetChild(i).gameObject.SetActive(false);
             }
         }
     }

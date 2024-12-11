@@ -6,9 +6,9 @@ using UnityEngine;
 public class Draggable : MonoBehaviour
 {
     public Transform canvasTransform;
-    private Card card;
-    private int originalIndex;
-    private Transform originalParent;
+    protected Card card;
+    protected int originalIndex;
+    protected Transform originalParent;
     private void Start() {
         originalIndex = transform.GetSiblingIndex();
         originalParent = transform.parent.transform;
@@ -36,15 +36,16 @@ public class Draggable : MonoBehaviour
     }
 
     private void OnCollisionStay2D(Collision2D other) {
-        Debug.Log("Colliding");
         if(card)return;
         Card temp_card;
         other.gameObject.TryGetComponent(out temp_card);
+        if(temp_card)other.transform.localScale = Vector3.one*3;
         card = temp_card;
     }
 
     private void OnCollisionExit2D(Collision2D other) {
         if(!card || !other.gameObject.GetComponent<Card>())return;
+        other.transform.localScale = Vector3.one*2;
         card = null;
     }
 }
