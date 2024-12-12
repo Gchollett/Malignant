@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/AbilityStore.unity
     guid: e6ece780a930dd3408779222b1e7fffe
   - enabled: 1
+    path: Assets/Scenes/Hunter.unity
+    guid: fdb9a7520c577b2498fd4250c3731936
+  - enabled: 1
     path: Assets/Scenes/CardStore.unity
     guid: a1416eba689899e428acf3e3739cf24c
   m_configObjects: {}

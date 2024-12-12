@@ -8,7 +8,7 @@ public class Scare : ActivatedAbility
     StatusEffect FrightenedPrefab;
     void Start()
     {
-        FrightenedPrefab = Resources.Load<StatusEffect>("/Prefabs/StatusEffects/Frightened");
+        FrightenedPrefab = Resources.Load<StatusEffect>("Prefabs/StatusEffects/Frightened.prefab");
     }
     public override void activatedAction()
     {

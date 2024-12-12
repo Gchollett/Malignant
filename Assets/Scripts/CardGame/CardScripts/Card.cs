@@ -15,11 +15,6 @@ public class Card : MonoBehaviour
     public CardData cardData;
     public SpriteRenderer spriteRenderer;
     public Image image;
-    public string cardName {get; private set;}
-    public Rarity rarity {get; private set;}    
-    public int power {get; private set;}
-    public int health {get; private set;}
-    public string flavorText {get; private set;}
     public int abilityLimit = 3;
     public List<Ability> abilities {get; private set;}
     public GameObject lane {get; set;}
@@ -43,11 +38,6 @@ public class Card : MonoBehaviour
 
     void Start()
     {
-        cardName = cardData.cardName;
-        power = cardData.power;
-        health = cardData.health;
-        rarity = cardData.rarity;
-        flavorText = cardData.flavorText;
         abilities = new List<Ability>(cardData.abilities);
         if(spriteRenderer) spriteRenderer.sprite = cardData.image;
         else image.sprite = cardData.image;
@@ -64,8 +54,8 @@ public class Card : MonoBehaviour
         }
     }
     void FixedUpdate() {
-        if(power + tempPower < 0){
-            tempPower = -power;
+        if(cardData.power + tempPower < 0){
+            tempPower = -cardData.power;
         }
     }
 
@@ -94,10 +84,10 @@ public class Card : MonoBehaviour
     }
 
     public void attack(Player p){
-        p.damage(power+tempPower<0?0:power+tempPower);
+        p.damage(cardData.power+tempPower<0?0:cardData.power+tempPower);
     }
     public void attack(Card c){
-        c.tempHealth -= power+tempPower<0?0:power+tempPower;
+        c.tempHealth -= cardData.power+tempPower<0?0:cardData.power+tempPower;
     }
     public void Kill()
     {
@@ -126,7 +116,7 @@ public class Card : MonoBehaviour
         isPoisoned = true;
     }
     public void CheckIfDead(){
-        if(health + tempHealth <= 0 || isPoisoned){
+        if(cardData.health + tempHealth <= 0 || isPoisoned){
             Kill();
         }
     }    
@@ -157,8 +147,7 @@ public class Card : MonoBehaviour
         }
         abilities[indx] = ab;
         cardData.abilities.Add(ab);
-        cardData.cardName = ab.adjective + " " + cardName;
-        cardName = ab.adjective + " " + cardName;
+        cardData.cardName = ab.adjective + " " + cardData.cardName;
         return true;
     }
     public void ActivateTrigger(Triggers trig){
@@ -192,12 +181,12 @@ public class Card : MonoBehaviour
 
     public int getInGameHealth()
     {
-        return health + tempHealth;
+        return cardData.health + tempHealth;
     }
 
     public int getInGamePower()
     {
-        return power + tempPower;
+        return cardData.power + tempPower;
     }
 
     public bool hasAbility(Type abCheck){

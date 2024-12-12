@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf63be6e16841946a7224ea46e81fb1, type: 3}
   m_Name: Deer
   m_EditorClassIdentifier: 
-  cardName: Fast Deer
+  cardName: Deer
   rarity: 0
   power: 2
   health: 4

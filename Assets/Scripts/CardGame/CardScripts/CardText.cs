@@ -25,9 +25,9 @@ public class CardText : MonoBehaviour
         foreach (StatusEffect se in creature.staticEffects){
             adjectives = se.effectName + " " + adjectives;
         }
-        nameText.text = adjectives + creature.cardName;
-        powerText.text = ((creature.power + creature.tempPower >= 0)?(creature.power + creature.tempPower):0).ToString();
-        healthText.text = (creature.health + creature.tempHealth).ToString();
+        nameText.text = adjectives + creature.cardData.cardName;
+        powerText.text = ((creature.cardData.power + creature.tempPower >= 0)?(creature.cardData.power + creature.tempPower):0).ToString();
+        healthText.text = (creature.cardData.health + creature.tempHealth).ToString();
         for(int i = 0; i < creature.abilityLimit; i++){
             Ability ab = i<creature.abilities.Count?creature.abilities[i]:null;
             if(ab){

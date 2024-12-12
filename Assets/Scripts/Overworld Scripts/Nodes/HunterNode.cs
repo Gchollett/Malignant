@@ -8,6 +8,6 @@ public class HunterNode : MapNode
 {
     public override void OnVisit()
     {   
-       SceneManager.LoadScene("Main Scene 1");
+       SceneManager.LoadScene("Hunter");
     }
 }
