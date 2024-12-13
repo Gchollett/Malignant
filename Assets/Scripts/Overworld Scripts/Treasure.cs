@@ -47,6 +47,9 @@ public class Treasure : MonoBehaviour
     }
 
     private void generateCards(){
+        for(int i = 0; i < CardContent.childCount;i++){
+            Destroy(CardContent.GetChild(i).gameObject);
+        }
         CardObjects = Resources.LoadAll<CardData>("ScriptableObjects/CreatureData");
         List<CardData> chosenCards = new List<CardData>();
         List<CardData> rareCards = new List<CardData>(CardObjects.Where((x) => x.rarity == Rarity.Rare));

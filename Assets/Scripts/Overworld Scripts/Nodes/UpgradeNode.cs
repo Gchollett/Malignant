@@ -8,6 +8,6 @@ public class UpgradeNode : MapNode
 {
     public override void OnVisit()
     {   
-       SceneManager.LoadScene("Main Scene 1");
+        GameObject.Find("Pop-up Canvas").transform.GetChild(1).gameObject.SetActive(true);
     }
 }

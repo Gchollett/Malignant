@@ -37,6 +37,7 @@ public class MapManager : MonoBehaviour
     private float radius;
     [SerializeField]
     private Vector2 sampleRegionSize;
+    public bool movingEnabled {get;set;} = true;
     public int numVisited {get; set;} = 0;
 
     public List<GameObject> nodes {get; private set;} = new List<GameObject>();

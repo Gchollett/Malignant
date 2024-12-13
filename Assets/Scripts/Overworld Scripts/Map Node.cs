@@ -34,7 +34,7 @@ public abstract class MapNode : MonoBehaviour
         }
     }
     private void OnMouseDown() {
-            if(op.ReadyToMove(this)){
+            if(mm.movingEnabled && op.ReadyToMove(this)){
                 StartCoroutine(moveThenVisit());
             }
     }

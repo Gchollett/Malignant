@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour
 {
-    public Transform canvasTransform;
+    public Transform ParentTransform;
     protected Card card;
     protected int originalIndex;
     protected Transform originalParent;
@@ -14,7 +14,7 @@ public class Draggable : MonoBehaviour
         originalParent = transform.parent.transform;
     }
     private void OnMouseDown() {
-        transform.SetParent(canvasTransform);
+        transform.SetParent(ParentTransform);
     }
     private void OnMouseDrag() {
         Plane dragPlane = new Plane(Camera.main.transform.forward, transform.position);
