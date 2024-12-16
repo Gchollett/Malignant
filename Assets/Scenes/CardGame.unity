@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hand: []
+  hoveringCursor: {fileID: 2800000, guid: 229b29c44d374a647be5904c5a7148e1, type: 3}
 --- !u!1 &55150132
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,6 +971,7 @@ GameObject:
   - component: {fileID: 718902959}
   - component: {fileID: 718902958}
   - component: {fileID: 718902957}
+  - component: {fileID: 718902960}
   m_Layer: 5
   m_Name: Pass Priority
   m_TagString: Untagged
@@ -1091,6 +1093,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 718902955}
   m_CullTransparentMesh: 1
+--- !u!114 &718902960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718902955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307789b7b9a0cee4aa5e3a29520263c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 2800000, guid: 229b29c44d374a647be5904c5a7148e1, type: 3}
 --- !u!1 &813420970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1872,6 +1887,7 @@ GameObject:
   - component: {fileID: 1225767603}
   - component: {fileID: 1225767604}
   - component: {fileID: 1225767605}
+  - component: {fileID: 1225767606}
   m_Layer: 0
   m_Name: Deck
   m_TagString: Untagged
@@ -2051,6 +2067,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1225767606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225767598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307789b7b9a0cee4aa5e3a29520263c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 2800000, guid: 229b29c44d374a647be5904c5a7148e1, type: 3}
 --- !u!1 &1284964822
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,6 +2243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db12d3775c14aad40ab4848e83a8893c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sacCursor: {fileID: 2800000, guid: b039db9f182799d4191a881f915b2c0d, type: 3}
   protag: {fileID: 35935746}
   antag: {fileID: 1540497076}
   lanes:

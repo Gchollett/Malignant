@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 6831613809335723601}
   - component: {fileID: 3590956538725412149}
   - component: {fileID: 1646773964665573846}
+  - component: {fileID: 5495656129712327546}
   m_Layer: 5
   m_Name: Ability 2 Button
   m_TagString: Untagged
@@ -255,6 +256,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5495656129712327546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453038158734782022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307789b7b9a0cee4aa5e3a29520263c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 2800000, guid: 229b29c44d374a647be5904c5a7148e1, type: 3}
 --- !u!1 &1661776854666274090
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +415,7 @@ GameObject:
   - component: {fileID: 1228265372410948761}
   - component: {fileID: 5901942731654439595}
   - component: {fileID: 5212682958057850239}
+  - component: {fileID: 6159952498116522293}
   m_Layer: 5
   m_Name: Ability 3 Button
   m_TagString: Untagged
@@ -510,6 +525,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6159952498116522293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2397477711842694050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307789b7b9a0cee4aa5e3a29520263c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 2800000, guid: 229b29c44d374a647be5904c5a7148e1, type: 3}
 --- !u!1 &2545013644028109348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,6 +1224,7 @@ GameObject:
   - component: {fileID: 1525208604452983937}
   - component: {fileID: 1769265943980924141}
   - component: {fileID: 1559758817382535860}
+  - component: {fileID: 7136793375390124879}
   m_Layer: 0
   m_Name: CreatureCard
   m_TagString: Untagged
@@ -1410,6 +1439,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7136793375390124879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4200072223276004059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307789b7b9a0cee4aa5e3a29520263c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 0}
 --- !u!1 &4623713994396511793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1422,6 +1464,7 @@ GameObject:
   - component: {fileID: 2466862728134937796}
   - component: {fileID: 5793654071808169005}
   - component: {fileID: 7464125550442828542}
+  - component: {fileID: 2689172172281655935}
   m_Layer: 5
   m_Name: Ability 1 Button
   m_TagString: Untagged
@@ -1531,6 +1574,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2689172172281655935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4623713994396511793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307789b7b9a0cee4aa5e3a29520263c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 2800000, guid: 229b29c44d374a647be5904c5a7148e1, type: 3}
 --- !u!1 &5804152764631037552
 GameObject:
   m_ObjectHideFlags: 0
