@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -3382648910573270373}
   - component: {fileID: 7857925465809682131}
   - component: {fileID: -5792781580925131486}
+  - component: {fileID: -8483326268262618472}
   m_Layer: 0
   m_Name: Treasure Node
   m_TagString: Untagged
@@ -134,3 +135,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   edges: []
+--- !u!114 &-8483326268262618472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6360991820196582984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307789b7b9a0cee4aa5e3a29520263c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 2800000, guid: 229b29c44d374a647be5904c5a7148e1, type: 3}

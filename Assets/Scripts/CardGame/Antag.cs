@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class Antag : Player {    
     void playCard(Lane lane){
@@ -16,19 +17,31 @@ public class Antag : Player {
     }
    public void MakePlay(Lane[] lanes){
         if(Hand.Count != 0){
-            bool played = false;
             List<Lane> emptyLanes = new List<Lane>();
+            List<(Lane,int,int)> nonemptyLanes = new List<(Lane, int, int)>();
             foreach(Lane lane in lanes){
-                if(!played && lane.protagCreature && !lane.antagCreature){
-                    playCard(lane);
-                    played = true;
+                if(lane.protagCreature && !lane.antagCreature){
+                    nonemptyLanes.Add((lane,lane.protagCreature.GetComponent<Card>().getInGamePower(),lane.protagCreature.GetComponent<Card>().getInGamePower()));
                 }else if(!lane.antagCreature){
                     emptyLanes.Add(lane);
                 }
-            }if(!played){
-                if(emptyLanes.Count > 0){
+            }
+            if(nonemptyLanes.Count > 0){
+                int maxHealth = nonemptyLanes.Max(x => x.Item3);
+                Lane healthy = new List<(Lane,int,int)>(nonemptyLanes.Where(x => x.Item3 == maxHealth))[0].Item1;
+                int maxPower = nonemptyLanes.Max(x => x.Item2);
+                Lane powerful = new List<(Lane,int,int)>(nonemptyLanes.Where(x => x.Item2 == maxPower))[0].Item1;
+                if(maxPower >= 2){
+                    playCard(powerful);
+                }else if(maxPower == 0 && emptyLanes.Count>0){
                     playCard(emptyLanes[Random.Range(0,emptyLanes.Count)]);
+                }else if(maxPower <= 1 && maxHealth > 4 && health > 5){
+                    playCard(healthy);
+                }else{
+                    playCard(nonemptyLanes[Random.Range(0,nonemptyLanes.Count)].Item1);
                 }
+            }else{
+                playCard(emptyLanes[Random.Range(0,emptyLanes.Count)]);
             }
         }
     }

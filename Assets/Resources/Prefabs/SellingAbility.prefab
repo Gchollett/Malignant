@@ -144,6 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7633088212222552}
   - component: {fileID: 2802926024888666854}
+  - component: {fileID: 7251802719183988608}
   m_Layer: 0
   m_Name: SellingAbility
   m_TagString: Untagged
@@ -217,6 +218,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 200, y: 70}
   m_EdgeRadius: 0
+--- !u!114 &7251802719183988608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7157034327810351647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307789b7b9a0cee4aa5e3a29520263c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 2800000, guid: 229b29c44d374a647be5904c5a7148e1, type: 3}
 --- !u!1001 &2552732799831054300
 PrefabInstance:
   m_ObjectHideFlags: 0
