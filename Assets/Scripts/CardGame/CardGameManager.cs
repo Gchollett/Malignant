@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class CardGameManager : MonoBehaviour
 {
     public static CardGameManager Instance;
+    public Texture2D sacCursor;
     public Protag protag;
     public Antag antag;
     private Player activePlayer;
@@ -127,10 +128,16 @@ public class CardGameManager : MonoBehaviour
             button.gameObject.SetActive(true);
                 isMoveEnabled = true;
                 isSacrificeEnabled = true;
+                foreach(Lane lane in lanes){
+                    if(lane.protagCreature) lane.protagCreature.GetComponent<HoverCursor>().cursor = sacCursor;
+                }
             }else{
                 button.gameObject.SetActive(false);
                 isMoveEnabled = false;
                 isSacrificeEnabled = false;
+                foreach(Lane lane in lanes){
+                    if(lane.protagCreature) lane.protagCreature.GetComponent<HoverCursor>().cursor = null;
+                }
                 StartCoroutine(playThenSwitch());
             }
         }else if(phase == Phase.Activation && !isWaiting){

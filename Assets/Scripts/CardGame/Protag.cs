@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Protag : Player {
     
+    public Texture2D hoveringCursor;
     private void FixedUpdate() {
         DisplayHand();
     }
@@ -30,6 +31,7 @@ public class Protag : Player {
                 GameObject card = Instantiate(CardPrefab,transform);
                 card.GetComponent<Card>().cardData = Hand[i];
                 card.transform.position = gameObject.transform.position + new Vector3(2*(i-Hand.Count/2f+.5f),0,0);
+                card.GetComponent<HoverCursor>().cursor = hoveringCursor;
             }
         }
         

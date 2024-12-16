@@ -21,6 +21,7 @@ public class CardMovement : MonoBehaviour
             if(card_locked || !gm.isMoveEnabled) return;
             card_index = gameObject.transform.GetSiblingIndex();
             data = CardGameManager.Instance.protag.RemoveGameCard(card_index);
+            gameObject.GetComponent<HoverCursor>().cursor = null;
         }
     }
     private void OnMouseDrag() {
