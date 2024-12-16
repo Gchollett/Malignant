@@ -75,9 +75,19 @@ public class CardGameManager : MonoBehaviour
         antagHealth.text = antag.health.ToString();
         protagPips.text = $"Pips: {protag.pips}";
         antagPips.text = $"Pips: {antag.pips}";
-        if(antag.health <= 0){
+        if(antag.health <= 0 && protag.health >= antag.health){
             dm.money += protag.pips;
+            if(dm.isMonolith){
+                dm.startingPips+=1;
+                dm.isMonolith = false;
+            }
             SceneManager.LoadScene("Overworld");
+        }
+        if(protag.health <= 0 && protag.health < antag.health){
+            Destroy(dm.gameObject);
+            Destroy(mm.gameObject);
+            Destroy(op.gameObject);
+            SceneManager.LoadScene(0);
         }
     }
 

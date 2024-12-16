@@ -44,7 +44,13 @@ public class Upgrade : MonoBehaviour
     }
 
     private void OnEnable() {
+        if(!mm) mm = MapManager.Instance;
+        mm.movingEnabled = false;
         generateAbilities();
+    }
+
+    private void OnDisable() {
+        mm.movingEnabled = true;
     }
 
     private void generateAbilities(){

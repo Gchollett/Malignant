@@ -1,5 +1,7 @@
 public enum Rarity{
     Common,
     Uncommon,
-    Rare
+    Rare,
+    Modded,
+    Monolith
 }

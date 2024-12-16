@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fast Snapping Racoon
   m_EditorClassIdentifier: 
   cardName: Fast Snapping Racoon
-  rarity: 
+  rarity: 3
   power: 2
   health: 3
   flavorText: It's gonna steal

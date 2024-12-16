@@ -11,6 +11,7 @@ public class DataManager : MonoBehaviour
     public List<CardData> Deck;
     public int startingPips = 0;
     public int money = 10;
+    public bool isMonolith {get; set;}
     public static MapManager mm;
     public static OverworldPlayer op;
     void Awake()

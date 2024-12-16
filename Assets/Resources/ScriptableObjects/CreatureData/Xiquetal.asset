@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eaf63be6e16841946a7224ea46e81fb1, type: 3}
-  m_Name: Flying Squirrel
+  m_Name: Xiquetal
   m_EditorClassIdentifier: 
-  cardName: Flying Squirrel
-  rarity: 
-  power: 1
-  health: 1
-  flavorText: It's a squirrel
-  abilities:
-  - {fileID: 3103212760774652538, guid: fa48866b772956e4e83954a7c78f901a, type: 3}
-  image: {fileID: 21300000, guid: 27227559151edb44bbe03173670632db, type: 3}
+  cardName: Xiquetal
+  rarity: 4
+  power: 2
+  health: 4
+  flavorText: A Reminder of the Ancient Times
+  abilities: []
+  image: {fileID: 21300000, guid: 236566a3d46f4dc429298ccdff8a34df, type: 3}
