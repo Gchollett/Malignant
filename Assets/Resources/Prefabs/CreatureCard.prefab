@@ -1195,6 +1195,7 @@ GameObject:
   - component: {fileID: 3553888807954663827}
   - component: {fileID: 1525208604452983937}
   - component: {fileID: 1769265943980924141}
+  - component: {fileID: 1559758817382535860}
   m_Layer: 0
   m_Name: CreatureCard
   m_TagString: Untagged
@@ -1239,7 +1240,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 62166a14a52ed1d4e80704acb9e03d20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1388,6 +1389,27 @@ MonoBehaviour:
   - {fileID: 1646773964665573846}
   - {fileID: 5212682958057850239}
   creature: {fileID: -6069409344659761535}
+--- !u!95 &1559758817382535860
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4200072223276004059}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4be53e245682aeb48beb93d74cc6ca4c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4623713994396511793
 GameObject:
   m_ObjectHideFlags: 0
