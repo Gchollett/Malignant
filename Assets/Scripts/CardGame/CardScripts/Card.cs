@@ -111,7 +111,7 @@ public class Card : MonoBehaviour
     public void UpdateCard()
     {
         foreach(StatusEffect se in new List<StatusEffect>(statusEffects.Keys)){
-            Debug.Log(se.effectName);
+        Debug.Log($"{se} {statusEffects[se]}");
             if(statusEffects[se] > 0) {
                 statusEffects[se] -= 1;
                 if(statusEffects[se] == 0){
