@@ -27,6 +27,7 @@ public class Card : MonoBehaviour
     public bool isAbilitiesStopped {get; set;}
     public bool isPoisoned {get; set;}
     private bool isDying;
+    private AudioManager audioManager;
     public bool isDealingDirect {get; set;} //Boolean for that allows the creature to avoid attacking opposing creatures
     private static CardGameManager gm;
     public Dictionary<StatusEffect,int> statusEffects {get; set;} = new Dictionary<StatusEffect, int>(); //The status effect and the duration of it
@@ -37,7 +38,8 @@ public class Card : MonoBehaviour
     public CardStatus status {get; set;} = CardStatus.Unplayed;
 
     void Start()
-    {
+    {   
+        audioManager = AudioManager.Instance;
         abilities = new List<Ability>(cardData.abilities);
         if(spriteRenderer) spriteRenderer.sprite = cardData.image;
         else image.sprite = cardData.image;
@@ -57,6 +59,7 @@ public class Card : MonoBehaviour
         if(cardData.power + tempPower < 0){
             tempPower = -cardData.power;
         }
+        
     }
 
     public void applyStaticEffect(StatusEffect se){

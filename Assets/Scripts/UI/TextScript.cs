@@ -9,6 +9,7 @@ public class TextAnimation : MonoBehaviour
 [SerializeField] TextMeshProUGUI _textMeshPro;
 
     public string[] stringArray;
+    private bool running = false;
 
     [SerializeField] float timeBtwnChars;
 
@@ -21,17 +22,18 @@ public class TextAnimation : MonoBehaviour
 
     public void EndCheck()
     {
-        if (i <= stringArray.Length - 1)
+        if (i <= stringArray.Length - 1 && !running)
         {
             _textMeshPro.text = stringArray[i];
             StartCoroutine(TextVisible());
-        }else{
+        }else if (!running){
             SceneManager.LoadScene(1);
         }
     }
 
     private IEnumerator TextVisible()
     {
+        running = true;
         _textMeshPro.ForceMeshUpdate();
         int totalVisibleCharacters = _textMeshPro.textInfo.characterCount;
         int counter = 0;
@@ -52,5 +54,6 @@ public class TextAnimation : MonoBehaviour
 
 
         }
+        running = false;
     }
 }
