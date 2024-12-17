@@ -37,6 +37,7 @@ public class CardGameManager : MonoBehaviour
         Combat = 3,
         End = 4
     }
+    private Vector3 deckStartPos;
 
 
     void Awake()
@@ -113,14 +114,7 @@ public class CardGameManager : MonoBehaviour
     void mainGameLoop()
     {
         if(phase == Phase.Start && !isWaiting){
-            foreach(Lane lane in lanes){
-                lane.protagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnStart);
-                lane.antagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnStart);
-            }
-            button.gameObject.SetActive(false);
-            gainPips();
-            isWaiting = true;
-            isDrawEnabled = true;
+            StartCoroutine(StartPhase());
         }else if(phase == Phase.Play && !isWaiting){
             isDrawEnabled = false;
             isWaiting = true;
@@ -177,7 +171,7 @@ public class CardGameManager : MonoBehaviour
             }
         }else if(phase == Phase.Combat && !isWaiting){
             isWaiting = true;
-            combat();
+            StartCoroutine(combat());
         }else if(phase == Phase.End && !isWaiting){
             cleanBoard();
             changePhase();
@@ -188,6 +182,22 @@ public class CardGameManager : MonoBehaviour
     void gainPips(){
         protag.upPips();
         antag.upPips();
+    }
+
+    private IEnumerator StartPhase()
+    {
+        button.gameObject.SetActive(false);
+        isWaiting = true;
+        isDrawEnabled = true;
+        foreach(Lane lane in lanes){
+            lane.protagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnStart);
+            lane.antagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnStart);
+        }
+        yield return new WaitForEndOfFrame();
+        gainPips();
+        yield return new WaitForEndOfFrame();
+        if(deck.cards.Count >0) deck.GetComponent<Animator>().SetBool("Drawing",true);
+        else changePhase();
     }
     //Play Phase Methods
         //DISABLE DRAW
@@ -207,7 +217,7 @@ public class CardGameManager : MonoBehaviour
         //ENABLE ACTIVATIONS
     //Combat Phase Methods
         //DISABLE ACTIVATIONS
-    void combat(){
+    private IEnumerator combat(){
         foreach(Lane lane in lanes){
             if(lane.protagCreature){
                 for(int i = 0; i <= lane.protagCreature.GetComponent<Card>().extraAttackCounter; i++){
@@ -225,6 +235,7 @@ public class CardGameManager : MonoBehaviour
                 }
                 lane.protagCreature.GetComponent<Card>().extraAttackCounter = 0;
             }
+            yield return new WaitForSeconds(.5f);
             if(lane.antagCreature){
                 for(int i = 0; i <= lane.antagCreature.GetComponent<Card>().extraAttackCounter; i++){
                     if(lane.antagCreature.GetComponent<Card>().isAttackStopped) break;
@@ -241,6 +252,7 @@ public class CardGameManager : MonoBehaviour
                 }
                 lane.antagCreature.GetComponent<Card>().extraAttackCounter = 0;
             }
+            yield return new WaitForSeconds(.5f);
         }
         changePhase();
     }

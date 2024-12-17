@@ -11,9 +11,19 @@ public class DeckButton : MonoBehaviour
         gm = CardGameManager.Instance;
     }
 
+    private IEnumerator DrawCardInGame()
+    {
+        gameObject.GetComponent<Animator>().SetBool("Drawing",false);
+        gameObject.GetComponent<Animator>().SetBool("Adding",true);
+        yield return new WaitUntil(() => gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Exit") && gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1f);
+        gm.protag.AddGameCard(deck.draw(),-1);
+        gameObject.GetComponent<Animator>().SetBool("Adding",false);
+        transform.position = new Vector3(10,0,0);
+    }
+
     private void OnMouseDown() {
         if(!gm.isDrawEnabled) return;
-        gm.protag.AddGameCard(deck.draw(),-1);
+        StartCoroutine(DrawCardInGame());
         foreach(Lane lane in gm.lanes){
             lane.protagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnDraw);
             lane.antagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnDraw);
