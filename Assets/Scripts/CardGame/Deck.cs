@@ -18,6 +18,7 @@ public class Deck : MonoBehaviour{
     }
     public CardData draw(){
         if(cards.Count == 0) return null;
+        AudioManager.Instance.PlaySound2d("card_draw");
         CardData card = cards[0];
         cards.RemoveAt(0);
         return card;
