@@ -595,8 +595,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _textMeshPro: {fileID: 712434376}
   stringArray:
-  - The forest spirit has awaken..
-  - You are now bound to the game...
+  - The forest spirit has awoken...
+  - You are now bound to the game
   timeBtwnChars: 0.05
 --- !u!114 &712434376
 MonoBehaviour:
