@@ -34,7 +34,7 @@ public class Card : MonoBehaviour
     public HashSet<StatusEffect> staticEffects {get; set;} = new HashSet<StatusEffect>(); //The status effects that don't need a duration
     public Dictionary<Triggers,List<(Action,int)>> tempTriggers {get; set;} = new Dictionary<Triggers, List<(Action, int)>>();//The triggers that only need to trigger a finite number of times
     public Dictionary<Triggers,List<Action>> staticTriggers {get;set;} = new Dictionary<Triggers, List<Action>>(); //The triggers that should trigger until removed
-    public Vector3 initialScale {get; private set;}
+    public Vector3 initialScale {get; set;}
     public CardStatus status {get; set;} = CardStatus.Unplayed;
 
     void Start()
@@ -92,21 +92,29 @@ public class Card : MonoBehaviour
     public void attack(Card c){
         c.tempHealth -= cardData.power+tempPower<0?0:cardData.power+tempPower;
     }
+    IEnumerator DyingAnimation(Action func)
+    {
+        GetComponent<Animator>().SetBool("Dying",true);
+        yield return new WaitForSeconds(.5f);
+        func();
+    }
     public void Kill()
     {
         if(isDying)return;
         isDying = true;
-        ActivateTrigger(Triggers.OnDeath);
-        audioManager.PlaySound2d("card_burn"); //Added this in here, might need to be moved if you know somewhere better Garrett - <3 Dennis
-        lane.GetComponent<Lane>().removeFromLane(gameObject);
-        Destroy(gameObject);
-        abilities.ForEach(ab => {
-            Destroy(ab);
-        });
+        StartCoroutine(DyingAnimation(() => {
+            ActivateTrigger(Triggers.OnDeath);
+            lane.GetComponent<Lane>().removeFromLane(gameObject);
+            Destroy(gameObject);
+            abilities.ForEach(ab => {
+                Destroy(ab);
+            });
+        }));
     }
     public void UpdateCard()
     {
         foreach(StatusEffect se in new List<StatusEffect>(statusEffects.Keys)){
+        Debug.Log($"{se} {statusEffects[se]}");
             if(statusEffects[se] > 0) {
                 statusEffects[se] -= 1;
                 if(statusEffects[se] == 0){
@@ -126,18 +134,20 @@ public class Card : MonoBehaviour
     }    
 
     public void Sacrifice(){
-        if(status == CardStatus.Protags){
-            gm.protag.upPips();
-            gm.disableSacrifice();            
-        }else if(status == CardStatus.Antags){
-            gm.antag.upPips();
-        }
-        ActivateTrigger(Triggers.OnSacrifice);
-        lane.GetComponent<Lane>().removeFromLane(gameObject);
-        Destroy(gameObject);
-        abilities.ForEach(ab => {
-            Destroy(ab);
-        });
+        StartCoroutine(DyingAnimation(() => {
+            if(status == CardStatus.Protags){
+                gm.protag.upPips();
+                gm.disableSacrifice();            
+            }else if(status == CardStatus.Antags){
+                gm.antag.upPips();
+            }
+            ActivateTrigger(Triggers.OnSacrifice);
+            lane.GetComponent<Lane>().removeFromLane(gameObject);
+            Destroy(gameObject);
+            abilities.ForEach(ab => {
+                Destroy(ab);
+            });
+        }));
     }
 
     public bool addAbility(Ability ab){

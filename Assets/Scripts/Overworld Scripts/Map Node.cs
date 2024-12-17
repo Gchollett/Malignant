@@ -31,10 +31,11 @@ public abstract class MapNode : MonoBehaviour
             OnVisit();
             mm.numVisited+=1;
             visited = true;
+            transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
         }
     }
     private void OnMouseDown() {
-            if(mm.movingEnabled && op.ReadyToMove(this)){
+            if(mm.movingEnabled && op.AbleToMove(this)){
                 StartCoroutine(moveThenVisit());
             }
     }

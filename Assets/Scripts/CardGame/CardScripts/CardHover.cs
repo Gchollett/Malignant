@@ -13,12 +13,11 @@ public class CardHover : MonoBehaviour
     [SerializeField] private int hoverSortingOrder = 4;
     private int initialSortingOrder;
     private Vector2 targetPos;
-    private SpriteRenderer cardRenderer;
+    [SerializeField] private SpriteRenderer cardRenderer;
     private Vector2 initialPos;
 
     void Start()
     {
-        cardRenderer = transform.GetComponent<SpriteRenderer>();
         initialSortingOrder = cardRenderer.sortingOrder;
         initialPos = transform.position;
         targetPos = initialPos;

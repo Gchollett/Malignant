@@ -34,7 +34,7 @@ public class CardText : MonoBehaviour
                 abilityText[i].text = ab.abilityName;
                 if(ab is ActivatedAbility){
                     abilityButtons[i].gameObject.SetActive(true);
-                    abilityButtons[i].gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{((ActivatedAbility)ab).cost} pips";
+                    abilityButtons[i].gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{((ActivatedAbility)ab).cost} <sprite index=0>";
                 }
             } else {
                 abilityText[i].text = "";

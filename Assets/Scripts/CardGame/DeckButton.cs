@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DeckButton : MonoBehaviour
@@ -11,13 +12,22 @@ public class DeckButton : MonoBehaviour
         gm = CardGameManager.Instance;
     }
 
-    private void OnMouseDown() {
-        if(!gm.isDrawEnabled) return;
+    private IEnumerator DrawCardInGame()
+    {
+        gameObject.GetComponent<Animator>().SetBool("Drawing",false);
+        gameObject.GetComponent<Animator>().SetBool("Adding",true);
+        yield return new WaitUntil(() => gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Exit") && gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1f);
         gm.protag.AddGameCard(deck.draw(),-1);
+        gameObject.GetComponent<Animator>().SetBool("Adding",false);
         foreach(Lane lane in gm.lanes){
-            lane.protagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnDraw);
-            lane.antagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnDraw);
+            if(lane.protagCreature)lane.protagCreature.GetComponent<Card>().ActivateTrigger(Triggers.OnDraw);
+            if(lane.antagCreature)lane.antagCreature.GetComponent<Card>().ActivateTrigger(Triggers.OnDraw);
         }
         gm.changePhase();
+    }
+
+    private void OnMouseDown() {
+        if(!gm.isDrawEnabled) return;
+        StartCoroutine(DrawCardInGame());
     }
 }

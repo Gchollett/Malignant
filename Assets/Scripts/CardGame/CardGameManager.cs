@@ -37,6 +37,7 @@ public class CardGameManager : MonoBehaviour
         Combat = 3,
         End = 4
     }
+    private Vector3 deckStartPos;
 
 
     void Awake()
@@ -76,6 +77,10 @@ public class CardGameManager : MonoBehaviour
         antagHealth.text = antag.health.ToString();
         protagPips.text = $"Pips: {protag.pips}";
         antagPips.text = $"Pips: {antag.pips}";
+    }
+
+    private void checkWin()
+    {
         if(antag.health <= 0 && protag.health >= antag.health){
             dm.money += protag.pips;
             if(dm.isMonolith){
@@ -110,22 +115,24 @@ public class CardGameManager : MonoBehaviour
         isSacrificeEnabled = false;
     }
 
+    IEnumerator setButtonText(string text){
+        button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+        foreach(char c in text){
+            button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += c;
+            yield return null;
+        }
+    }
+
     void mainGameLoop()
     {
         if(phase == Phase.Start && !isWaiting){
-            foreach(Lane lane in lanes){
-                lane.protagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnStart);
-                lane.antagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnStart);
-            }
-            button.gameObject.SetActive(false);
-            gainPips();
-            isWaiting = true;
-            isDrawEnabled = true;
+            StartCoroutine(StartPhase());
         }else if(phase == Phase.Play && !isWaiting){
             isDrawEnabled = false;
             isWaiting = true;
             if(activePlayer == protag){
-            button.gameObject.SetActive(true);
+                button.gameObject.SetActive(true);
+                StartCoroutine(setButtonText("Done Playing?"));
                 isMoveEnabled = true;
                 isSacrificeEnabled = true;
                 foreach(Lane lane in lanes){
@@ -144,6 +151,7 @@ public class CardGameManager : MonoBehaviour
             isWaiting = true;
             if(activePlayer == protag){
                 button.gameObject.SetActive(true);
+                StartCoroutine(setButtonText("Done Activating?"));
                 isActivationEnabled = true;
                 foreach(Lane lane in lanes){
                     if(lane.protagCreature && !lane.protagCreature.GetComponent<Card>().isAbilitiesStopped){
@@ -155,6 +163,7 @@ public class CardGameManager : MonoBehaviour
                                 if(lane.protagCreature.gameObject.GetComponent<Card>().abilities[index].ProcessAbility(protag.pips)){
                                     protag.lowerPips(((ActivatedAbility)lane.protagCreature.gameObject.GetComponent<Card>().abilities[index]).cost);
                                 }
+                                checkWin();
                             });
                         }
                     }
@@ -171,15 +180,14 @@ public class CardGameManager : MonoBehaviour
                 }
                 button.gameObject.SetActive(false);
                 isActivationEnabled = false;
-                antag.activateAbilities(lanes);
-                changePhase();
-                changeActivePlayer();
+                StartCoroutine(activateThenSwitch());
             }
         }else if(phase == Phase.Combat && !isWaiting){
             isWaiting = true;
-            combat();
+            StartCoroutine(combat());
         }else if(phase == Phase.End && !isWaiting){
             cleanBoard();
+            checkWin();
             changePhase();
         }
     }
@@ -189,13 +197,28 @@ public class CardGameManager : MonoBehaviour
         protag.upPips();
         antag.upPips();
     }
+
+    private IEnumerator StartPhase()
+    {
+        button.gameObject.SetActive(false);
+        isWaiting = true;
+        isDrawEnabled = true;
+        foreach(Lane lane in lanes){
+            lane.protagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnStart);
+            lane.antagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnStart);
+        }
+        yield return new WaitForEndOfFrame();
+        gainPips();
+        yield return new WaitForEndOfFrame();
+        if(deck.cards.Count >0) deck.GetComponent<Animator>().SetBool("Drawing",true);
+        else changePhase();
+    }
     //Play Phase Methods
         //DISABLE DRAW
         //ENABLE MOVE
         //ENABLE SACRICE
         IEnumerator playThenSwitch()
         {
-            
                 antag.MakePlay(lanes);
                 yield return new WaitForFixedUpdate();
                 changePhase();
@@ -205,13 +228,22 @@ public class CardGameManager : MonoBehaviour
         //DISABLE MOVE
         //DISABLE SACRIFICE
         //ENABLE ACTIVATIONS
+        IEnumerator activateThenSwitch()
+        {
+            antag.activateAbilities(lanes);
+            yield return new WaitForFixedUpdate();
+            changePhase();
+            changeActivePlayer();
+        }
     //Combat Phase Methods
         //DISABLE ACTIVATIONS
-    void combat(){
+    private IEnumerator combat(){
         foreach(Lane lane in lanes){
             if(lane.protagCreature){
                 for(int i = 0; i <= lane.protagCreature.GetComponent<Card>().extraAttackCounter; i++){
                     if(lane.protagCreature.GetComponent<Card>().isAttackStopped) break;
+                    lane.protagCreature.GetComponent<Animator>().SetBool("PlayerAttacking",true);
+                    yield return new WaitUntil(() => lane.protagCreature.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime<=1f);
                     if(lane.antagCreature && !lane.antagCreature.GetComponent<Card>().isBlockStopped && (!lane.protagCreature.GetComponent<Card>().isDealingDirect || lane.antagCreature.GetComponent<Card>().canBlockDirect)){
                         lane.protagCreature.GetComponent<Card>().attack(lane.antagCreature.GetComponent<Card>());
                         lane.protagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnDealingDamage);
@@ -222,12 +254,15 @@ public class CardGameManager : MonoBehaviour
                         lane.protagCreature.GetComponent<Card>().ActivateTrigger(Triggers.OnDamagingPlayer);
                     }
                     lane.protagCreature.GetComponent<Card>().ActivateTrigger(Triggers.OnAttack);
+                    lane.protagCreature.GetComponent<Animator>().SetBool("PlayerAttacking",false);
                 }
                 lane.protagCreature.GetComponent<Card>().extraAttackCounter = 0;
             }
             if(lane.antagCreature){
                 for(int i = 0; i <= lane.antagCreature.GetComponent<Card>().extraAttackCounter; i++){
                     if(lane.antagCreature.GetComponent<Card>().isAttackStopped) break;
+                    lane.antagCreature.GetComponent<Animator>().SetBool("EnemyAttacking",true);
+                    yield return new WaitUntil(() => lane.antagCreature.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime<=1f);
                     if(lane.protagCreature && !lane.protagCreature.GetComponent<Card>().isBlockStopped && (!lane.antagCreature.GetComponent<Card>().isDealingDirect || lane.protagCreature.GetComponent<Card>().canBlockDirect)){
                         lane.antagCreature.GetComponent<Card>().attack(lane.protagCreature.GetComponent<Card>());
                         lane.antagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnDealingDamage);
@@ -238,6 +273,7 @@ public class CardGameManager : MonoBehaviour
                         lane.antagCreature.GetComponent<Card>().ActivateTrigger(Triggers.OnDamagingPlayer);
                     }
                     lane.antagCreature.GetComponent<Card>().ActivateTrigger(Triggers.OnAttack);
+                    lane.antagCreature.GetComponent<Animator>().SetBool("EnemyAttacking",false);
                 }
                 lane.antagCreature.GetComponent<Card>().extraAttackCounter = 0;
             }
