@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Moose
   m_EditorClassIdentifier: 
   cardName: Moose
-  rarity: 
+  rarity: 1
   power: 3
   health: 3
   flavorText: It made it from Canada

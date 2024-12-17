@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Turtle
   m_EditorClassIdentifier: 
   cardName: Turtle
-  rarity: 
+  rarity: 1
   power: 1
   health: 5
   flavorText: It has a shell

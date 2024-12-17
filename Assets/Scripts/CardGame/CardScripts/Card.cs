@@ -13,12 +13,8 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
     public CardData cardData;
-    public SpriteRenderer image;
-    public string cardName {get; private set;}
-    public string rarity {get; private set;}    
-    public int power {get; private set;}
-    public int health {get; private set;}
-    public string flavorText {get; private set;}
+    public SpriteRenderer spriteRenderer;
+    public Image image;
     public int abilityLimit = 3;
     public List<Ability> abilities {get; private set;}
     public GameObject lane {get; set;}
@@ -31,24 +27,22 @@ public class Card : MonoBehaviour
     public bool isAbilitiesStopped {get; set;}
     public bool isPoisoned {get; set;}
     private bool isDying;
+    private AudioManager audioManager;
     public bool isDealingDirect {get; set;} //Boolean for that allows the creature to avoid attacking opposing creatures
     private static CardGameManager gm;
     public Dictionary<StatusEffect,int> statusEffects {get; set;} = new Dictionary<StatusEffect, int>(); //The status effect and the duration of it
     public HashSet<StatusEffect> staticEffects {get; set;} = new HashSet<StatusEffect>(); //The status effects that don't need a duration
     public Dictionary<Triggers,List<(Action,int)>> tempTriggers {get; set;} = new Dictionary<Triggers, List<(Action, int)>>();//The triggers that only need to trigger a finite number of times
     public Dictionary<Triggers,List<Action>> staticTriggers {get;set;} = new Dictionary<Triggers, List<Action>>(); //The triggers that should trigger until removed
-    public Vector3 initialScale {get; private set;}
+    public Vector3 initialScale {get; set;}
     public CardStatus status {get; set;} = CardStatus.Unplayed;
 
     void Start()
-    {
-        cardName = cardData.cardName;
-        power = cardData.power;
-        health = cardData.health;
-        rarity = cardData.rarity;
-        flavorText = cardData.flavorText;
+    {   
+        audioManager = AudioManager.Instance;
         abilities = new List<Ability>(cardData.abilities);
-        image.sprite = cardData.image;
+        if(spriteRenderer) spriteRenderer.sprite = cardData.image;
+        else image.sprite = cardData.image;
         initialScale = transform.localScale;
         gm = CardGameManager.Instance;
         for(int i = 0; i < Math.Min(abilities.Count,abilityLimit); i++){
@@ -62,9 +56,10 @@ public class Card : MonoBehaviour
         }
     }
     void FixedUpdate() {
-        if(power + tempPower < 0){
-            tempPower = -power;
+        if(cardData.power + tempPower < 0){
+            tempPower = -cardData.power;
         }
+        
     }
 
     public void applyStaticEffect(StatusEffect se){
@@ -92,25 +87,34 @@ public class Card : MonoBehaviour
     }
 
     public void attack(Player p){
-        p.damage(power+tempPower<0?0:power+tempPower);
+        p.damage(cardData.power+tempPower<0?0:cardData.power+tempPower);
     }
     public void attack(Card c){
-        c.tempHealth -= power+tempPower<0?0:power+tempPower;
+        c.tempHealth -= cardData.power+tempPower<0?0:cardData.power+tempPower;
+    }
+    IEnumerator DyingAnimation(Action func)
+    {
+        GetComponent<Animator>().SetBool("Dying",true);
+        yield return new WaitForSeconds(.5f);
+        func();
     }
     public void Kill()
     {
         if(isDying)return;
         isDying = true;
-        ActivateTrigger(Triggers.OnDeath);
-        lane.GetComponent<Lane>().removeFromLane(gameObject);
-        Destroy(gameObject);
-        abilities.ForEach(ab => {
-            Destroy(ab);
-        });
+        StartCoroutine(DyingAnimation(() => {
+            ActivateTrigger(Triggers.OnDeath);
+            lane.GetComponent<Lane>().removeFromLane(gameObject);
+            Destroy(gameObject);
+            abilities.ForEach(ab => {
+                Destroy(ab);
+            });
+        }));
     }
     public void UpdateCard()
     {
         foreach(StatusEffect se in new List<StatusEffect>(statusEffects.Keys)){
+        Debug.Log($"{se} {statusEffects[se]}");
             if(statusEffects[se] > 0) {
                 statusEffects[se] -= 1;
                 if(statusEffects[se] == 0){
@@ -124,27 +128,29 @@ public class Card : MonoBehaviour
         isPoisoned = true;
     }
     public void CheckIfDead(){
-        if(health + tempHealth <= 0 || isPoisoned){
+        if(cardData.health + tempHealth <= 0 || isPoisoned){
             Kill();
         }
     }    
 
     public void Sacrifice(){
-        if(status == CardStatus.Protags){
-            gm.protag.upPips();
-            gm.disableSacrifice();            
-        }else if(status == CardStatus.Antags){
-            gm.antag.upPips();
-        }
-        ActivateTrigger(Triggers.OnSacrifice);
-        lane.GetComponent<Lane>().removeFromLane(gameObject);
-        Destroy(gameObject);
-        abilities.ForEach(ab => {
-            Destroy(ab);
-        });
+        StartCoroutine(DyingAnimation(() => {
+            if(status == CardStatus.Protags){
+                gm.protag.upPips();
+                gm.disableSacrifice();            
+            }else if(status == CardStatus.Antags){
+                gm.antag.upPips();
+            }
+            ActivateTrigger(Triggers.OnSacrifice);
+            lane.GetComponent<Lane>().removeFromLane(gameObject);
+            Destroy(gameObject);
+            abilities.ForEach(ab => {
+                Destroy(ab);
+            });
+        }));
     }
 
-    public bool addAbility(Ability ab,bool test = false){
+    public bool addAbility(Ability ab){
         int indx = 0;
         while(indx < abilities.Count && indx < abilityLimit && abilities[indx] != null){
             indx ++;
@@ -153,13 +159,9 @@ public class Card : MonoBehaviour
         if(indx == abilities.Count){
             abilities.Add(null);
         }
-        if(test){
-            abilities[indx] = Instantiate(ab);
-            abilities[indx].owner = this;
-        }else{
-            abilities[indx] = ab;
-        }
-        cardName = ab.adjective+ " " + cardName;
+        abilities[indx] = ab;
+        cardData.abilities.Add(ab);
+        cardData.cardName = ab.adjective + " " + cardData.cardName;
         return true;
     }
     public void ActivateTrigger(Triggers trig){
@@ -193,12 +195,12 @@ public class Card : MonoBehaviour
 
     public int getInGameHealth()
     {
-        return health + tempHealth;
+        return cardData.health + tempHealth;
     }
 
     public int getInGamePower()
     {
-        return power + tempPower;
+        return cardData.power + tempPower;
     }
 
     public bool hasAbility(Type abCheck){

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf63be6e16841946a7224ea46e81fb1, type: 3}
+  m_Name: Fast Snapping Racoon
+  m_EditorClassIdentifier: 
+  cardName: Fast Snapping Racoon
+  rarity: 3
+  power: 2
+  health: 3
+  flavorText: It's gonna steal
+  abilities:
+  - {fileID: -3226920501309072291, guid: 83003b0316f28d140b9986fc9db5490c, type: 3}
+  - {fileID: -1229292005608344092, guid: 79a50e3e0de3ee54aae43b598e86438e, type: 3}
+  - {fileID: -5071529493868634274, guid: 9f0371301d135d841b20932a0fb9652f, type: 3}
+  image: {fileID: 21300000, guid: aa4e5ab866533864da57fc61cf34431d, type: 3}

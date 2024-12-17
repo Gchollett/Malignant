@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tarantula
   m_EditorClassIdentifier: 
   cardName: Taranutla
-  rarity: 
+  rarity: 1
   power: 1
   health: 1
   flavorText: It's yucky and gross

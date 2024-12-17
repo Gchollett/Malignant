@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf63be6e16841946a7224ea46e81fb1, type: 3}
+  m_Name: Silranus
+  m_EditorClassIdentifier: 
+  cardName: Silranus
+  rarity: 4
+  power: 1
+  health: 5
+  flavorText: A Glimpse at the Present
+  abilities: []
+  image: {fileID: 21300000, guid: f3466ba20cbe9344f9e1c7d113635729, type: 3}

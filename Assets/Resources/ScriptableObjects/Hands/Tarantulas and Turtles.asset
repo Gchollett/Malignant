@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tarantulas and Turtles
   m_EditorClassIdentifier: 
   handName: Tarantulas and Turtles
-  difficulty: 0
+  difficulty: 1
   Hand:
   - {fileID: 11400000, guid: a669e6364323d0640a716691c1a2ae1c, type: 2}
   - {fileID: 11400000, guid: a669e6364323d0640a716691c1a2ae1c, type: 2}

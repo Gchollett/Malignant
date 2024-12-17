@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Frog
   m_EditorClassIdentifier: 
   cardName: Frog
-  rarity: 
+  rarity: 1
   power: 1
   health: 2
   flavorText: It's green and slimy

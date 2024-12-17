@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bunny
   m_EditorClassIdentifier: 
   cardName: Bunny
-  rarity: 
+  rarity: 1
   power: 1
   health: 1
   flavorText: It's a fluffy rabbit

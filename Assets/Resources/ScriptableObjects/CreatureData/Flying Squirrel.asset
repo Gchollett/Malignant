@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf63be6e16841946a7224ea46e81fb1, type: 3}
+  m_Name: Flying Squirrel
+  m_EditorClassIdentifier: 
+  cardName: Flying Squirrel
+  rarity: 3
+  power: 1
+  health: 1
+  flavorText: It's a squirrel
+  abilities:
+  - {fileID: 3103212760774652538, guid: fa48866b772956e4e83954a7c78f901a, type: 3}
+  image: {fileID: 21300000, guid: 27227559151edb44bbe03173670632db, type: 3}

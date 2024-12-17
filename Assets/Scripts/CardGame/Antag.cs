@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class Antag : Player {    
     void playCard(Lane lane){
@@ -16,19 +17,31 @@ public class Antag : Player {
     }
    public void MakePlay(Lane[] lanes){
         if(Hand.Count != 0){
-            bool played = false;
             List<Lane> emptyLanes = new List<Lane>();
+            List<(Lane,int,int)> nonemptyLanes = new List<(Lane, int, int)>();
             foreach(Lane lane in lanes){
-                if(!played && lane.protagCreature && !lane.antagCreature){
-                    playCard(lane);
-                    played = true;
+                if(lane.protagCreature && !lane.antagCreature){
+                    nonemptyLanes.Add((lane,lane.protagCreature.GetComponent<Card>().getInGamePower(),lane.protagCreature.GetComponent<Card>().getInGamePower()));
                 }else if(!lane.antagCreature){
                     emptyLanes.Add(lane);
                 }
-            }if(!played){
-                if(emptyLanes.Count > 0){
+            }
+            if(nonemptyLanes.Count > 0){
+                int maxHealth = nonemptyLanes.Max(x => x.Item3);
+                Lane healthy = new List<(Lane,int,int)>(nonemptyLanes.Where(x => x.Item3 == maxHealth))[0].Item1;
+                int maxPower = nonemptyLanes.Max(x => x.Item2);
+                Lane powerful = new List<(Lane,int,int)>(nonemptyLanes.Where(x => x.Item2 == maxPower))[0].Item1;
+                if(maxPower >= 2){
+                    playCard(powerful);
+                }else if(maxPower == 0 && emptyLanes.Count>0){
                     playCard(emptyLanes[Random.Range(0,emptyLanes.Count)]);
+                }else if(maxPower <= 1 && maxHealth > 4 && health > 5){
+                    playCard(healthy);
+                }else{
+                    playCard(nonemptyLanes[Random.Range(0,nonemptyLanes.Count)].Item1);
                 }
+            }else if (emptyLanes.Count>0){
+                playCard(emptyLanes[Random.Range(0,emptyLanes.Count)]);
             }
         }
     }
@@ -40,13 +53,13 @@ public class Antag : Player {
                 Card creature = lane.antagCreature.GetComponent<Card>();
                 foreach(Ability ab in creature.abilities){
                     float prob = 0.01f;
-                    switch(ab){
-                        case Scare:
+                    switch(ab.abilityName){
+                        case "Scare":
                             prob = .05f;
                             if(pips >= ((ActivatedAbility)ab).cost+2) prob = .3f;
                             break;
                     }
-                    if(Random.Range(0f,1f) > prob) if(ab.ProcessAbility(pips)){lowerPips(((ActivatedAbility)ab).cost);};
+                    if(Random.Range(0.01f,1f) > prob) if(ab.ProcessAbility(pips)){lowerPips(((ActivatedAbility)ab).cost);};
                 }
             }            
         }
@@ -55,14 +68,14 @@ public class Antag : Player {
                 Card creature = lane.antagCreature.GetComponent<Card>();
                 foreach(Ability ab in creature.abilities){
                     float prob = 0.01f;
-                    switch(ab){
-                        case Honk:
+                    switch(ab.abilityName){
+                        case "Honk":
                             prob = .6f;
                             break;
-                        case Hop:
+                        case "Hop":
                             prob = .7f;
                             break;                            
-                        case Rage:
+                        case "Rage":
                             if(creature.getInGameHealth() > 1){
                                 if(lane.protagCreature){
                                     Card protagCreature = lane.protagCreature.GetComponent<Card>();
@@ -78,7 +91,11 @@ public class Antag : Player {
                             prob = 0;
                             break;
                     }
-                    if(Random.Range(0f,1f) > prob) if(ab.ProcessAbility(pips)){lowerPips(((ActivatedAbility)ab).cost);};
+                    if(Random.Range(0.01f,1f) > prob){
+                        if(ab.ProcessAbility(pips)){
+                            lowerPips(((ActivatedAbility)ab).cost);
+                        }
+                    }
                 }
             }            
         }
@@ -87,8 +104,8 @@ public class Antag : Player {
                 Card creature = lane.antagCreature.GetComponent<Card>();
                 foreach(Ability ab in creature.abilities){
                     float prob = 0.01f;
-                    switch(ab){
-                        case Hasten:
+                    switch(ab.abilityName){
+                        case "Hasten":
                             if(lane.protagCreature){
                                 if(creature.getInGamePower() * 2 >= lane.protagCreature.GetComponent<Card>().getInGameHealth()){
                                     prob = .7f;
@@ -101,14 +118,14 @@ public class Antag : Player {
                                 }
                             }
                             break;
-                        case Bonk:
+                        case "Bonk":
                             if(lane.protagCreature && lane.protagCreature.GetComponent<Card>().getInGameHealth() <= creature.getInGamePower()*1.5){
                                 prob = .5f;
                             }else{
                                 prob = 0;
                             }
                             break;
-                        case Snap:
+                        case "Snap":
                             if(lane.protagCreature){
                                 prob = .6f;
                             }else{
@@ -119,7 +136,11 @@ public class Antag : Player {
                             prob = 0;
                             break;
                     }
-                    if(Random.Range(0f,1f) > prob) if(ab.ProcessAbility(pips)){lowerPips(((ActivatedAbility)ab).cost);};
+                    if(Random.Range(0.01f,1f) > prob){
+                        if(ab.ProcessAbility(pips)){
+                            lowerPips(((ActivatedAbility)ab).cost);
+                        }
+                    }
                 }
             }            
         }
@@ -127,9 +148,10 @@ public class Antag : Player {
             if(lane.antagCreature && lane.antagCreature.GetComponent<Card>().abilities.Count > 0){
                 Card creature = lane.antagCreature.GetComponent<Card>();
                 foreach(Ability ab in creature.abilities){
-                    float prob = 0.01f;
-                    switch(ab){
-                        case PlayDead:
+                    float prob = 0f;
+                    Debug.Log(ab.abilityName);
+                    switch(ab.abilityName){
+                        case "Play Dead":
                             if(lane.protagCreature){
                                 Card protagCreature = lane.protagCreature.GetComponent<Card>();
                                 foreach(Ability abi in creature.abilities){
@@ -143,7 +165,12 @@ public class Antag : Player {
                             prob = 0;
                             break;
                     }
-                    if(Random.Range(0f,1f) > prob) if(ab.ProcessAbility(pips)){lowerPips(((ActivatedAbility)ab).cost);};
+                    if(Random.Range(0.01f,1f) > prob){
+                        Debug.Log("Activating Play Dead");
+                        if(ab.ProcessAbility(pips)){
+                            lowerPips(((ActivatedAbility)ab).cost);
+                        }
+                    }
                 }
             }            
         }

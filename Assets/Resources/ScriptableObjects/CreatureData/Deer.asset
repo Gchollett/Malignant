@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Deer
   m_EditorClassIdentifier: 
   cardName: Deer
-  rarity: 
+  rarity: 0
   power: 2
   health: 4
   flavorText: It misses it's mother

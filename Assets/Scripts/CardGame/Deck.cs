@@ -14,9 +14,11 @@ public class Deck : MonoBehaviour{
         if(dm){
             cards = new List<CardData>(dm.Deck);
         } 
+        shuffle();
     }
     public CardData draw(){
         if(cards.Count == 0) return null;
+        AudioManager.Instance.PlaySound2d("card_draw");
         CardData card = cards[0];
         cards.RemoveAt(0);
         return card;
