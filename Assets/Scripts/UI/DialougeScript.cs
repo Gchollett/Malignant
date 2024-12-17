@@ -10,9 +10,6 @@ public class DialougeScript : MonoBehaviour
 
     public string[] stringArray;
     private bool running = false;
-
-    [SerializeField] float timeBtwnChars = 0.05f;
-
     int i = 0;
 
     void Start()
@@ -50,7 +47,7 @@ public class DialougeScript : MonoBehaviour
             }
 
             counter += 1;
-            yield return new WaitForSeconds(timeBtwnChars);
+            yield return null;
 
 
         }  

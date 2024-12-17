@@ -2757,9 +2757,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3857710318339802341, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
       propertyPath: m_text
-      value: '
-
-        test'
+      value: ...
+      objectReference: {fileID: 0}
+    - target: {fileID: 3857710318339802341, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
+      propertyPath: m_fontSize
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 3857710318339802341, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
+      propertyPath: m_margin.w
+      value: -126.199646
+      objectReference: {fileID: 0}
+    - target: {fileID: 3857710318339802341, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
+      propertyPath: m_margin.z
+      value: -345.6068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3857710318339802341, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3857710318339802341, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 4356774199396399750, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
       propertyPath: m_Pivot.x
@@ -2841,17 +2859,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6033881095760145683, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033881095760145683, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033881095760145683, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033881095760145683, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 7491914772054511255, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
       propertyPath: stringArray.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7491914772054511255, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
+      propertyPath: stringArray.Array.data[0]
+      value: Hello there young one. We don't get many of your kind out here.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491914772054511255, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
       propertyPath: stringArray.Array.data[1]
-      value: Choose any card to add it to your deck.
+      value: Choose from any of my forest dwelling friends to aid you on you journey...
       objectReference: {fileID: 0}
     - target: {fileID: 7491914772054511255, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
       propertyPath: stringArray.Array.data[2]
-      value: When you're done, press Okay.
+      value: for a price of course
       objectReference: {fileID: 0}
     - target: {fileID: 7563344299417543964, guid: 773f55b66f045f74baa0910fd4705e99, type: 3}
       propertyPath: m_Name
