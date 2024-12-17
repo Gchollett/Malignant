@@ -78,6 +78,7 @@ public class MapManager : MonoBehaviour
         for(int i=0; i < nodeNum; i++){
             if(i == 0){
                 GameObject newNode = Instantiate(startNodePrefab,transform);
+                newNode.transform.localScale = Vector3.one*.4f;
                 newNode.transform.position = points[i*p_count] - sampleRegionSize/2;
                 nodes.Add(newNode);
             } else if(i <= nodeNum/3){
@@ -94,6 +95,7 @@ public class MapManager : MonoBehaviour
                 GameObject pickedNode = nodeList[Random.Range(0,nodeList.Count)];
                 GameObject newNode = Instantiate(pickedNode,transform);
                 newNode.transform.position = points[i*p_count] - sampleRegionSize/2;
+                newNode.transform.localScale = Vector3.one*.4f;
                 nodes.Add(newNode);
             }else if(i <= nodeNum*3/4){
                 List<GameObject> nodeList = new List<GameObject>
@@ -120,6 +122,7 @@ public class MapManager : MonoBehaviour
                 GameObject pickedNode = nodeList[Random.Range(0,nodeList.Count)];
                 GameObject newNode = Instantiate(pickedNode,transform);
                 newNode.transform.position = points[i*p_count] - sampleRegionSize/2;
+                newNode.transform.localScale = Vector3.one*.4f;
                 nodes.Add(newNode);
             }else if(i < nodeNum-1){
                 List<GameObject> nodeList = new List<GameObject>
@@ -132,10 +135,12 @@ public class MapManager : MonoBehaviour
                 GameObject pickedNode = nodeList[Random.Range(0,nodeList.Count)];
                 GameObject newNode = Instantiate(pickedNode,transform);
                 newNode.transform.position = points[i*p_count] - sampleRegionSize/2;
+                newNode.transform.localScale = Vector3.one*.4f;
                 nodes.Add(newNode);
             }else{
                 GameObject newNode = Instantiate(bossNodePrefab,transform);
-                newNode.transform.position = points[i*p_count] - sampleRegionSize/2;                
+                newNode.transform.position = points[i*p_count] - sampleRegionSize/2;     
+                newNode.transform.localScale = Vector3.one*.4f;           
                 nodes.Add(newNode);
             }
         }
@@ -143,6 +148,7 @@ public class MapManager : MonoBehaviour
             if(i%p_count != 0){
                 GameObject newNode = Instantiate(treeNodePrefab,transform);
                 newNode.transform.position = points[i] - sampleRegionSize/2; 
+                newNode.transform.localScale = Vector3.one*.4f;
             }
 
         }
