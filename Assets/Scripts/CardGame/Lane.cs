@@ -8,20 +8,21 @@ public class Lane : MonoBehaviour
     public GameObject protagCreature {get; set;}
     public GameObject antagCreature {get; set;}
 
-    public Vector2 playerPt { get; private set; }
-    public Vector2 enemyPt { get; private set; }
+    public Transform playerPt { get; private set; }
+    public Transform enemyPt { get; private set; }
     // Start is called before the first frame update
 
     private void Start() {
-        playerPt = transform.GetChild(0).transform.position;
-        enemyPt = transform.GetChild(1).transform.position;
+        playerPt = transform.GetChild(0);
+        enemyPt = transform.GetChild(1);
     }
 
     public void addAntagCreature(GameObject card)
     {
         if(antagCreature) return;
         antagCreature = card;
-        card.transform.position = enemyPt;
+        card.transform.position = enemyPt.position;
+        card.transform.SetParent(enemyPt);
 
     }
 
@@ -29,7 +30,9 @@ public class Lane : MonoBehaviour
     {
         if(protagCreature) return;
         protagCreature = card;
-        card.transform.position = playerPt;
+        card.transform.position = playerPt.position;
+        card.GetComponent<Card>().initialScale = new Vector3(.5f,1/3f,1);
+        card.transform.SetParent(playerPt);
     }
 
     public bool removeFromLane(GameObject card){

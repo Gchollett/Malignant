@@ -33,7 +33,7 @@ public class Card : MonoBehaviour
     public HashSet<StatusEffect> staticEffects {get; set;} = new HashSet<StatusEffect>(); //The status effects that don't need a duration
     public Dictionary<Triggers,List<(Action,int)>> tempTriggers {get; set;} = new Dictionary<Triggers, List<(Action, int)>>();//The triggers that only need to trigger a finite number of times
     public Dictionary<Triggers,List<Action>> staticTriggers {get;set;} = new Dictionary<Triggers, List<Action>>(); //The triggers that should trigger until removed
-    public Vector3 initialScale {get; private set;}
+    public Vector3 initialScale {get; set;}
     public CardStatus status {get; set;} = CardStatus.Unplayed;
 
     void Start()

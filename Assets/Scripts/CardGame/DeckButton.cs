@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DeckButton : MonoBehaviour
@@ -25,8 +26,8 @@ public class DeckButton : MonoBehaviour
         if(!gm.isDrawEnabled) return;
         StartCoroutine(DrawCardInGame());
         foreach(Lane lane in gm.lanes){
-            lane.protagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnDraw);
-            lane.antagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnDraw);
+            if(lane.protagCreature)lane.protagCreature.GetComponent<Card>().ActivateTrigger(Triggers.OnDraw);
+            if(lane.antagCreature)lane.antagCreature.GetComponent<Card>().ActivateTrigger(Triggers.OnDraw);
         }
         gm.changePhase();
     }

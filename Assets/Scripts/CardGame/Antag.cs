@@ -40,7 +40,7 @@ public class Antag : Player {
                 }else{
                     playCard(nonemptyLanes[Random.Range(0,nonemptyLanes.Count)].Item1);
                 }
-            }else{
+            }else if (emptyLanes.Count>0){
                 playCard(emptyLanes[Random.Range(0,emptyLanes.Count)]);
             }
         }
