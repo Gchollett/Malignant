@@ -89,20 +89,29 @@ public class Card : MonoBehaviour
     public void attack(Card c){
         c.tempHealth -= cardData.power+tempPower<0?0:cardData.power+tempPower;
     }
+    IEnumerator DyingAnimation(Action func)
+    {
+        GetComponent<Animator>().SetBool("Dying",true);
+        yield return new WaitForSeconds(.5f);
+        func();
+    }
     public void Kill()
     {
         if(isDying)return;
         isDying = true;
-        ActivateTrigger(Triggers.OnDeath);
-        lane.GetComponent<Lane>().removeFromLane(gameObject);
-        Destroy(gameObject);
-        abilities.ForEach(ab => {
-            Destroy(ab);
-        });
+        StartCoroutine(DyingAnimation(() => {
+            ActivateTrigger(Triggers.OnDeath);
+            lane.GetComponent<Lane>().removeFromLane(gameObject);
+            Destroy(gameObject);
+            abilities.ForEach(ab => {
+                Destroy(ab);
+            });
+        }));
     }
     public void UpdateCard()
     {
         foreach(StatusEffect se in new List<StatusEffect>(statusEffects.Keys)){
+            Debug.Log(se.effectName);
             if(statusEffects[se] > 0) {
                 statusEffects[se] -= 1;
                 if(statusEffects[se] == 0){
@@ -122,18 +131,20 @@ public class Card : MonoBehaviour
     }    
 
     public void Sacrifice(){
-        if(status == CardStatus.Protags){
-            gm.protag.upPips();
-            gm.disableSacrifice();            
-        }else if(status == CardStatus.Antags){
-            gm.antag.upPips();
-        }
-        ActivateTrigger(Triggers.OnSacrifice);
-        lane.GetComponent<Lane>().removeFromLane(gameObject);
-        Destroy(gameObject);
-        abilities.ForEach(ab => {
-            Destroy(ab);
-        });
+        StartCoroutine(DyingAnimation(() => {
+            if(status == CardStatus.Protags){
+                gm.protag.upPips();
+                gm.disableSacrifice();            
+            }else if(status == CardStatus.Antags){
+                gm.antag.upPips();
+            }
+            ActivateTrigger(Triggers.OnSacrifice);
+            lane.GetComponent<Lane>().removeFromLane(gameObject);
+            Destroy(gameObject);
+            abilities.ForEach(ab => {
+                Destroy(ab);
+            });
+        }));
     }
 
     public bool addAbility(Ability ab){

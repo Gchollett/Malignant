@@ -77,6 +77,10 @@ public class CardGameManager : MonoBehaviour
         antagHealth.text = antag.health.ToString();
         protagPips.text = $"Pips: {protag.pips}";
         antagPips.text = $"Pips: {antag.pips}";
+    }
+
+    private void checkWin()
+    {
         if(antag.health <= 0 && protag.health >= antag.health){
             dm.money += protag.pips;
             if(dm.isMonolith){
@@ -159,6 +163,7 @@ public class CardGameManager : MonoBehaviour
                                 if(lane.protagCreature.gameObject.GetComponent<Card>().abilities[index].ProcessAbility(protag.pips)){
                                     protag.lowerPips(((ActivatedAbility)lane.protagCreature.gameObject.GetComponent<Card>().abilities[index]).cost);
                                 }
+                                checkWin();
                             });
                         }
                     }
@@ -184,6 +189,7 @@ public class CardGameManager : MonoBehaviour
             StartCoroutine(combat());
         }else if(phase == Phase.End && !isWaiting){
             cleanBoard();
+            checkWin();
             changePhase();
         }
     }
@@ -233,7 +239,7 @@ public class CardGameManager : MonoBehaviour
                 for(int i = 0; i <= lane.protagCreature.GetComponent<Card>().extraAttackCounter; i++){
                     if(lane.protagCreature.GetComponent<Card>().isAttackStopped) break;
                     lane.protagCreature.GetComponent<Animator>().SetBool("PlayerAttacking",true);
-                    yield return new WaitUntil(() => lane.protagCreature.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime<.8f);
+                    yield return new WaitUntil(() => lane.protagCreature.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime<1f);
                     if(lane.antagCreature && !lane.antagCreature.GetComponent<Card>().isBlockStopped && (!lane.protagCreature.GetComponent<Card>().isDealingDirect || lane.antagCreature.GetComponent<Card>().canBlockDirect)){
                         lane.protagCreature.GetComponent<Card>().attack(lane.antagCreature.GetComponent<Card>());
                         lane.protagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnDealingDamage);
@@ -252,7 +258,7 @@ public class CardGameManager : MonoBehaviour
                 for(int i = 0; i <= lane.antagCreature.GetComponent<Card>().extraAttackCounter; i++){
                     if(lane.antagCreature.GetComponent<Card>().isAttackStopped) break;
                     lane.antagCreature.GetComponent<Animator>().SetBool("EnemyAttacking",true);
-                    yield return new WaitUntil(() => lane.antagCreature.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime<.8f);
+                    yield return new WaitUntil(() => lane.antagCreature.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime<1f);
                     if(lane.protagCreature && !lane.protagCreature.GetComponent<Card>().isBlockStopped && (!lane.antagCreature.GetComponent<Card>().isDealingDirect || lane.protagCreature.GetComponent<Card>().canBlockDirect)){
                         lane.antagCreature.GetComponent<Card>().attack(lane.protagCreature.GetComponent<Card>());
                         lane.antagCreature?.GetComponent<Card>().ActivateTrigger(Triggers.OnDealingDamage);
