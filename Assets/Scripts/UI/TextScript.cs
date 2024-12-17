@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TextAnimation : MonoBehaviour
 {
-[SerializeField] TextMeshProUGUI _textMeshPro;
+    [SerializeField] TextMeshProUGUI _textMeshPro;
 
     public string[] stringArray;
 
